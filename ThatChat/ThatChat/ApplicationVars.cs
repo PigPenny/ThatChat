@@ -7,37 +7,37 @@ namespace ThatChat
 {
     public class ApplicationVars
     {
-        private const string KEY_CONVERSATIONS = "conversations";
+        public static ApplicationVar<List<Conversation>> Conversations 
+            = new ApplicationVar<List<Conversation>>("conversations");
 
-        private static HttpApplicationState context = HttpContext.Current.Application;
-
-        private static object appGet(string key)
+        public class ApplicationVar<T>
         {
-            object output;
+            private string key;
+            private HttpApplicationState context = HttpContext.Current.Application;
 
-            context.Lock();
-            output = context[KEY_CONVERSATIONS];
-            context.UnLock();
-
-            return output;
-        }
-
-        private static void appSet(string key, object val)
-        {
-            context.Lock();
-            context[key] = val;
-            context.UnLock();
-        }
-
-        public static List<Conversation> Conversations
-        {
-            get
+            public ApplicationVar(string key)
             {
-                return (List<Conversation>) appGet(KEY_CONVERSATIONS);
+                this.key = key;
             }
-            set
+
+            public T Val
             {
-                appSet(KEY_CONVERSATIONS, value);
+                get
+                {
+                    T output;
+
+                    context.Lock();
+                    output = (T)context[key];
+                    context.UnLock();
+
+                    return output;
+                }
+                set
+                {
+                    context.Lock();
+                    context[key] = value;
+                    context.UnLock();
+                }
             }
         }
     }
