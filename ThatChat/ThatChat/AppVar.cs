@@ -8,7 +8,11 @@ namespace ThatChat
     public class AppVar<T>
     {
         private string key;
-        private static HttpApplicationState context = HttpContext.Current.Application;
+        private static HttpApplicationState context 
+            = HttpContext.Current.Application;
+
+        public static AppVar<List<Conversation>> Conversations { get; private set; }
+            = new AppVar<List<Conversation>>("conversations");
 
         public AppVar(string key)
         {

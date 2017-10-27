@@ -197,10 +197,10 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppVars.cs" />
     <Compile Include="AppVar.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Catalogue.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Conversation.cs" />
