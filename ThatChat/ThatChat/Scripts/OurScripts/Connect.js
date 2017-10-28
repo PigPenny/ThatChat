@@ -16,6 +16,8 @@ $('#displayname').val(prompt('Enter your name:', ''));
 // Set initial focus to message input box.
 $('#message').focus();
 
+
+
 // Start the connection.
 $.connection.hub.start().done(function () {
     $('#sendmessage').click(function () {
@@ -24,4 +26,6 @@ $.connection.hub.start().done(function () {
         // Clear text box and reset focus for next comment.
         $('#message').val('').focus();
     });
+    chat.server.init();
 });
+

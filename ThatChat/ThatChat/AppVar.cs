@@ -11,8 +11,8 @@ namespace ThatChat
         private static HttpApplicationState context 
             = HttpContext.Current.Application;
 
-        public static AppVar<List<Conversation>> Conversations { get; private set; }
-            = new AppVar<List<Conversation>>("conversations");
+        public static AppVar<Conversation> Conversation { get; set; }
+            = new AppVar<Conversation>("conversation");
 
         public AppVar(string key)
         {

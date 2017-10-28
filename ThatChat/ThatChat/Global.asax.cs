@@ -16,6 +16,17 @@ namespace ThatChat
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Account acct1 = new Account("shitface");
+            Account acct2 = new Account("shit face");
+            Account acct3 = new Account("fuckface");
+            AppVar<int>.Conversation.Val = new Conversation("Convo1");
+            AppVar<int>.Conversation.Val.Messages.Add(new Message(acct1, "hey guys"));
+            AppVar<int>.Conversation.Val.Messages.Add(new Message(acct3, "hi!"));
+            AppVar<int>.Conversation.Val.Messages.Add(new Message(acct2, "ugh, this faggot."));
+            AppVar<int>.Conversation.Val.Messages.Add(new Message(acct3, "hey!  don't be rude!"));
+            AppVar<int>.Conversation.Val.Messages.Add(new Message(acct2, "I'll say whatever the fuck I want"));
+            AppVar<int>.Conversation.Val.Messages.Add(new Message(acct1, "ur meen :,,,c"));
         }
     }
 }
