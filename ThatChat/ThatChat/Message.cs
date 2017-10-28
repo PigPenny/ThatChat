@@ -7,12 +7,12 @@ namespace ThatChat
 {
     public class Message
     {
-        public User User { get; private set; }
+        public Account Acct { get; private set; }
         public string Content { get; private set; }
 
-        public Message(User user, string content)
+        public Message(Account acct, string content)
         {
-            this.User = user;
+            this.Acct = acct;
             this.Content = content;
         }
     }
