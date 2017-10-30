@@ -30,6 +30,7 @@ namespace ThatChat
         private void addUser()
         {
             AppVars.Conversation.Val.broadcast(new Message(new Account ("GOD"), "A NEW USER HAS JOINED"), this);
+            AppVars.Conversation.Val.Users.Add(new User(Clients.Caller));
         }
     }
 }
