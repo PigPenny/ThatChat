@@ -14,7 +14,7 @@ namespace ThatChat
         private ConcurrentDictionary<string, User> users = AppVars.Users.Val;
         private Account god = AppVars.Admin.Val;
 
-        public void send(string name, string content)
+        public void send(string content)
         {
             try
             {
@@ -33,9 +33,9 @@ namespace ThatChat
             client.broadcastMessage(name, message);
         }
 
-        public void init()
+        public void init(string name)
         {
-            addUser("name");
+            addUser(name);
 
             foreach (Message msg in AppVars.Conversation.Val.Messages)
                 Clients.Caller.broadcastMessage(msg.Acct.Name, msg.Content);
