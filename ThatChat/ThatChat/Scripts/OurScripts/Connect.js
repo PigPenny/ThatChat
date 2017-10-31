@@ -7,14 +7,12 @@ chat.client.broadcastMessage = function (name, message) {
     var encodedName = $('<div />').text(name).html();
     var encodedMsg = $('<div />').text(message).html();
     // Add the message to the page.
-    $('#discussion').append('<li><strong>' + encodedName
-        + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+    $('#discussion').append('<li><div class="active accnt">' + encodedName
+        + ':&nbsp;&nbsp; </div>' + encodedMsg + '</li>');
 };
 
-// Set initial focus to message input box.
-$('#message').focus();
-
-
+// Set initial focus to name input box.
+$('#displayname').focus();
 
 // Start the connection.
 $.connection.hub.start().done(function () {

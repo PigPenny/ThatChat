@@ -1,6 +1,10 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ThatChat._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <head>
+        <link rel="stylesheet" href="Content/accounts.css">
+    </head>
+
     <div class="container">
         <input type="text" id="message" />
         <input type="button" id="sendmessage" value="Send"/>
