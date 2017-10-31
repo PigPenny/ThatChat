@@ -7,8 +7,6 @@ namespace ThatChat
 {
     public class Catalogue
     {
-        private static Catalogue catalogue;
-
         private List<Conversation> convos;
 
         public Conversation this[int i]

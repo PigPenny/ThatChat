@@ -22,10 +22,10 @@ $('#message').focus();
 $.connection.hub.start().done(function () {
     $('#sendmessage').click(function () {
         // Call the Send method on the hub.
-        chat.server.send($('#displayname').val(), $('#message').val());
+        chat.server.send($('#message').val());
         // Clear text box and reset focus for next comment.
         $('#message').val('').focus();
     });
-    chat.server.init();
+    chat.server.init($('#displayname').val());
 });
 

@@ -6,6 +6,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using System.Collections.Concurrent;
 
 namespace ThatChat
 {
@@ -27,6 +28,10 @@ namespace ThatChat
             AppVars.Conversation.Val.Messages.Add(new Message(acct3, "hey!  don't be rude!"));
             AppVars.Conversation.Val.Messages.Add(new Message(acct2, "I'll say whatever I want"));
             AppVars.Conversation.Val.Messages.Add(new Message(acct1, "ur meen :,,,c"));
+
+            AppVars.Admin.Val = new Account("GOD");
+
+            AppVars.Users.Val = new ConcurrentDictionary<string, User>();
         }
     }
 }
