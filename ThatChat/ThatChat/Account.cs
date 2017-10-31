@@ -11,6 +11,8 @@ namespace ThatChat
     /// </summary>
     public class Account
     {
+        // A counter keeping track of the number of times an 
+        // Account has been instantiated with invalid inputs.
         private static Int32 invalidCount = 0;
 
         /// <summary>
@@ -42,8 +44,20 @@ namespace ThatChat
             else
             {
                 Interlocked.Increment(ref invalidCount);
-                this.Name = "Invalid name #" + invalidCount;
+                this.Name = generateName();
             }
+        }
+
+        /// <summary>
+        /// Purpose:  Generates an automatic name.
+        ///           To be used when the client fails to supply a valid one.
+        /// Author:   Andrew Busto
+        /// Date:     October 31, 2017
+        /// </summary>
+        /// <returns> An auto generated name. </returns>
+        private string generateName()
+        {
+            return "Invalid name #" + invalidCount;
         }
 
         /// <summary>
@@ -52,7 +66,7 @@ namespace ThatChat
         /// Date:     October 31, 2017
         /// </summary>
         /// <param name="name"> The name to be validated. </param>
-        /// <returns></returns>
+        /// <returns> True if name is valid, false otherwise. </returns>
         private bool validName(string name)
         {
             return !name.Equals("");
