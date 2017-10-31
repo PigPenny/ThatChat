@@ -15,6 +15,8 @@ namespace ThatChat
         // Account has been instantiated with invalid inputs.
         private static Int32 invalidCount = 0;
 
+        private static Int32 accntCount = 0;
+
         /// <summary>
         /// The user's name.
         /// </summary>
@@ -24,6 +26,8 @@ namespace ThatChat
         /// True if this account is currently in use, false otherwise.
         /// </summary>
         public bool Active { get; set; }
+
+        public int Id { get; private set; }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the Account class.
@@ -40,12 +44,14 @@ namespace ThatChat
             if (validName(name))
             {
                 this.Name = name;
-            }
-            else
+            }else
             {
                 Interlocked.Increment(ref invalidCount);
                 this.Name = generateName();
             }
+
+            Id = accntCount;
+            Interlocked.Increment(ref accntCount);
         }
 
         /// <summary>

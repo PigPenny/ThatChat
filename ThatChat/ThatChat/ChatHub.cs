@@ -51,7 +51,10 @@ namespace ThatChat
         /// <param name="client"> The client to recieve the message. </param>
         public void SendTo(Message msg, dynamic client)
         {
-            client.broadcastMessage(msg.Acct.Name, msg.Content);
+            client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id);
+
+            //JUST FOR TESTING
+            client.deactivateUser(1);
         }
 
         /// <summary>
@@ -67,7 +70,7 @@ namespace ThatChat
 
             // Sends the client all the messages that have been sent in their absense.
             foreach (Message msg in AppVars.Conversation.Val.Messages)
-                Clients.Caller.broadcastMessage(msg.Acct.Name, msg.Content);
+                SendTo(msg, Clients.Caller);
         }
 
         /// <summary>

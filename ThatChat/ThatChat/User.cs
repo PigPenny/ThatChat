@@ -24,10 +24,9 @@ namespace ThatChat
         /// <summary>
         /// The name of this User (equivalent to User.Accnt.Name)
         /// </summary>
-        public string Name
-        {
-            get => Accnt.Name;
-        }
+        public string Name { get => Accnt.Name; }
+
+        public int Id { get => Accnt.Id; }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the User class.
