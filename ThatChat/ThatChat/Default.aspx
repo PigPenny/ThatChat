@@ -3,8 +3,9 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container">
         <input type="text" id="message" />
-        <input type="button" id="sendmessage" value="Send" onclick="sendmessage" />
-        <input type="hidden" id="displayname" />
+        <input type="button" id="sendmessage" value="Send"/>
+        <input type="text" id="displayname" />
+        <input type="button" id="setname" value="Set Name"/>
         <ul id="discussion"></ul>
     </div>
 

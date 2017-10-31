@@ -48,7 +48,7 @@ namespace ThatChat
             Messages.Add(msg);
             foreach (User user in Users)
             {
-                hub.SendTo(msg.Acct.Name, msg.Content, user.Client);
+                hub.SendTo(msg, user.Client);
             }
         }
     }

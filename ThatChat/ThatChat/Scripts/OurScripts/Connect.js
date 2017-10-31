@@ -11,8 +11,6 @@ chat.client.broadcastMessage = function (name, message) {
         + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
 };
 
-// Get the user name and store it to prepend to messages.
-$('#displayname').val(prompt('Enter your name:', ''));
 // Set initial focus to message input box.
 $('#message').focus();
 
@@ -26,6 +24,14 @@ $.connection.hub.start().done(function () {
         // Clear text box and reset focus for next comment.
         $('#message').val('').focus();
     });
+
+    $('#setname').click(function () {
+        // Call the Send method on the hub.
+        chat.server.setName($('#displayname').val());
+        // Clear text box and reset focus for next comment.
+        $('#displayname').val('').focus();
+    });
+
     chat.server.init($('#displayname').val());
 });
 
