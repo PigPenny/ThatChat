@@ -20,13 +20,7 @@ namespace ThatChat
         {
             get
             {
-                T output;
-
-                context.Lock();
-                output = (T)context[key];
-                context.UnLock();
-
-                return output;
+                return (T)context[key];
             }
             set
             {

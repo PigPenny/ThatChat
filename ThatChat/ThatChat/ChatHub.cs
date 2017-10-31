@@ -3,15 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
+using System.Collections.Concurrent;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace ThatChat
 {
     public class ChatHub : Hub
     {
-        public void Send(string name, string message)
+        private Conversation convo = AppVars.Conversation.Val;
+        private ConcurrentDictionary<string, User> users = AppVars.Users.Val;
+        private Account god = AppVars.Admin.Val;
+
+        public void send(string name, string content)
         {
-            // Call the broadcastMessage method to update clients.
-            AppVars.Conversation.Val.broadcast(new Message(new Account(name), message), this);
+            try
+            {
+                Message msg = new Message(users[Context.ConnectionId].Accnt, content);
+
+                convo.broadcast(msg, this);
+            } catch (KeyNotFoundException e)
+            {
+                convo.broadcast(new Message(god, "A user not in our system is trying to send a message.  Observe:"), this);
+                convo.broadcast(new Message(god, e.Message), this);
+            }
         }
 
         public void SendTo(string name, string message, dynamic client)
@@ -21,16 +35,17 @@ namespace ThatChat
 
         public void init()
         {
-            addUser();
+            addUser("name");
 
             foreach (Message msg in AppVars.Conversation.Val.Messages)
                 Clients.Caller.broadcastMessage(msg.Acct.Name, msg.Content);
         }
 
-        private void addUser()
+        private void addUser(string name)
         {
-            AppVars.Conversation.Val.broadcast(new Message(new Account ("GOD"), "A NEW USER HAS JOINED"), this);
-            AppVars.Conversation.Val.Users.Add(new User(Clients.Caller));
+            users[Context.ConnectionId] = new User(Clients.Caller, name);
+            convo.broadcast(new Message(god, users[Context.ConnectionId].Name + " HAS JOINED YOUR GLORIOUS CHAT"), this);
+            convo.Users.Add(users[Context.ConnectionId]);
         }
     }
 }
