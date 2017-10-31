@@ -37,7 +37,7 @@ namespace ThatChat
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
         public User(dynamic client)
         {
-            init(client, "dog");
+            init(client, "");
         }
 
         /// <summary>
