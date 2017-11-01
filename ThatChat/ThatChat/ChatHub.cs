@@ -43,16 +43,15 @@ namespace ThatChat
         }
 
         /// <summary>
-        /// Purpose:  Sends a message (not a Message) to a specific client.
+        /// Purpose:  Sends a Message to a specific client.
         /// Author:   Andrew Busto
         /// Date:     October 28, 2017
         /// </summary>
-        /// <param name="name"> The name associated with the message. </param>
-        /// <param name="message"> The text to be sent as a message. </param>
-        /// <param name="client"> The client to send the message to. </param>
-        public void SendTo(string name, string message, dynamic client)
+        /// <param name="msg"> The message being sent. </param>
+        /// <param name="client"> The client to recieve the message. </param>
+        public void SendTo(Message msg, dynamic client)
         {
-            client.broadcastMessage(name, message);
+            client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id);
         }
 
         /// <summary>
@@ -68,7 +67,7 @@ namespace ThatChat
 
             // Sends the client all the messages that have been sent in their absense.
             foreach (Message msg in AppVars.Conversation.Val.Messages)
-                Clients.Caller.broadcastMessage(msg.Acct.Name, msg.Content);
+                SendTo(msg, Clients.Caller);
         }
 
         /// <summary>
@@ -82,6 +81,31 @@ namespace ThatChat
             users[Context.ConnectionId] = new User(Clients.Caller, name);
             convo.broadcast(new Message(god, users[Context.ConnectionId].Name + " HAS JOINED YOUR GLORIOUS CHAT"), this);
             convo.Users.Add(users[Context.ConnectionId]);
+        }
+
+        /// <summary>
+        /// Purpose:  To be called by a client to change their name.
+        /// Author:   Andrew Busto
+        /// Date:     October 31, 2017
+        /// </summary>
+        /// <param name="name"> The user's new name. </param>
+        public void setName(string name)
+        {
+            try
+            {
+                deactivate(users[Context.ConnectionId].Accnt);
+                users[Context.ConnectionId].Accnt = new Account(name);
+            } catch (KeyNotFoundException e)
+            {
+                convo.broadcast(new Message(god, "A user not in our system is trying to set their name.  Observe:"), this);
+                convo.broadcast(new Message(god, e.Message), this);
+            }
+        }
+
+        private void deactivate(Account acct)
+        {
+            Clients.All.deactivateUser(acct.Id);
+            acct.Active = false;
         }
     }
 }

@@ -1,22 +1,38 @@
 ﻿// Declare a proxy to reference the hub.
 var chat = $.connection.chatHub;
+var names = [];
 
 // Create a function that the hub can call to broadcast messages.
-chat.client.broadcastMessage = function (name, message) {
-    // Html encode display name and message.
-    var encodedName = $('<div />').text(name).html();
-    var encodedMsg = $('<div />').text(message).html();
+chat.client.broadcastMessage = function (name, message, id) {
+    var li = document.createElement("li");
+    var nameDiv = document.createElement("div");
+    var contentDiv = document.createElement("div");
+
+    nameDiv.className = "active accnt";
+    nameDiv.innerText = name;
+    contentDiv.innerText = message;
+
+    li.appendChild(nameDiv);
+    li.appendChild(contentDiv)
+
     // Add the message to the page.
-    $('#discussion').append('<li><strong>' + encodedName
-        + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+    $('#discussion').append(li);
+
+    if (names[id] == null)
+        names[id] = [];
+    names[id][names[id].length] = nameDiv;
 };
 
-// Get the user name and store it to prepend to messages.
-$('#displayname').val(prompt('Enter your name:', ''));
-// Set initial focus to message input box.
-$('#message').focus();
+chat.client.deactivateUser = function (id) {
+    if (names[id] != null)
+    {
+        for (var nameDiv of names[id])
+            nameDiv.className = "inactive accnt"
+    }
+}
 
-
+// Set initial focus to name input box.
+$('#displayname').focus();
 
 // Start the connection.
 $.connection.hub.start().done(function () {
@@ -26,6 +42,14 @@ $.connection.hub.start().done(function () {
         // Clear text box and reset focus for next comment.
         $('#message').val('').focus();
     });
+
+    $('#setname').click(function () {
+        // Call the Send method on the hub.
+        chat.server.setName($('#displayname').val());
+        // Clear text box and reset focus for next comment.
+        $('#displayname').val('').focus();
+    });
+
     chat.server.init($('#displayname').val());
 });
 

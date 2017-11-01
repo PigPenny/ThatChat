@@ -24,10 +24,9 @@ namespace ThatChat
         /// <summary>
         /// The name of this User (equivalent to User.Accnt.Name)
         /// </summary>
-        public string Name
-        {
-            get => Accnt.Name;
-        }
+        public string Name { get => Accnt.Name; }
+
+        public int Id { get => Accnt.Id; }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the User class.
@@ -37,7 +36,7 @@ namespace ThatChat
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
         public User(dynamic client)
         {
-            init(client, "dog");
+            init(client, "");
         }
 
         /// <summary>
