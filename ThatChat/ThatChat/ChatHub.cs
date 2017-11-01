@@ -52,9 +52,6 @@ namespace ThatChat
         public void SendTo(Message msg, dynamic client)
         {
             client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id);
-
-            //JUST FOR TESTING
-            client.deactivateUser(1);
         }
 
         /// <summary>
@@ -96,13 +93,19 @@ namespace ThatChat
         {
             try
             {
-                users[Context.ConnectionId].Accnt.Active = false;
+                deactivate(users[Context.ConnectionId].Accnt);
                 users[Context.ConnectionId].Accnt = new Account(name);
             } catch (KeyNotFoundException e)
             {
                 convo.broadcast(new Message(god, "A user not in our system is trying to set their name.  Observe:"), this);
                 convo.broadcast(new Message(god, e.Message), this);
             }
+        }
+
+        private void deactivate(Account acct)
+        {
+            Clients.All.deactivateUser(acct.Id);
+            acct.Active = false;
         }
     }
 }
