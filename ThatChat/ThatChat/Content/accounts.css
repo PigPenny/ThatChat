@@ -1,0 +1,12 @@
+﻿.accnt {
+    font-weight: bold;
+}
+
+.active {
+    color: blue;
+}
+
+.inactive {
+    color: black;
+}
+
