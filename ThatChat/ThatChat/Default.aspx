@@ -3,16 +3,30 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <head>
         <link rel="stylesheet" href="Content/accounts.css">
+        <link rel="stylesheet" href="Content/bootstrap.css">
     </head>
 
     <div class="container">
-        <input type="text" id="message" />
-        <input type="button" id="sendmessage" value="Send"/>
-        <input type="text" id="displayname" />
-        <input type="button" id="setname" value="Set Name"/>
-        <ul id="discussion"></ul>
-    </div>
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="chatRooms">
+                    <li><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox></li>
+                    <li>Coffee</li>
+                    <li>Tea</li>
+                    <li>Milk</li>
+                </ul>
+            </div>
 
+            <div class="col-md-9">
+                <input type="text" id="displayname" />
+                <input type="button" id="setname" value="Set Name" />
+                <ul id="discussion"></ul>
+                <input type="text" id="message" />
+                <input type="button" id="sendmessage" value="Send" />
+            </div>
+        </div>
+
+    </div>
     <!--Script references. -->
     <!--Reference the jQuery library. -->
     <script src="Scripts/jquery-1.10.2.min.js"></script>
