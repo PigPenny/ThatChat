@@ -8,19 +8,23 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <ul id="chatRooms">
-                    <li><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox></li>
+            <div class="col-md-4">
+                <ul id="chatRooms" style="list-style:none;">
+                    <li><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>    
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                   </li>
                     <li>Coffee</li>
                     <li>Tea</li>
                     <li>Milk</li>
                 </ul>
             </div>
 
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <input type="text" id="displayname" />
                 <input type="button" id="setname" value="Set Name" />
-                <ul id="discussion"></ul>
+                <ul id="discussion" style="list-style:none;"></ul>
                 <input type="text" id="message" />
                 <input type="button" id="sendmessage" value="Send" />
             </div>

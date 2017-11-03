@@ -11,7 +11,8 @@ namespace ThatChat
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-                
+           // this.displayname.Attributes.Add("onkeypress", "button_click(this,'" + this.setname.ClientID + "')");
+            //this.message.Attributes.Add("onkeypress", "button_click(this,'" + this.sendmessage.ClientID + "')");
         }
     }
 }
