@@ -36,11 +36,24 @@ $('#displayname').focus();
 
 // Start the connection.
 $.connection.hub.start().done(function () {
+
+    $('#message').keypress(function (e) {
+        if (e.which == 13) {
+            $('#sendmessage').click();
+        }
+    });
+
     $('#sendmessage').click(function () {
         // Call the Send method on the hub.
         chat.server.send($('#message').val());
         // Clear text box and reset focus for next comment.
         $('#message').val('').focus();
+    });
+
+    $('#displayname').keypress(function (e) {
+        if (e.which == 13) {
+            $('#setname').click();
+        }
     });
 
     $('#setname').click(function () {
