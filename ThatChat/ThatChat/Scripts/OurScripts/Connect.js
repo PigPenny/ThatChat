@@ -3,17 +3,23 @@ var chat = $.connection.chatHub;
 var names = [];
 
 // Create a function that the hub can call to broadcast messages.
-chat.client.broadcastMessage = function (name, message, id) {
+chat.client.broadcastMessage = function (name, message, id, active) {
     var li = document.createElement("li");
     var nameDiv = document.createElement("div");
     var contentDiv = document.createElement("div");
 
-    nameDiv.className = "active accnt";
+    if (active == true) {
+        nameDiv.className = "active accnt";
+    }
+    else {
+        nameDiv.className = "inactive accnt";
+    }
+
     nameDiv.innerText = name;
     contentDiv.innerText = message;
 
     li.appendChild(nameDiv);
-    li.appendChild(contentDiv)
+    li.appendChild(contentDiv);
     li.className = "remove";
 
     // Add the message to the page.

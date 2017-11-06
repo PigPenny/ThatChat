@@ -53,7 +53,7 @@ namespace ThatChat
         /// <param name="client"> The client to recieve the message. </param>
         public void SendTo(Message msg, dynamic client)
         {
-            client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id);
+            client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id, msg.Acct.Active);
         }
 
         /// <summary>
