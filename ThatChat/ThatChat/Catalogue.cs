@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,18 +13,17 @@ namespace ThatChat
     /// </summary>
     public class Catalogue
     {
-        private List<Conversation> convos;
-
-        public Conversation this[int i]
-        {
-            get { return convos[i]; }
-            set { convos[i] = value; }
-        }
-
+        private ConcurrentDictionary<int, Conversation> conversations;
 
         public Catalogue()
         {
-            convos = new List<Conversation>();
+            conversations = new ConcurrentDictionary<int, Conversation>();
+        }
+
+        public Conversation this[int i]
+        {
+            get { return conversations[i]; }
+            set { conversations[i] = value; }
         }
     }
 }
