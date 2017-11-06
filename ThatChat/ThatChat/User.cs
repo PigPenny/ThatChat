@@ -11,6 +11,7 @@ namespace ThatChat
     /// </summary>
     public class User
     {
+
         /// <summary>
         /// The account associated with this user.
         /// </summary>
@@ -27,6 +28,22 @@ namespace ThatChat
         public string Name { get => Accnt.Name; }
 
         public int Id { get => Accnt.Id; }
+
+        private Conversation convo;
+        public Conversation Convo {
+            get
+            {
+                return convo;
+            }
+            set
+            {
+                if (((object) convo) != null)
+                    convo.Users.Remove(this);
+
+                convo = value;
+                convo.Users.Add(this);
+            }
+        }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the User class.

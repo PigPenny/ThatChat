@@ -15,9 +15,9 @@
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                    </li>
-                    <li>Coffee</li>
-                    <li>Tea</li>
-                    <li>Milk</li>
+                    <li class="chatRoom">Coffee</li>
+                    <li class="chatRoom">Tea</li>
+                    <li class="chatRoom">Milk</li>
                 </ul>
             </div>
 

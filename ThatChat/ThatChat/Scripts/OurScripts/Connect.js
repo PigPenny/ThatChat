@@ -2,22 +2,19 @@
 var chat = $.connection.chatHub;
 var names = [];
 
-
 // Create a function that the hub can call to broadcast messages.
-chat.client.broadcastMessage = function (name, message, id,active) {
+chat.client.broadcastMessage = function (name, message, id) {
     var li = document.createElement("li");
     var nameDiv = document.createElement("div");
     var contentDiv = document.createElement("div");
 
-    if (active == true)
-        nameDiv.className = "active accnt";
-    else
-        nameDiv.className = "inactive accnt";
+    nameDiv.className = "active accnt";
     nameDiv.innerText = name;
     contentDiv.innerText = message;
 
     li.appendChild(nameDiv);
-    li.appendChild(contentDiv);
+    li.appendChild(contentDiv)
+    li.className = "remove";
 
     // Add the message to the page.
     $('#discussion').append(li);
@@ -67,6 +64,16 @@ $.connection.hub.start().done(function () {
         $('#displayname').val('').focus();
     });
 
-    chat.server.init($('#displayname').val());
+    $(".chatRoom").click(function () {
+        $("#discussion").empty();
+        
+        chat.server.selectChatRoom(1);
+        chat.server.init();
+    });
+
+    chat.server.addUser($('#displayname').val());
+    chat.server.selectChatRoom(0);
+    chat.server.init();
+
 });
 
