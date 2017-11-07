@@ -10,14 +10,11 @@
         <div class="row">
             <div class="col-md-4">
                 <ul id="chatRooms" style="list-style:none;">
-                    <li><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>    
+                    <li><asp:TextBox ID="TextBoxChatSearch" runat="server"></asp:TextBox>    
                         <button type="button" class="btn btn-default">
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                    </li>
-                    <li class="chatRoom">Coffee</li>
-                    <li class="chatRoom">Tea</li>
-                    <li class="chatRoom">Milk</li>
                 </ul>
             </div>
 
