@@ -13,17 +13,17 @@ namespace ThatChat
     /// </summary>
     public class Catalogue
     {
-        private ConcurrentDictionary<int, Conversation> conversations;
+        public ConcurrentDictionary<int, Conversation> Conversations { get; private set; }
 
         public Catalogue()
         {
-            conversations = new ConcurrentDictionary<int, Conversation>();
+            Conversations = new ConcurrentDictionary<int, Conversation>();
         }
 
         public Conversation this[int i]
         {
-            get { return conversations[i]; }
-            set { conversations[i] = value; }
+            get { return Conversations[i]; }
+            set { Conversations[i] = value; }
         }
     }
 }

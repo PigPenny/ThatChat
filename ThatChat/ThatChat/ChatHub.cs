@@ -109,5 +109,11 @@ namespace ThatChat
         {
             users[Context.ConnectionId].Convo = catalogue[chatID];
         }
+
+        public void populateChats()
+        {
+            foreach (KeyValuePair<int, Conversation> convo in catalogue.Conversations)
+                Clients.Caller.addChat(convo.Value.Name, convo.Key);
+        }
     }
 }

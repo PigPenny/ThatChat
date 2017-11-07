@@ -30,6 +30,24 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     names[id][names[id].length] = nameDiv;
 };
 
+chat.client.addChat = function (name, id) {
+    var li = document.createElement("li");
+    var nameDiv = document.createElement("div");
+
+    nameDiv.innerText = name;
+
+    li.appendChild(nameDiv);
+    li.onclick = function () {
+        $("#discussion").empty();
+
+        chat.server.selectChatRoom(id);
+        chat.server.init();
+    }
+
+    // Add the message to the page.
+    $('#chatRooms').append(li);
+}
+
 chat.client.deactivateUser = function (id) {
     if (names[id] != null)
     {
@@ -70,13 +88,7 @@ $.connection.hub.start().done(function () {
         $('#displayname').val('').focus();
     });
 
-    $(".chatRoom").click(function () {
-        $("#discussion").empty();
-        
-        chat.server.selectChatRoom(1);
-        chat.server.init();
-    });
-
+    chat.server.populateChats();
     chat.server.addUser($('#displayname').val());
     chat.server.selectChatRoom(0);
     chat.server.init();
