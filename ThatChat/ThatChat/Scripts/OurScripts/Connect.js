@@ -42,19 +42,18 @@ chat.client.addChat = function (name, id) {
 
         chat.server.selectChatRoom(id);
         chat.server.init();
-    }
+    };
 
     // Add the message to the page.
     $('#chatRooms').append(li);
-}
+};
 
 chat.client.deactivateUser = function (id) {
-    if (names[id] != null)
-    {
+    if (names[id] != null) {
         for (var nameDiv of names[id])
-            nameDiv.className = "inactive accnt"
+            nameDiv.className = "inactive accnt";
     }
-}
+};
 
 // Set initial focus to name input box.
 $('#displayname').focus();
@@ -85,7 +84,14 @@ $.connection.hub.start().done(function () {
         // Call the Send method on the hub.
         chat.server.setName($('#displayname').val());
         // Clear text box and reset focus for next comment.
-        $('#displayname').val('').focus();
+        $('#displayname').val('');
+        $('#message').focus();
+    });
+
+    $('#ButtonChatAdd').click(function () {
+        chat.server.addChat($('#TextBoxChatAdd').val());
+        $('#TextBoxChatAdd').val('');
+        $('#message').focus();
     });
 
     chat.server.populateChats();

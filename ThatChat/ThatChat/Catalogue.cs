@@ -13,17 +13,35 @@ namespace ThatChat
     /// </summary>
     public class Catalogue
     {
-        public ConcurrentDictionary<int, Conversation> Conversations { get; private set; }
+        int count = 0;
+        private ConcurrentDictionary<int, Conversation> conversations;
 
         public Catalogue()
         {
-            Conversations = new ConcurrentDictionary<int, Conversation>();
+            conversations = new ConcurrentDictionary<int, Conversation>();
+        }
+
+        public int addConversation(Conversation convo)
+        {
+            conversations.TryAdd(count, convo);
+
+            return count++;
+        }
+
+        public void deleteConversation(int id)
+        {
+            Conversation convo;
+            conversations.TryRemove(id, out convo);
+        }
+
+        public ICollection<int> Keys
+        {
+            get => conversations.Keys;
         }
 
         public Conversation this[int i]
         {
-            get { return Conversations[i]; }
-            set { Conversations[i] = value; }
+            get { return conversations[i]; }
         }
     }
 }

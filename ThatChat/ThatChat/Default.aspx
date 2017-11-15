@@ -16,6 +16,9 @@
                         </button>
                    </li>
                 </ul>
+                <input type="text" id="TextBoxChatAdd" /> 
+                <button type="button" class="btn btn-default" id="ButtonChatAdd" value="add chat">
+                </button>
             </div>
 
             <div class="col-md-8">

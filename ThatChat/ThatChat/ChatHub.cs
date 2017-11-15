@@ -112,8 +112,14 @@ namespace ThatChat
 
         public void populateChats()
         {
-            foreach (KeyValuePair<int, Conversation> convo in catalogue.Conversations)
-                Clients.Caller.addChat(convo.Value.Name, convo.Key);
+            foreach (int key in catalogue.Keys)
+                Clients.Caller.addChat(catalogue[key].Name, key);
+        }
+
+        public void addChat(string name)
+        {
+            int id = catalogue.addConversation(new Conversation(name));
+            Clients.All.addChat(catalogue[id].Name, id);
         }
     }
 }
