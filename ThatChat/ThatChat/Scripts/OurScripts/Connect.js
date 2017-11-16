@@ -43,22 +43,21 @@ chat.client.addChat = function (name, id) {
 
         chat.server.selectChatRoom(id);
         chat.server.init();
-    }
+    };
 
     // Add the message to the page.
     $('#chatRooms').append(li);
 
-    var nameObject = { "name" : name };
+    var nameObject = { "name": name };
     chatNames.push(nameObject);
-}
+};
 
 chat.client.deactivateUser = function (id) {
-    if (names[id] != null)
-    {
+    if (names[id] != null) {
         for (var nameDiv of names[id])
-            nameDiv.className = "inactive accnt"
+            nameDiv.className = "inactive accnt";
     }
-}
+};
 
 // Set initial focus to name input box.
 $('#displayname').focus();
@@ -89,7 +88,14 @@ $.connection.hub.start().done(function () {
         // Call the Send method on the hub.
         chat.server.setName($('#displayname').val());
         // Clear text box and reset focus for next comment.
-        $('#displayname').val('').focus();
+        $('#displayname').val('');
+        $('#message').focus();
+    });
+
+    $('#ButtonChatAdd').click(function () {
+        chat.server.addChat($('#TextBoxChatAdd').val());
+        $('#TextBoxChatAdd').val('');
+        $('#message').focus();
     });
 
     chat.server.populateChats();
@@ -121,10 +127,10 @@ $.connection.hub.start().done(function () {
         for (var i = 0; i < result.length; i++) {
             var li = document.createElement("li");
             var nameDiv = document.createElement("div");
-            //console.log(result[i]);
-            nameDiv.innerText = result[i].name;
 
+            nameDiv.innerText = result[i].name;
             li.appendChild(nameDiv)
+
             // Add the message to the page.
             $('#chatRooms').append(li);
         }

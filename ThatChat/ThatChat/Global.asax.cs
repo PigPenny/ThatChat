@@ -25,7 +25,7 @@ namespace ThatChat
             // Initializes the Conversation.  IMPORTANT.
             AppVars.Conversations.Val = new Catalogue();
 
-            AppVars.Conversations.Val[0] = new Conversation("convo1");
+            AppVars.Conversations.Val.addConversation(new Conversation("convo0"));
             AppVars.Conversations.Val[0].Messages.Add(new Message(acct1, "hey guys"));
             AppVars.Conversations.Val[0].Messages.Add(new Message(acct3, "hi!"));
             AppVars.Conversations.Val[0].Messages.Add(new Message(acct2, "ugh, this guy."));
@@ -33,10 +33,10 @@ namespace ThatChat
             AppVars.Conversations.Val[0].Messages.Add(new Message(acct2, "I'll say whatever I want"));
             AppVars.Conversations.Val[0].Messages.Add(new Message(acct1, "ur meen :,,,c"));
 
-            AppVars.Conversations.Val[1] = new Conversation("convo2");
+            AppVars.Conversations.Val.addConversation(new Conversation("convo1"));
             AppVars.Conversations.Val[1].Messages.Add(new Message(acct1, "hey gals"));
 
-            AppVars.Conversations.Val[2] = new Conversation("convo3");
+            AppVars.Conversations.Val.addConversation(new Conversation("convo2"));
             AppVars.Conversations.Val[2].Messages.Add(new Message(acct1, "hey gays"));
   
             // Initializes Admin.  IMPORTANT.
