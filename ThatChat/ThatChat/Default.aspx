@@ -9,12 +9,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <ul id="chatRooms" style="list-style:none;">
-                    <li><asp:TextBox ID="TextBoxChatSearch" runat="server"></asp:TextBox>    
-                        <button type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                   </li>
+
+                     <input type="text" id="searchBox" /> 
+                        <input type="button" id="searchButton" value="Search Chat">
+
+                                <ul id="chatRooms" style="list-style:none;">
                 </ul>
             </div>
 
@@ -37,5 +36,6 @@
     <script src="signalr/hubs"></script>
     <!--Reference to script to update the page and send messages.-->
     <script src="Scripts/OurScripts/connect.js"></script>
+    <script src="Scripts/fuse.js"></script>
 
 </asp:Content>

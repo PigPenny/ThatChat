@@ -1,6 +1,7 @@
 ﻿// Declare a proxy to reference the hub.
 var chat = $.connection.chatHub;
 var names = [];
+var chatNames = [];
 
 // Create a function that the hub can call to broadcast messages.
 chat.client.broadcastMessage = function (name, message, id, active) {
@@ -46,6 +47,9 @@ chat.client.addChat = function (name, id) {
 
     // Add the message to the page.
     $('#chatRooms').append(li);
+
+    var nameObject = { "name" : name };
+    chatNames.push(nameObject);
 }
 
 chat.client.deactivateUser = function (id) {
@@ -93,5 +97,38 @@ $.connection.hub.start().done(function () {
     chat.server.selectChatRoom(0);
     chat.server.init();
 
+    var options = {
+        shouldSort: true,
+        threshold: 0.0,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+            "name"
+        ]
+    };
+
+    $('#searchButton').click(function () {
+        console.log(chatNames);
+        var fuse = new Fuse(chatNames, options); // "list" is the item array
+
+        var chat = $('#searchBox').val();
+        console.log(chat);
+        var result = fuse.search(chat);
+        console.log(result);
+        $('#chatRooms').empty();
+        for (var i = 0; i < result.length; i++) {
+            var li = document.createElement("li");
+            var nameDiv = document.createElement("div");
+            //console.log(result[i]);
+            nameDiv.innerText = result[i].name;
+
+            li.appendChild(nameDiv)
+            // Add the message to the page.
+            $('#chatRooms').append(li);
+        }
+
+    })
 });
 
