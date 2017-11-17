@@ -66,8 +66,12 @@ namespace ThatChat
         public void init()
         {
             // Sends the client all the messages that have been sent in their absense.
-            foreach (Message msg in users[Context.ConnectionId].Convo.Messages)
-                SendTo(msg, Clients.Caller);
+            users[Context.ConnectionId].Convo.forAllMessages(updateCaller);
+        }
+
+        public void updateCaller(Message msg)
+        {
+            SendTo(msg, Clients.Caller);
         }
 
         /// <summary>

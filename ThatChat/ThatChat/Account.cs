@@ -13,9 +13,9 @@ namespace ThatChat
     {
         // A counter keeping track of the number of times an 
         // Account has been instantiated with invalid inputs.
-        private static Int32 invalidCount = 0;
+        private static long invalidCount = 0;
 
-        private static Int32 accntCount = 0;
+        private static long accntCount = 0;
 
         /// <summary>
         /// The user's name.
@@ -27,7 +27,13 @@ namespace ThatChat
         /// </summary>
         public bool Active { get; set; }
 
-        public int Id { get; private set; }
+        private long id;
+        public long Id {
+            get
+            {
+                return Interlocked.Read(ref id);
+            }
+        }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the Account class.
@@ -50,7 +56,7 @@ namespace ThatChat
                 this.Name = generateName();
             }
 
-            Id = accntCount;
+            id = accntCount;
             Interlocked.Increment(ref accntCount);
         }
 
@@ -63,7 +69,7 @@ namespace ThatChat
         /// <returns> An auto generated name. </returns>
         private string generateName()
         {
-            return "Invalid name #" + invalidCount;
+            return "Invalid name #" + Interlocked.Read(ref invalidCount);
         }
 
         /// <summary>

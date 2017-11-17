@@ -127,6 +127,6 @@ $.connection.hub.start().done(function () {
             $('#chatRooms').append(result[i]["element"]);
         }
 
-    })
+    });
 });
 
