@@ -104,7 +104,7 @@ namespace ThatChat
         private void deactivate(Account acct)
         {
             Clients.All.deactivateUser(acct.Id);
-            acct.Active = false;
+            acct.deactivate();
         }
 
         public void selectChatRoom(int chatID)
