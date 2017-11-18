@@ -14,8 +14,6 @@ namespace ThatChat
     /// </summary>
     public class ChatHub : Hub
     {
-        // The Conversation that all users are presently engaged in.
-        //private Conversation convo = AppVars.Conversations.Val[0];
         Catalogue catalogue = AppVars.Conversations.Val;
         // All users that have ever connected. (this needs addressing)
         private ConcurrentDictionary<string, User> users = AppVars.Users.Val;
@@ -66,8 +64,12 @@ namespace ThatChat
         public void init()
         {
             // Sends the client all the messages that have been sent in their absense.
-            foreach (Message msg in users[Context.ConnectionId].Convo.Messages)
-                SendTo(msg, Clients.Caller);
+            users[Context.ConnectionId].Convo.forAllMessages(updateCaller);
+        }
+
+        public void updateCaller(Message msg)
+        {
+            SendTo(msg, Clients.Caller);
         }
 
         /// <summary>
@@ -102,7 +104,7 @@ namespace ThatChat
         private void deactivate(Account acct)
         {
             Clients.All.deactivateUser(acct.Id);
-            acct.Active = false;
+            acct.deactivate();
         }
 
         public void selectChatRoom(int chatID)
@@ -112,8 +114,14 @@ namespace ThatChat
 
         public void populateChats()
         {
-            foreach (KeyValuePair<int, Conversation> convo in catalogue.Conversations)
-                Clients.Caller.addChat(convo.Value.Name, convo.Key);
+            foreach (int key in catalogue.Keys)
+                Clients.Caller.addChat(catalogue[key].Name, key);
+        }
+
+        public void addChat(string name)
+        {
+            int id = catalogue.addConversation(new Conversation(name));
+            Clients.All.addChat(catalogue[id].Name, id);
         }
     }
 }

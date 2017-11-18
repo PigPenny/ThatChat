@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace ThatChat
@@ -13,17 +14,35 @@ namespace ThatChat
     /// </summary>
     public class Catalogue
     {
-        public ConcurrentDictionary<int, Conversation> Conversations { get; private set; }
+        private int count = -1;
+        private ConcurrentDictionary<int, Conversation> conversations;
 
         public Catalogue()
         {
-            Conversations = new ConcurrentDictionary<int, Conversation>();
+            conversations = new ConcurrentDictionary<int, Conversation>();
+        }
+
+        public int addConversation(Conversation convo)
+        {
+            conversations.TryAdd(Interlocked.Increment(ref count), convo);
+
+            return count;
+        }
+
+        public void deleteConversation(int id)
+        {
+            Conversation convo;
+            conversations.TryRemove(id, out convo);
+        }
+
+        public ICollection<int> Keys
+        {
+            get => conversations.Keys;
         }
 
         public Conversation this[int i]
         {
-            get { return Conversations[i]; }
-            set { Conversations[i] = value; }
+            get => conversations[i];
         }
     }
 }

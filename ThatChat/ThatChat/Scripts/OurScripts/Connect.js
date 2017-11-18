@@ -3,7 +3,7 @@ var chat = $.connection.chatHub;
 // Arrray used to store list of user names
 var names = [];
 // Array used to store list of chat room names
-var chatNames = [];
+var chats = [];
 
 // Create a function that the hub can call to broadcast messages.
 chat.client.broadcastMessage = function (name, message, id, active) {
@@ -46,23 +46,22 @@ chat.client.addChat = function (name, id) {
 
         chat.server.selectChatRoom(id);
         chat.server.init();
-    }
+    };
 
     // Add the message to the page.
     $('#chatRooms').append(li);
 
-    var nameObject = { "name" : name };
-    chatNames.push(nameObject);
-}
+    var nameObject = { "name": name, "element": li };
+    chats.push(nameObject);
+};
 
 // Create a function that the hub can call to deactivate a user no longer in use
 chat.client.deactivateUser = function (id) {
-    if (names[id] != null)
-    {
+    if (names[id] != null) {
         for (var nameDiv of names[id])
-            nameDiv.className = "inactive accnt"
+            nameDiv.className = "inactive accnt";
     }
-}
+};
 
 // Set initial focus to name input box
 $('#displayname').focus();
@@ -97,7 +96,14 @@ $.connection.hub.start().done(function () {
         // Call the Send method on the hub.
         chat.server.setName($('#displayname').val());
         // Clear text box and reset focus for next comment.
-        $('#displayname').val('').focus();
+        $('#displayname').val('');
+        $('#message').focus();
+    });
+
+    $('#ButtonChatAdd').click(function () {
+        chat.server.addChat($('#TextBoxChatAdd').val());
+        $('#TextBoxChatAdd').val('');
+        $('#message').focus();
     });
 
     //Puts all the chats currently existing in the chat list
@@ -138,8 +144,7 @@ $.connection.hub.start().done(function () {
 
     //Searches the list of existing chatrooms using the string specified in the chat search box
     $('#searchButton').click(function () {
-
-        var fuse = new Fuse(chatNames, options);
+        var fuse = new Fuse(chats, options); // "list" is the item array
 
         var chat = $('#searchBox').val();
 
@@ -147,16 +152,9 @@ $.connection.hub.start().done(function () {
 
         $('#chatRooms').empty();
         for (var i = 0; i < result.length; i++) {
-            var li = document.createElement("li");
-            var nameDiv = document.createElement("div");
-
-            nameDiv.innerText = result[i].name;
-
-            li.appendChild(nameDiv)
-            
-            $('#chatRooms').append(li);
+            $('#chatRooms').append(result[i]["element"]);
         }
 
-    })
+    });
 });
 
