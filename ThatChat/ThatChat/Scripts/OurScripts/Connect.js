@@ -97,11 +97,17 @@ $.connection.hub.start().done(function () {
     chat.server.selectChatRoom(0);
     chat.server.init();
 
+    //options for our fuzzy search, these shouldn't need to be changed very often
     var options = {
+        //Will sort the results based on how close the search is to the real answer
         shouldSort: true,
+        //This will determine how close the search has match a conversation, 0 means it must match perfectly, 
+        //1 means it does not have to match at all
         threshold: 0.0,
+        //Where to start matching, 0 is at the beginning of the string
         location: 0,
-        distance: 100,
+
+        distance: 0,
         maxPatternLength: 32,
         minMatchCharLength: 1,
         keys: [
