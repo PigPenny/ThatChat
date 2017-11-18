@@ -14,7 +14,7 @@ namespace ThatChat
     /// </summary>
     public class Catalogue
     {
-        private int count = 0;
+        private int count = -1;
         private ConcurrentDictionary<int, Conversation> conversations;
 
         public Catalogue()
@@ -24,9 +24,9 @@ namespace ThatChat
 
         public int addConversation(Conversation convo)
         {
-            conversations.TryAdd(count, convo);
+            conversations.TryAdd(Interlocked.Increment(ref count), convo);
 
-            return Interlocked.Increment(ref count);
+            return count;
         }
 
         public void deleteConversation(int id)

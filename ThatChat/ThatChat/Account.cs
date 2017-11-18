@@ -25,7 +25,7 @@ namespace ThatChat
         /// <summary>
         /// True if this account is currently in use, false otherwise.
         /// </summary>
-        public bool Active { get; set; }
+        public bool Active { get; private set; }
 
         private int id;
         public int Id {
@@ -82,6 +82,11 @@ namespace ThatChat
         private bool validName(string name)
         {
             return !name.Equals("");
+        }
+
+        public void deactivate()
+        {
+            Active = false;
         }
     }
 }
