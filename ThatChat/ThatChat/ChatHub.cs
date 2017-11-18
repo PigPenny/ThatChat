@@ -14,8 +14,6 @@ namespace ThatChat
     /// </summary>
     public class ChatHub : Hub
     {
-        // The Conversation that all users are presently engaged in.
-        //private Conversation convo = AppVars.Conversations.Val[0];
         Catalogue catalogue = AppVars.Conversations.Val;
         // All users that have ever connected. (this needs addressing)
         private ConcurrentDictionary<string, User> users = AppVars.Users.Val;
