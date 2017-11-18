@@ -54,6 +54,16 @@ namespace ThatChat
             userAccess.ReleaseMutex();
         }
 
+        public void forAllUsers(Action<User> act)
+        {
+            userAccess.WaitOne();
+
+            foreach (User usr in users)
+                act(usr);
+
+            userAccess.ReleaseMutex();
+        }
+
         public void forAllMessages(Action<Message> act)
         {
             messageAccess.WaitOne();

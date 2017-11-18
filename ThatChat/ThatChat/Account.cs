@@ -13,9 +13,9 @@ namespace ThatChat
     {
         // A counter keeping track of the number of times an 
         // Account has been instantiated with invalid inputs.
-        private static long invalidCount = 0;
+        private static int invalidCount = 0;
 
-        private static long accntCount = 0;
+        private static int accntCount = 0;
 
         /// <summary>
         /// The user's name.
@@ -27,11 +27,13 @@ namespace ThatChat
         /// </summary>
         public bool Active { get; set; }
 
-        private long id;
-        public long Id {
+        private int id;
+        public int Id {
             get
             {
-                return Interlocked.Read(ref id);
+                // though reading a long is atomic on 64-bit systems, they may
+                // not be on a 32 bit system.  Hence the use of Interlocked.Read()
+                return id;
             }
         }
 
@@ -52,12 +54,10 @@ namespace ThatChat
                 this.Name = name;
             }else
             {
-                Interlocked.Increment(ref invalidCount);
-                this.Name = generateName();
+                this.Name = generateName(Interlocked.Increment(ref invalidCount));
             }
 
-            id = accntCount;
-            Interlocked.Increment(ref accntCount);
+            id = Interlocked.Increment(ref accntCount);
         }
 
         /// <summary>
@@ -67,9 +67,9 @@ namespace ThatChat
         /// Date:     October 31, 2017
         /// </summary>
         /// <returns> An auto generated name. </returns>
-        private string generateName()
+        private string generateName(int inv)
         {
-            return "Invalid name #" + Interlocked.Read(ref invalidCount);
+            return "Invalid name #" + inv;
         }
 
         /// <summary>
