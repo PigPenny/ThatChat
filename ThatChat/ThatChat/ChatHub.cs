@@ -34,7 +34,7 @@ namespace ThatChat
                 User user = users[Context.ConnectionId];
 
                 Message msg = new Message(user.Accnt, content);
- 
+
                 user.Convo.broadcast(msg, this);
             } catch (KeyNotFoundException e)
             {
@@ -49,7 +49,7 @@ namespace ThatChat
         /// </summary>
         /// <param name="msg"> The message being sent. </param>
         /// <param name="client"> The client to recieve the message. </param>
-        public void SendTo(Message msg, dynamic client)
+        public void sendTo(Message msg, dynamic client)
         {
             client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id, msg.Acct.Active);
         }
@@ -69,7 +69,7 @@ namespace ThatChat
 
         public void updateCaller(Message msg)
         {
-            SendTo(msg, Clients.Caller);
+            sendTo(msg, Clients.Caller);
         }
 
         /// <summary>
@@ -109,7 +109,13 @@ namespace ThatChat
 
         public void selectChatRoom(int chatID)
         {
-            users[Context.ConnectionId].Convo = catalogue[chatID];
+            try
+            {
+                users[Context.ConnectionId].Convo = catalogue[chatID];
+            } catch (KeyNotFoundException e)
+            {
+                Debug.Print(e.Message);
+            }
         }
 
         public void populateChats()

@@ -11,10 +11,10 @@ namespace ThatChat
     /// </summary>
     public class Account
     {
-        // A counter keeping track of the number of times an 
-        // Account has been instantiated with invalid inputs.
+        // invalidCount - Keeps track of the number of invalid accounts
+        // accntCount   - Keeps track of the number of accounts
+        // Both of the above refer to all that have been created, not just those active.
         private static int invalidCount = 0;
-
         private static int accntCount = 0;
 
         /// <summary>
@@ -27,22 +27,23 @@ namespace ThatChat
         /// </summary>
         public bool Active { get; private set; }
 
-        private int id;
+        /// <summary>
+        /// This Accounts unique identifier.
+        /// </summary>
         public int Id {
             get
             {
-                // though reading a long is atomic on 64-bit systems, they may
-                // not be on a 32 bit system.  Hence the use of Interlocked.Read()
                 return id;
             }
         }
+        private int id;
 
         /// <summary>
         /// Purpose:  Instantiates an object of the Account class.
         /// Author:   Andrew Busto
         /// Date:     October 17, 2017
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The username associated with this Account </param>
         public Account(string name)
         {
             Active = true;
@@ -84,6 +85,11 @@ namespace ThatChat
             return !name.Equals("");
         }
 
+        /// <summary>
+        /// Purpose:  Deactivates an account.
+        /// Author:   Chandu Dissanayake
+        /// Date:     November 17, 2017
+        /// </summary>
         public void deactivate()
         {
             Active = false;

@@ -88,15 +88,13 @@ namespace ThatChat
         /// <param name="hub"> The ChatHub with which the Message is sent. </param>
         public void broadcast(Message msg, ChatHub hub)
         {
-            messageAccess.WaitOne();
-            messages.Add(msg);
+            addMessage(msg);
 
             userAccess.WaitOne();
             foreach (User user in users)
-                hub.SendTo(msg, user.Client);
+                hub.sendTo(msg, user.Client);
 
             userAccess.ReleaseMutex();
-            messageAccess.ReleaseMutex();
         }
     }
 }
