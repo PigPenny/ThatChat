@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Web;
 
 namespace ThatChat
 {
@@ -57,7 +55,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Removes a user from the conversation.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Paul McCarlie
         /// Date:     November 16, 2017
         /// </summary>
         /// <param name="user"> The user to be removed. </param>
@@ -70,7 +68,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Performs an action with each user.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Paul McCarlie
         /// Date:     November 17, 2017
         /// </summary>
         /// <param name="act"> The action to be performed. </param>
@@ -86,7 +84,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Performs an action with each message.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Paul McCarlie
         /// Date:     November 17, 2017
         /// </summary>
         /// <param name="act"> The action to be performed. </param>
@@ -102,7 +100,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Adds a message to this conversation.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Paul McCarlie
         /// Date:     November 17, 2017
         /// </summary>
         /// <param name="msg"></param>

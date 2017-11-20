@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 
 namespace ThatChat
@@ -23,7 +22,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Instantiates an object of the AppVar class.
-        /// Author:   Andrew Busto
+        /// Author:   Paul McCarlie
         /// Date:     October 17, 2017
         /// </summary>
         /// <param name="key"> The key that will be used in Application's indexer. </param>
@@ -38,7 +37,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Gets and sets the appropriate value in Application.
-        /// Author:   Andrew Busto
+        /// Author:   Paul McCarlie
         /// Date:     October 17, 2017
         /// </summary>
         public T Val

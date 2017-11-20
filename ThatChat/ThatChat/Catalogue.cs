@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Web;
 
 namespace ThatChat
 {
@@ -20,7 +17,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Instantiates an object of the Catalogue class.
-        /// Author:   Chandu Dissanayake
+        /// Author:   Chandu Dissanayake/Connor Goudie
         /// Date:     November 6, 2017
         /// </summary>
         public Catalogue()
@@ -30,7 +27,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Add a conversation to the catalogue.
-        /// Author:   Chandu Dissanayake
+        /// Author:   Chandu Dissanayake/Connor Goudie
         /// Date:     November 6, 2017
         /// </summary>
         /// <param name="convo"> The conversation to be added. </param>
@@ -44,7 +41,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Removes a conversation.
-        /// Author:   Chandu Dissanayake
+        /// Author:   Chandu Dissanayake/Connor Goudie
         /// Date:     November 11, 2017
         /// </summary>
         /// <param name="id"> The key of the conversation. </param>
@@ -56,7 +53,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Gets the keys associated with all existing conversations.
-        /// Author:   Chandu Dissanayake
+        /// Author:   Chandu Dissanayake/Connor Goudie
         /// Date:     November 11, 2017
         /// </summary>
         public ICollection<int> Keys
@@ -66,7 +63,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Gets the conversation associated with the given key.
-        /// Author:   Chandu Dissanayake
+        /// Author:   Chandu Dissanayake/Connor Goudie
         /// Date:     November 11, 2017
         /// </summary>
         /// <param name="key"> They key to access a conversation by. </param>

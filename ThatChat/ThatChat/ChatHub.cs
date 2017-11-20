@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Microsoft.AspNet.SignalR;
 using System.Collections.Concurrent;
-using Microsoft.AspNet.SignalR.Hubs;
 using System.Diagnostics;
 
 namespace ThatChat
@@ -58,7 +54,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Initializes a client's screen and user info.
-        /// Author:   Andrew Busto
+        /// Author:   Connor Goudie
         /// Date:     October 28, 2017
         /// </summary>
         /// <param name="name"> The name that the client has chosen. </param>
@@ -81,7 +77,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Adds a user's information to all relevant lists.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Connor Goudie
         /// Date:     October 30, 2017
         /// </summary>
         /// <param name="name"> The name of the user. </param>
@@ -110,7 +106,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Deactivates an account.
-        /// Author:   Andrew Busto
+        /// Author:   Chandu Dissanayake
         /// Date:     November 6, 2017
         /// </summary>
         /// <param name="acct"></param>
