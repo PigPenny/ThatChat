@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Web;
+﻿using System.Threading;
 
 namespace ThatChat
 {
@@ -12,7 +8,9 @@ namespace ThatChat
     /// </summary>
     public class User
     {
+        // Controls access to this user's conversation.
         private Mutex convoAccess;
+
         /// <summary>
         /// The account associated with this user.
         /// </summary>
@@ -28,9 +26,14 @@ namespace ThatChat
         /// </summary>
         public string Name { get => Accnt.Name; }
 
+        /// <summary>
+        /// The unique identifier of this user's current account.
+        /// </summary>
         public long Id { get => Accnt.Id; }
 
-        private Conversation convo;
+        /// <summary>
+        /// The conversation this user is currently involved in.
+        /// </summary>
         public Conversation Convo {
             get
             {
@@ -40,6 +43,7 @@ namespace ThatChat
             {
                 convoAccess.WaitOne();
 
+                // Ensures this user is only ever in one conversation.
                 if (((object) convo) != null)
                     convo.removeUser(this);
 
@@ -49,10 +53,11 @@ namespace ThatChat
                 convoAccess.ReleaseMutex();
             }
         }
+        private Conversation convo;
 
         /// <summary>
         /// Purpose:  Instantiates an object of the User class.
-        /// Author:   Andrew Busto
+        /// Author:   Connor Goudie/Chandu Dissanayake
         /// Date:     October 17, 2017
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
@@ -63,7 +68,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Instantiates an object of the User class.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Paul McCarlie
         /// Date:     October 29, 2017
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
@@ -75,7 +80,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Initializes the values in this User to valid states.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Paul McCarlie
         /// Date:     October 30, 2017
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
