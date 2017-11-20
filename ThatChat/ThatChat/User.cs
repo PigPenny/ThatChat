@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace ThatChat
@@ -11,6 +12,7 @@ namespace ThatChat
     /// </summary>
     public class User
     {
+        private Mutex convoAccess;
         /// <summary>
         /// The account associated with this user.
         /// </summary>
@@ -26,7 +28,27 @@ namespace ThatChat
         /// </summary>
         public string Name { get => Accnt.Name; }
 
-        public int Id { get => Accnt.Id; }
+        public long Id { get => Accnt.Id; }
+
+        private Conversation convo;
+        public Conversation Convo {
+            get
+            {
+                return convo;
+            }
+            set
+            {
+                convoAccess.WaitOne();
+
+                if (((object) convo) != null)
+                    convo.removeUser(this);
+
+                convo = value;
+                convo.addUser(this);
+
+                convoAccess.ReleaseMutex();
+            }
+        }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the User class.
@@ -62,6 +84,7 @@ namespace ThatChat
         {
             this.Client = client;
             this.Accnt = new Account(name);
+            this.convoAccess = new Mutex();
         }
     }
 }

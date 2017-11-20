@@ -3,16 +3,33 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <head>
         <link rel="stylesheet" href="Content/accounts.css">
+        <link rel="stylesheet" href="Content/bootstrap.css">
     </head>
 
     <div class="container">
-        <input type="text" id="message" />
-        <input type="button" id="sendmessage" value="Send"/>
-        <input type="text" id="displayname" />
-        <input type="button" id="setname" value="Set Name"/>
-        <ul id="discussion"></ul>
-    </div>
+        <div class="row">
+            <div class="col-md-4">
 
+                     <input type="text" id="searchBox" /> 
+                        <input type="button" id="searchButton" value="Search Chat">
+
+                                <ul id="chatRooms" style="list-style:none;">
+                </ul>
+                <input type="text" id="TextBoxChatAdd" /> 
+                <button type="button" class="btn btn-default" id="ButtonChatAdd" value="add chat">
+                </button>
+            </div>
+
+            <div class="col-md-8">
+                <input type="text" id="displayname" />
+                <input type="button" id="setname" value="Set Name" />
+                <ul id="discussion" style="list-style:none;"></ul>
+                <input type="text" id="message" />
+                <input type="button" id="sendmessage" value="Send" />
+            </div>
+        </div>
+
+    </div>
     <!--Script references. -->
     <!--Reference the jQuery library. -->
     <script src="Scripts/jquery-1.10.2.min.js"></script>
@@ -22,5 +39,6 @@
     <script src="signalr/hubs"></script>
     <!--Reference to script to update the page and send messages.-->
     <script src="Scripts/OurScripts/connect.js"></script>
+    <script src="Scripts/fuse.js"></script>
 
 </asp:Content>

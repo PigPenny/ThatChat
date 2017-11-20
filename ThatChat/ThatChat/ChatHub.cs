@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using System.Collections.Concurrent;
 using Microsoft.AspNet.SignalR.Hubs;
+using System.Diagnostics;
 
 namespace ThatChat
 {
@@ -13,9 +14,7 @@ namespace ThatChat
     /// </summary>
     public class ChatHub : Hub
     {
-        // The Conversation that all users are presently engaged in.
-        private Conversation convo = AppVars.Conversation.Val;
-
+        Catalogue catalogue = AppVars.Conversations.Val;
         // All users that have ever connected. (this needs addressing)
         private ConcurrentDictionary<string, User> users = AppVars.Users.Val;
 
@@ -32,13 +31,14 @@ namespace ThatChat
         {
             try
             {
-                Message msg = new Message(users[Context.ConnectionId].Accnt, content);
+                User user = users[Context.ConnectionId];
 
-                convo.broadcast(msg, this);
+                Message msg = new Message(user.Accnt, content);
+ 
+                user.Convo.broadcast(msg, this);
             } catch (KeyNotFoundException e)
             {
-                convo.broadcast(new Message(god, "A user not in our system is trying to send a message.  Observe:"), this);
-                convo.broadcast(new Message(god, e.Message), this);
+                Debug.Print(e.Message);
             }
         }
 
@@ -51,7 +51,7 @@ namespace ThatChat
         /// <param name="client"> The client to recieve the message. </param>
         public void SendTo(Message msg, dynamic client)
         {
-            client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id);
+            client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id, msg.Acct.Active);
         }
 
         /// <summary>
@@ -61,13 +61,15 @@ namespace ThatChat
         /// Date:     October 28, 2017
         /// </summary>
         /// <param name="name"> The name that the client has chosen. </param>
-        public void init(string name)
+        public void init()
         {
-            addUser(name);
-
             // Sends the client all the messages that have been sent in their absense.
-            foreach (Message msg in AppVars.Conversation.Val.Messages)
-                SendTo(msg, Clients.Caller);
+            users[Context.ConnectionId].Convo.forAllMessages(updateCaller);
+        }
+
+        public void updateCaller(Message msg)
+        {
+            SendTo(msg, Clients.Caller);
         }
 
         /// <summary>
@@ -76,11 +78,9 @@ namespace ThatChat
         /// Date:     October 30, 2017
         /// </summary>
         /// <param name="name"> The name of the user. </param>
-        private void addUser(string name)
+        public void addUser(string name)
         {
             users[Context.ConnectionId] = new User(Clients.Caller, name);
-            convo.broadcast(new Message(god, users[Context.ConnectionId].Name + " HAS JOINED YOUR GLORIOUS CHAT"), this);
-            convo.Users.Add(users[Context.ConnectionId]);
         }
 
         /// <summary>
@@ -97,15 +97,31 @@ namespace ThatChat
                 users[Context.ConnectionId].Accnt = new Account(name);
             } catch (KeyNotFoundException e)
             {
-                convo.broadcast(new Message(god, "A user not in our system is trying to set their name.  Observe:"), this);
-                convo.broadcast(new Message(god, e.Message), this);
+                Debug.Print(e.Message);
             }
         }
 
         private void deactivate(Account acct)
         {
             Clients.All.deactivateUser(acct.Id);
-            acct.Active = false;
+            acct.deactivate();
+        }
+
+        public void selectChatRoom(int chatID)
+        {
+            users[Context.ConnectionId].Convo = catalogue[chatID];
+        }
+
+        public void populateChats()
+        {
+            foreach (int key in catalogue.Keys)
+                Clients.Caller.addChat(catalogue[key].Name, key);
+        }
+
+        public void addChat(string name)
+        {
+            int id = catalogue.addConversation(new Conversation(name));
+            Clients.All.addChat(catalogue[id].Name, id);
         }
     }
 }

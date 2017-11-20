@@ -13,12 +13,6 @@ namespace ThatChat
     public class AppVars
     {
         /// <summary>
-        /// The conversation that all users are currently to be connected to.
-        /// </summary>
-        public static AppVar<Conversation> Conversation { get; set; }
-            = new AppVar<Conversation>("conversation");
-
-        /// <summary>
         /// All users that have ever connected.
         /// </summary>
         public static AppVar<ConcurrentDictionary<string, User>> Users { get; set; }
@@ -29,5 +23,11 @@ namespace ThatChat
         /// </summary>
         public static AppVar<Account> Admin { get; set; }
             = new AppVar<Account>("admin");
+
+        /// <summary>
+        /// The conversations.
+        /// </summary>
+        public static AppVar<Catalogue> Conversations { get; set; }
+            = new AppVar<Catalogue>("convsersations");
     }
 }

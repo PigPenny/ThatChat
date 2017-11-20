@@ -13,9 +13,9 @@ namespace ThatChat
     {
         // A counter keeping track of the number of times an 
         // Account has been instantiated with invalid inputs.
-        private static Int32 invalidCount = 0;
+        private static int invalidCount = 0;
 
-        private static Int32 accntCount = 0;
+        private static int accntCount = 0;
 
         /// <summary>
         /// The user's name.
@@ -25,9 +25,17 @@ namespace ThatChat
         /// <summary>
         /// True if this account is currently in use, false otherwise.
         /// </summary>
-        public bool Active { get; set; }
+        public bool Active { get; private set; }
 
-        public int Id { get; private set; }
+        private int id;
+        public int Id {
+            get
+            {
+                // though reading a long is atomic on 64-bit systems, they may
+                // not be on a 32 bit system.  Hence the use of Interlocked.Read()
+                return id;
+            }
+        }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the Account class.
@@ -46,12 +54,10 @@ namespace ThatChat
                 this.Name = name;
             }else
             {
-                Interlocked.Increment(ref invalidCount);
-                this.Name = generateName();
+                this.Name = generateName(Interlocked.Increment(ref invalidCount));
             }
 
-            Id = accntCount;
-            Interlocked.Increment(ref accntCount);
+            id = Interlocked.Increment(ref accntCount);
         }
 
         /// <summary>
@@ -61,9 +67,9 @@ namespace ThatChat
         /// Date:     October 31, 2017
         /// </summary>
         /// <returns> An auto generated name. </returns>
-        private string generateName()
+        private string generateName(int inv)
         {
-            return "Invalid name #" + invalidCount;
+            return "Invalid name #" + inv;
         }
 
         /// <summary>
@@ -76,6 +82,11 @@ namespace ThatChat
         private bool validName(string name)
         {
             return !name.Equals("");
+        }
+
+        public void deactivate()
+        {
+            Active = false;
         }
     }
 }
