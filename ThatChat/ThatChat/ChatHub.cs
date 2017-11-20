@@ -14,11 +14,13 @@ namespace ThatChat
     /// </summary>
     public class ChatHub : Hub
     {
+        // The catalogue to access conversations from.
         Catalogue catalogue = AppVars.Conversations.Val;
-        // All users that have ever connected. (this needs addressing)
+        
+        // All users that have ever connected.
         private ConcurrentDictionary<string, User> users = AppVars.Users.Val;
 
-        // The Admin bot that let's us know when stuff happens.  Thanks, god!
+        // The Admin bot that let's us know when stuff happens.
         private Account god = AppVars.Admin.Val;
 
         /// <summary>
@@ -56,7 +58,6 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Initializes a client's screen and user info.
-        ///             TODO: make this suck less.
         /// Author:   Andrew Busto
         /// Date:     October 28, 2017
         /// </summary>
@@ -67,6 +68,12 @@ namespace ThatChat
             users[Context.ConnectionId].Convo.forAllMessages(updateCaller);
         }
 
+        /// <summary>
+        /// Purpose:  Sends a message to the person making this call.
+        /// Author:   Andrew Busto
+        /// Date:     November 18, 2017
+        /// </summary>
+        /// <param name="msg"></param>
         public void updateCaller(Message msg)
         {
             sendTo(msg, Clients.Caller);
@@ -101,12 +108,24 @@ namespace ThatChat
             }
         }
 
+        /// <summary>
+        /// Purpose:  Deactivates an account.
+        /// Author:   Andrew Busto
+        /// Date:     November 6, 2017
+        /// </summary>
+        /// <param name="acct"></param>
         private void deactivate(Account acct)
         {
             Clients.All.deactivateUser(acct.Id);
             acct.deactivate();
         }
 
+        /// <summary>
+        /// Purpose:  Selects a chat room from a given id.
+        /// Author:   Andrew Busto
+        /// Date:     October 31, 2017
+        /// </summary>
+        /// <param name="chatID"> The id/key used to access the conversation </param>
         public void selectChatRoom(int chatID)
         {
             try
@@ -118,12 +137,23 @@ namespace ThatChat
             }
         }
 
+        /// <summary>
+        /// Purpose:  Fills the conversation list of a client.
+        /// Author:   Paul McCarlie
+        /// Date:     November 6, 2017
+        /// </summary>
         public void populateChats()
         {
             foreach (int key in catalogue.Keys)
                 Clients.Caller.addChat(catalogue[key].Name, key);
         }
 
+        /// <summary>
+        /// Purpose:  Adds a new conversation to the catalogue.
+        /// Author:   Andrew Busto
+        /// Date:     November 15, 2017
+        /// </summary>
+        /// <param name="name"></param>
         public void addChat(string name)
         {
             int id = catalogue.addConversation(new Conversation(name));
