@@ -30,6 +30,12 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     // Add the message to the page.
     $('#discussion').append(li);
 
+    //scroll to bottom of chat div
+    //var objDiv = document.getElementById("your_div");
+    // $('').scrollTop = $('discussionScrollDiv').scrollHeight;
+    $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
+    //$('#discussionScrollDiv').scrollTop(1000000);
+    //Add names for colouring later
     if (names[id] == null)
         names[id] = [];
     names[id][names[id].length] = nameDiv;

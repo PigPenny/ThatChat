@@ -4,6 +4,9 @@ body {
     padding-bottom: 20px;
 }
 
+#discussionScrollDiv {
+    color: white;
+}
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -11,13 +14,151 @@ body {
     padding-right: 15px;
 }
 
+.inline{
+    display:inline;
+}
+#chatRooms{
+    color:white;
+    margin:auto;
+    margin-top:5px;
+    margin-bottom:5px;
+    text-align:center;
+    padding-left:0px;
+
+
+}
+.headerDiv{
+    padding:0px;
+}
+
+.header{
+    padding:0px;
+    margin:0px;
+    text-align:center;
+}
+
+#TextBoxChatAdd {
+    width:85%;
+    display:inline;
+}
+
+#ButtonChatAdd {
+    width: 10%;
+    padding:0px;
+    text-align:center;
+    display: inline;
+}
+
+#displayname {
+    display: inline;
+    vertical-align: middle;
+    width: 50%;
+}
+
+#setname{
+    width:15%;
+    float:initial;
+    display:inline;
+}
+#sendmessage {
+    float: right;
+    width: 12%;
+}
+
+    #sendmessage:hover {
+        background-color: cadetblue;
+    }
+
+#message {
+    display:inline;
+    vertical-align: middle;
+    width: 85%;
+}
+
+
+
+
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*//max-width: 280px;*/
 }
 
+.chatbox {
+    background-color: #7A7979;
+    padding: 15px;
+}
+
+.grad {
+    /*background: #3C7293; /* For browsers that do not support gradients */
+    /*background: -webkit-linear-gradient(left top, #2DAF93, #3C7293); 
+    background: -o-linear-gradient(bottom right, #2DAF93, #3C7293); 
+    background: -moz-linear-gradient(bottom right, #2DAF93, #3C7293); 
+    background: linear-gradient(to bottom right, #2DAF93, #3C7293);*/
+    background: linear-gradient(230deg, #a24bcf, #4b79cf, #4bc5cf);
+    background-size: 600% 600%;
+    -webkit-animation: AnimationName 30s ease infinite;
+    -moz-animation: AnimationName 30s ease infinite;
+    -o-animation: AnimationName 30s ease infinite;
+    animation: AnimationName 30s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes AnimationName {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-o-keyframes AnimationName {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes AnimationName {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

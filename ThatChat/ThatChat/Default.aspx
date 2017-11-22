@@ -5,27 +5,44 @@
         <link rel="stylesheet" href="Content/accounts.css">
         <link rel="stylesheet" href="Content/bootstrap.css">
     </head>
-
+    <div class="headerDiv">
+        <h1 class="header">ThatchaT</h1>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
+                <div class="jumbotron">
+                    <input type="text" id="searchBox" class="form-control" />
+                    <input type="button" id="searchButton" class="form-control btn-info" value="Search Chat">
 
-                     <input type="text" id="searchBox" /> 
-                        <input type="button" id="searchButton" value="Search Chat">
+                    <ul id="chatRooms" style="list-style: none;">
+                    </ul>
+                    <input type="text" id="TextBoxChatAdd" class="inline form-control" />
+                    <input type="button" class="form-control btn-success" id="ButtonChatAdd" value="+">
+                   
+                </div>
 
-                                <ul id="chatRooms" style="list-style:none;">
-                </ul>
-                <input type="text" id="TextBoxChatAdd" /> 
-                <button type="button" class="btn btn-default" id="ButtonChatAdd" value="add chat">
-                </button>
             </div>
 
             <div class="col-md-8">
-                <input type="text" id="displayname" />
-                <input type="button" id="setname" value="Set Name" />
-                <ul id="discussion" style="list-style:none;"></ul>
-                <input type="text" id="message" />
-                <input type="button" id="sendmessage" value="Send" />
+                <div class="jumbotron">
+
+                    <input type="text" id="displayname" class="form-control" />
+                    <input type="button" id="setname" class="form-control" value="Set Name" />
+
+
+                    <hr />
+                    <div id="discussionScrollDiv" style="overflow-y: scroll; height: 400px;">
+                        <ul id="discussion" style="list-style: none;"></ul>
+                    </div>
+                    <hr />
+                    <div class="sendDiv">
+                        <input type="text" id="message" class="form-control" />
+                        <input type="button" id="sendmessage" class="form-control btn-success" value="Send" />
+                    </div>
+
+                </div>
+
             </div>
         </div>
 
