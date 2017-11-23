@@ -127,7 +127,6 @@ $.connection.hub.start().done(function () {
         $('#TextBoxChatAdd').val('');
         $('#message').focus();
         $('.closebtn').click();
-        closeSide();
     });
 
     //Puts all the chats currently existing in the chat list

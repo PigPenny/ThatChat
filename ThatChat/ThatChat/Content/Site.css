@@ -8,21 +8,26 @@ font-family: 'Marcellus SC', serif;
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-bottom: 20px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Arial', cursive;
 }
 
 .title {
     font-family: 'Monoton', cursive;
     text-align: center;
     color: black;
+    margin: 0;
+    top: 0;
+    z-index: 10;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
 }
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
-./*body-content {
+. /*body-content {
     padding-left: 15px;
     padding-right: 15px;
 }*/
-
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
@@ -30,18 +35,23 @@ textarea {
     max-width: 280px;
     margin: 5px;
 }
+
 #message {
     width: 85%;
 }
+
 #sendmessage {
     width: 10%;
     min-width: 50px;
 }
+
 #messageArea {
     width: 100%;
 }
 
-
+h2 {
+    display: none;
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
@@ -52,54 +62,63 @@ textarea {
         padding: 0;
     }
 }
-@media screen and (max-width: 650px) {
-    .title {
+
+#burger {
+    display: none;
+}
+
+#mySideNav {
+    padding-top: 60px;
+    padding-left: 15px;
+}
+
+    #mySideNav a {
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+    #mySideNav #closebtn {
         display: none;
     }
-    h2 {
-        font-family: 'Monoton', cursive;
-    }
-}
-.closebtn {
-    display: none;
-}
 
-.burger {
-    display: none;
-}
-
-#mySideNav a {
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
+#header {
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 40px;
+    background-color: darkgray;
+    z-index: 2;
+    color: black;
+    position: fixed;
     display: block;
-    transition: 0.3s;
+    box-shadow: 0px 0px 15px #888;
+}
+
+#userInfo {
+    margin-top: 20px;
+}
+
+#closebtn {
+    display: none;
 }
 
 @media screen and (max-width: 991px) {
     #body-content {
         margin: 0;
     }
-    #topMenu {
-        width: 100%;
-        top: 0;
-        height:40px;
-        background-color:darkgray;
-        color: black;
-        position: fixed;
-        display: block;
+
+    #col-md-4 {
+        display: none;
     }
-    .title {
-        position: fixed;
-        top: -15px;
-        text-align: center;
-        width: 75%;
-        position: fixed;
-        left: 50%;
-        margin-left: -37.5%;
-        z-index: 1;
+
+    #search {
+        margin-top: 40px;
     }
-    .burger {
+
+    #burger {
         display: block;
         font-size: 30px;
         cursor: pointer;
@@ -115,7 +134,7 @@ textarea {
         height: 100%;
         width: 0;
         position: fixed;
-        z-index: 1;
+        z-index: 10;
         top: 0;
         left: -30px;
         padding-left: 15px;
@@ -125,12 +144,7 @@ textarea {
         padding-top: 20px;
     }
 
-        #chatroms ul {
-            -webkit-padding-start: 0px;
-            padding: 0px;
-        }
-
-        #mySideNav .closebtn {
+        #mySideNav #closebtn {
             position: absolute;
             display: block;
             top: 0;
@@ -138,6 +152,11 @@ textarea {
             font-size: 36px;
             margin-left: 50px;
         }
+
+    ul {
+        z-index: 0;
+        overflow: hidden;
+    }
 }
 
 
@@ -153,7 +172,6 @@ a {
         color: #666;
         background-color: #eee;
         text-transform: uppercase;
-        letter-spacing: 2px;
         font-size: 12px;
         padding: 10px 30px;
         margin: 5px 15px 5px 0px;
@@ -162,6 +180,7 @@ a {
         -webkit-border-radius: 5px;
         border: 1px solid rgba(0,0,0,0.3);
         border-bottom-width: 3px;
+        min-width: 183px;
     }
 
         a.btn:hover {
@@ -211,6 +230,32 @@ a {
                 background-color: #B32C24;
                 border-color: rgba(0,0,0,0.9);
             }
+
+@media screen and (min-width: 991px) {
+    #mySideNav {
+        width: 260px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    #message {
+        margin: 0;
+        padding: 0;
+        width: 75%;
+    }
+
+    #sendmessage {
+        margin: 0;
+        padding: 0;
+        width: 10%;
+        min-width: 50px;
+    }
+
+    #messageArea {
+        width: 100%;
+    }
+}
+
 input[type=text]:focus {
     border: 3px solid #555;
 }

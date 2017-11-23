@@ -1,7 +1,7 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" 
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master"
     AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ThatChat._Default" %>
 
-<asp:Content  ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <!--Script references. -->
     <!--Reference the jQuery library. -->
     <script src="Scripts/jquery-1.10.2.min.js"></script>
@@ -27,28 +27,29 @@
 
     <h1 class="title"><strong>ThatChat</strong></h1>
 
-    <div class="row">
+    <div class="row" style="margin: 30px 0 0 0">
         <div class="col-md-4">
             <div id="mySideNav" class="sidenav">
-                <h2><strong>That Chat</strong></h2>
-                <a href="javascript:void(0)" class="closebtn" onclick="closeSide()">&times;</a>
-
-                <input type="text" id="searchBox" />
-                <input type="button" id="searchButton" value="Search Chat">
-
-                <ul id="chatRooms" style="list-style: none; -webkit-padding-start: 0px;">
+                <a href="javascript:void(0)" id="closebtn" onclick="closeSide()">&times;</a>
+                <div id="search">
+                    <input type="text" id="searchBox" />
+                    <input type="button" id="searchButton" value="Search" class="btn">
+                </div>
+                <ul id="chatRooms" style="list-style: none; padding: 0">
                 </ul>
-                <input type="text" id="TextBoxChatAdd" />
-                <button type="button" class="btn btn-default" id="ButtonChatAdd" value="add chat"></button>
+                <input type="text" id="TextBoxChatAdd"/>
+                <button type="button" class="btn btn-blue" id="ButtonChatAdd" >+</button>
+                <div id="userInfo">
+                    <input type="text" id="displayname" />
+                    <input type="button" id="setname" value="Set Name" class="btn" />
+                </div>
             </div>
-            <div id="topMenu">
-                <span class="burger" onclick="openSide()">&#9776;</span>
+            <div id="header">
+                <span id="burger" onclick="openSide()">&#9776;</span>
             </div>
             <br />
         </div>
-        <div class="col-md-8 col-s-10">
-            <input type="text" id="displayname" />
-            <input type="button" id="setname" value="Set Name" />
+        <div class="col-md-8" style="padding-right: 0; padding-left: 0">
             <ul id="discussion" style="list-style: none;"></ul>
             <div id="messageArea">
                 <input type="text" id="message" />
