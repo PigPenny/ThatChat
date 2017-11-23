@@ -1,35 +1,6 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ThatChat._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <head>
-        <link rel="stylesheet" href="Content/accounts.css">
-        <link rel="stylesheet" href="Content/bootstrap.css">
-    </head>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-
-                     <input type="text" id="searchBox" /> 
-                        <input type="button" id="searchButton" value="Search Chat">
-
-                                <ul id="chatRooms" style="list-style:none;">
-                </ul>
-                <input type="text" id="TextBoxChatAdd" /> 
-                <button type="button" class="btn btn-default" id="ButtonChatAdd" value="add chat">
-                </button>
-            </div>
-
-            <div class="col-md-8">
-                <input type="text" id="displayname" />
-                <input type="button" id="setname" value="Set Name" />
-                <ul id="discussion" style="list-style:none;"></ul>
-                <input type="text" id="message" />
-                <input type="button" id="sendmessage" value="Send" />
-            </div>
-        </div>
-
-    </div>
     <!--Script references. -->
     <!--Reference the jQuery library. -->
     <script src="Scripts/jquery-1.10.2.min.js"></script>
@@ -40,5 +11,36 @@
     <!--Reference to script to update the page and send messages.-->
     <script src="Scripts/OurScripts/connect.js"></script>
     <script src="Scripts/fuse.js"></script>
+    <script src="content/client.js"></script>
+    <!-- End of script references -->
+
+    <link rel="stylesheet" href="Content/accounts.css">
+    <link rel="stylesheet" href="Content/bootstrap.css">
+    <link rel="stylesheet" href="Content/site.css">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div id="mySideNav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeSide()">&times;</a>
+
+                <input type="text" id="searchBox" />
+                <input type="button" id="searchButton" value="Search Chat">
+
+                <ul id="chatRooms" style="list-style: none;">
+                </ul>
+                <input type="text" id="TextBoxChatAdd" />
+                <button type="button" class="btn btn-default" id="ButtonChatAdd" value="add chat"></button>
+            </div>
+            <span class="burger" style="font-size: 30px; cursor: pointer;" onclick="openSide()">&#9776;</span>
+            <br />
+        </div>
+        <div class="col-md-8">
+            <input type="text" id="displayname" />
+            <input type="button" id="setname" value="Set Name" />
+            <ul id="discussion" style="list-style: none;"></ul>
+            <input type="text" id="message" />
+            <input type="button" id="sendmessage" value="Send" />
+        </div>
+    </div>
 
 </asp:Content>

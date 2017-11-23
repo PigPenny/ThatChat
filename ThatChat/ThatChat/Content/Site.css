@@ -29,3 +29,49 @@ textarea {
         padding: 0;
     }
 }
+
+.closebtn {
+    display: none;
+}
+
+.burger {
+    display: none;
+}
+
+@media screen and (max-width: 991px) {
+
+    .burger {
+        display: block;
+    }
+
+    #mySideNav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #eee;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+        #mySideNav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        #mySideNav .closebtn {
+            position: absolute;
+            display: block;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+}

@@ -40,16 +40,23 @@ chat.client.broadcastMessage = function (name, message, id, active) {
 // November 7, 2017
 chat.client.addChat = function (name, id) {
     var li = document.createElement("li");
-    var nameDiv = document.createElement("div");
+    //var nameDiv = document.createElement("div");
 
-    nameDiv.innerText = name;
+    var a = document.createElement('a');
+    var linkText = document.createTextNode(name);
+    a.appendChild(linkText);
+    a.title = name;
+    a.href = "#";
+    document.body.appendChild(a);
 
-    li.appendChild(nameDiv);
-    li.onclick = function () {
+    //nameDiv.innerText = "<a href=\"#\">" + name + "</a>";
+
+    li.appendChild(a);
+    a.onclick = function () {
         $("#discussion").empty();
-
         chat.server.selectChatRoom(id);
         chat.server.init();
+        closeSide();
     };
 
     // Add the message to the page.
@@ -121,6 +128,8 @@ $.connection.hub.start().done(function () {
         chat.server.addChat($('#TextBoxChatAdd').val());
         $('#TextBoxChatAdd').val('');
         $('#message').focus();
+        $('.closebtn').click();
+        closeSide();
     });
 
     //Puts all the chats currently existing in the chat list
