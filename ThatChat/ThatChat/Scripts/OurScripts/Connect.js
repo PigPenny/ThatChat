@@ -40,16 +40,14 @@ chat.client.broadcastMessage = function (name, message, id, active) {
 // November 7, 2017
 chat.client.addChat = function (name, id) {
     var li = document.createElement("li");
-    //var nameDiv = document.createElement("div");
 
     var a = document.createElement('a');
     var linkText = document.createTextNode(name);
     a.appendChild(linkText);
     a.title = name;
     a.href = "#";
+    a.className = "btn";
     document.body.appendChild(a);
-
-    //nameDiv.innerText = "<a href=\"#\">" + name + "</a>";
 
     li.appendChild(a);
     a.onclick = function () {
