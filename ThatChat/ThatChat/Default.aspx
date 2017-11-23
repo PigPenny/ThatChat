@@ -1,35 +1,7 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ThatChat._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master"
+    AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ThatChat._Default" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <head>
-        <link rel="stylesheet" href="Content/accounts.css">
-        <link rel="stylesheet" href="Content/bootstrap.css">
-    </head>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-
-                     <input type="text" id="searchBox" /> 
-                        <input type="button" id="searchButton" value="Search Chat">
-
-                                <ul id="chatRooms" style="list-style:none;">
-                </ul>
-                <input type="text" id="TextBoxChatAdd" /> 
-                <button type="button" class="btn btn-default" id="ButtonChatAdd" value="add chat">
-                </button>
-            </div>
-
-            <div class="col-md-8">
-                <input type="text" id="displayname" />
-                <input type="button" id="setname" value="Set Name" />
-                <ul id="discussion" style="list-style:none;"></ul>
-                <input type="text" id="message" />
-                <input type="button" id="sendmessage" value="Send" />
-            </div>
-        </div>
-
-    </div>
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <!--Script references. -->
     <!--Reference the jQuery library. -->
     <script src="Scripts/jquery-1.10.2.min.js"></script>
@@ -40,5 +12,50 @@
     <!--Reference to script to update the page and send messages.-->
     <script src="Scripts/OurScripts/connect.js"></script>
     <script src="Scripts/fuse.js"></script>
+    <script src="content/client.js"></script>
+    <!-- End of script references -->
+
+    <!-- CSS references -->
+    <link rel="stylesheet" href="Content/accounts.css">
+    <link rel="stylesheet" href="Content/bootstrap.css">
+    <link rel="stylesheet" href="Content/site.css">
+    <!-- End of CSS references -->
+
+    <!-- Google Font references NOTE: how to use fonts in comment at head of Site.css-->
+    <link href="https://fonts.googleapis.com/css?family=Marcellus+SC|Monoton|Raleway:500|Russo+One" rel="stylesheet">
+    <!-- End of Google Font references -->
+
+    <h1 class="title"><strong>ThatChat</strong></h1>
+
+    <div class="row" style="margin: 30px 0 0 0">
+        <div class="col-md-4">
+            <div id="mySideNav" class="sidenav">
+                <a href="javascript:void(0)" id="closebtn" onclick="closeSide()">&times;</a>
+                <div id="search">
+                    <input type="text" id="searchBox" />
+                    <input type="button" id="searchButton" value="Search" class="btn">
+                </div>
+                <ul id="chatRooms" style="list-style: none; padding: 0">
+                </ul>
+                <input type="text" id="TextBoxChatAdd"/>
+                <button type="button" class="btn btn-blue" id="ButtonChatAdd" >+</button>
+                <div id="userInfo">
+                    <input type="text" id="displayname" />
+                    <input type="button" id="setname" value="Set Name" class="btn" />
+                </div>
+            </div>
+            <div id="header">
+                <span id="burger" onclick="openSide()">&#9776;</span>
+            </div>
+            <br />
+        </div>
+        <div class="col-md-8" style="padding-right: 0; padding-left: 0">
+            <ul id="discussion" style="list-style: none;"></ul>
+            <div id="messageArea">
+                <input type="text" id="message" />
+                <input type="button" id="sendmessage" value="Send" />
+            </div>
+        </div>
+    </div>
 
 </asp:Content>
