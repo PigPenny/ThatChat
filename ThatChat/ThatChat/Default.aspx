@@ -21,41 +21,43 @@
     <!-- End of CSS references -->
 
     <!-- Google Font references NOTE: how to use fonts in comment at head of Site.css-->
-    <link href="https://fonts.googleapis.com/css?family=Marcellus+SC|Monoton|Raleway:500|Russo+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <!-- End of Google Font references -->
 
-    <h1 class="title"><strong>ThatChat</strong></h1>
+    <div class="header">
+        <h1 class="title">ThatChat</h1>
+    </div>
 
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <div id="mySideNav" class="sidenav">
+                <div id="mySideNav" class="sidenav grad">
                     <a href="javascript:void(0)" id="closebtn" onclick="closeSide()">&times;</a>
-                    <div class="jumbotron">
+                    <div class="jumbotron" style="padding: 20px 20px 20px 20px">
+                    <h3>&nbsp;Conversations</h3>
                         <div id="search">
                             <input type="text" id="searchBox" class="form-control" />
                             <input type="button" id="searchButton" class="form-control btn-info" value="Search Chat">
                         </div>
 
-                        <ul id="chatRooms" style="list-style: none; padding:0">
+                        <ul id="chatRooms" style="list-style: none; padding: 0">
                         </ul>
                         <input type="text" id="TextBoxChatAdd" class="inline form-control" />
                         <input type="button" class="form-control btn-success" id="ButtonChatAdd" value="+">
-
-                        <div id="userInfo">
-                            <input type="text" id="displayname" class="form-control" />
-                            <input type="button" id="setname" class="form-control" value="Set Name" />
-                        </div>
                     </div>
                 </div>
-            <div id="header">
-                <span id="burger" onclick="openSide()">&#9776;</span>
-            </div>
+                <div id="header">
+                    <span id="burger" onclick="openSide()">&#9776;</span>
+                </div>
 
             </div>
 
             <div class="col-md-8">
                 <div class="jumbotron">
+                    <div id="userInfo">
+                        <input type="text" id="displayname" class="form-control" />
+                        <input type="button" id="setname" class="form-control btn-primary" value="Set Name" />
+                    </div>
                     <hr />
                     <div id="discussionScrollDiv" style="overflow-y: scroll; height: 400px;">
                         <ul id="discussion" style="list-style: none;"></ul>

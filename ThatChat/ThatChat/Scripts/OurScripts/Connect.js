@@ -52,7 +52,7 @@ chat.client.addChat = function (name, id) {
     a.appendChild(linkText);
     a.title = name;
     a.href = "#";
-    a.className = "btn";
+    a.className = "form-control";
     document.body.appendChild(a);
 
     li.appendChild(a);
@@ -123,6 +123,7 @@ $.connection.hub.start().done(function () {
         // Clear text box and reset focus for next comment.
         $('#displayname').val('');
         $('#message').focus();
+        closeSide();
     });
 
     // Adds a chat when the user clicks the button

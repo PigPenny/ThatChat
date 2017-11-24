@@ -14,92 +14,39 @@ body {
 #discussionScrollDiv {
     color: white;
 }
+
+#mySideNav li {
+    margin: 5px 5px 5px 5px;
+}
+
+
 .title {
-    font-family: 'Monoton', cursive;
+    font-family: 'Pacifico', cursive;
+    font-size:45px;
     text-align: center;
-    color: black;
-    margin: 0;
+    color: white;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     top: 0;
-    z-index: 10;
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute;
+}
+
+
+
+#mySideNav h3 {
+    top: 10px;
+    font-family:'Pacifico',cursive;
+    font-weight:100;
+    margin-bottom: 30px;
+    text-align: center;
+    display:inline;
+    z-index: 100;
+    color: white;
 }
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
-. /*body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-<<<<<<<
-}
 
-.inline{
-    display:inline;
-}
-#chatRooms{
-    color:white;
-    margin:auto;
-    margin-top:5px;
-    margin-bottom:5px;
-    text-align:center;
-    padding-left:0px;
-
-
-}
-.headerDiv{
-    padding:0px;
-}
-
-.header{
-    padding:0px;
-    margin:0px;
-    text-align:center;
-}
-
-#TextBoxChatAdd {
-    width:85%;
-    display:inline;
-}
-
-#ButtonChatAdd {
-    width: 10%;
-    padding:0px;
-    text-align:center;
-    display: inline;
-}
-
-#displayname {
-    display: inline;
-    vertical-align: middle;
-    width: 50%;
-}
-
-#setname{
-    width:15%;
-    float:initial;
-    display:inline;
-}
-#sendmessage {
-    float: right;
-    width: 12%;
-}
-
-    #sendmessage:hover {
-        background-color: cadetblue;
-    }
-
-#message {
-    display:inline;
-    vertical-align: middle;
-    width: 85%;
-}
-
-
-
-
-=======
-}*/
->>>>>>>
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
@@ -112,6 +59,7 @@ textarea {
     background-color: #7A7979;
     padding: 15px;
 }
+
 #message {
     width: 85%;
 }
@@ -128,6 +76,7 @@ textarea {
     -moz-animation: AnimationName 30s ease infinite;
     -o-animation: AnimationName 30s ease infinite;
     animation: AnimationName 30s ease infinite;
+    padding: 0;
 }
 
 @-webkit-keyframes AnimationName {
@@ -195,9 +144,6 @@ textarea {
     width: 100%;
 }
 
-h2 {
-    display: none;
-}
 
 
 @media screen and (max-width: 370px) {
@@ -210,6 +156,8 @@ h2 {
 @media screen and (min-width: 768px) {
     .jumbotron {
         margin-top: 20px;
+        background-color: rgba(0,0,0,0.5);
+        
     }
 
     .body-content {
@@ -221,45 +169,40 @@ h2 {
     display: none;
 }
 
-#mySideNav {
-    padding-top: 60px;
-    padding-left: 15px;
+/*#mySideNav a {
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}*/
+#closebtn:hover {
+    text-decoration: none;
+    background-color: rgba(0,0,0,0);
 }
-
-    #mySideNav a {
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
-    }
-
-    #mySideNav #closebtn {
-        display: none;
-    }
-
+#mySideNav #closebtn {
+    display: none;
+}
+.container {
+    top: -40px !important;
+    margin-top: 45px !important;
+}
 #header {
     width: 100%;
     top: 0;
     left: 0;
-    height: 40px;
-    background-color: darkgray;
     z-index: 2;
-    color: black;
-    position: fixed;
+    color: white;
+    position: absolute;
     display: block;
-    box-shadow: 0px 0px 15px #888;
+    text-align:center;
 }
 
 #userInfo {
     margin-top: 20px;
 }
 
-#closebtn {
-    display: none;
-}
-
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 992px) {
     #body-content {
         margin: 0;
     }
@@ -268,9 +211,6 @@ h2 {
         display: none;
     }
 
-    #search {
-        margin-top: 40px;
-    }
 
     #burger {
         display: block;
@@ -286,26 +226,35 @@ h2 {
     #mySideNav {
         box-shadow: 0px 0px 15px #000;
         height: 100%;
-        width: 0;
         position: fixed;
         z-index: 10;
         top: 0;
+        display:inline;
+        margin:0px;
         left: -30px;
-        padding-left: 15px;
-        background-color: #eee;
+        width: 0;
+        background-color: transparent;
         overflow-x: hidden;
         transition: 0.5s;
-        padding-top: 20px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
     }
 
-        #mySideNav #closebtn {
-            position: absolute;
-            display: block;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
+    .sidenav .jumbotron {
+        height: 100%;
+        left: 0;
+        margin: 0;
+        /*background-color: black;*/
+    }
+
+    #mySideNav #closebtn {
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
 
     ul {
         z-index: 0;
@@ -318,8 +267,15 @@ h2 {
 
 a {
     text-decoration: none;
-    margin: 0;
+    margin: 5px 5px 5px 5px;
+    text-align: center;
 }
+    a:hover {
+        background-color: #e3e3e3;
+        border-color: rgba(0,0,0,0.5);
+        text-decoration: none;
+        color: black;
+    }
 
     a.btn {
         display: inline-block;
@@ -385,7 +341,7 @@ a {
                 border-color: rgba(0,0,0,0.9);
             }
 
-@media screen and (min-width: 991px) {
+@media screen and (min-width: 992px) {
     #mySideNav {
         width: 260px;
     }
@@ -413,4 +369,3 @@ a {
 input[type=text]:focus {
     border: 3px solid #555;
 }
-
