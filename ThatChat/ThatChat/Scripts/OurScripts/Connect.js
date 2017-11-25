@@ -6,6 +6,8 @@ var names = [];
 var chats = [];
 
 // Create a function that the hub can call to broadcast messages.
+// Chandu Dissanayake/Andrew Busto
+// October 17, 2017
 chat.client.broadcastMessage = function (name, message, id, active) {
     var li = document.createElement("li");
     var nameDiv = document.createElement("div");
@@ -28,24 +30,37 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     // Add the message to the page.
     $('#discussion').append(li);
 
+    //scroll to bottom of chat div
+    //var objDiv = document.getElementById("your_div");
+    // $('').scrollTop = $('discussionScrollDiv').scrollHeight;
+    $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
+    //$('#discussionScrollDiv').scrollTop(1000000);
+    //Add names for colouring later
     if (names[id] == null)
         names[id] = [];
     names[id][names[id].length] = nameDiv;
 };
 
 // Create a function that the hub can call to add a chat room to the hub
+// Paul McCarlie
+// November 7, 2017
 chat.client.addChat = function (name, id) {
     var li = document.createElement("li");
-    var nameDiv = document.createElement("div");
 
-    nameDiv.innerText = name;
+    var a = document.createElement('a');
+    var linkText = document.createTextNode(name);
+    a.appendChild(linkText);
+    a.title = name;
+    a.href = "#";
+    a.className = "form-control";
+    document.body.appendChild(a);
 
-    li.appendChild(nameDiv);
-    li.onclick = function () {
+    li.appendChild(a);
+    a.onclick = function () {
         $("#discussion").empty();
-
         chat.server.selectChatRoom(id);
         chat.server.init();
+        closeSide();
     };
 
     // Add the message to the page.
@@ -56,6 +71,8 @@ chat.client.addChat = function (name, id) {
 };
 
 // Create a function that the hub can call to deactivate a user no longer in use
+// Andrew Busto
+// October 31, 2017
 chat.client.deactivateUser = function (id) {
     if (names[id] != null) {
         for (var nameDiv of names[id])
@@ -70,6 +87,8 @@ $('#displayname').focus();
 $.connection.hub.start().done(function () {
 
     // Calls the sendmessage function when the user presses enter in the message textbox 
+    // Paul McCarlie
+    // November 9, 2017
     $('#message').keypress(function (e) {
         if (e.which == 13) {
             $('#sendmessage').click();
@@ -77,6 +96,8 @@ $.connection.hub.start().done(function () {
     });
 
     // Sends a message when the user clicks send
+    // Paul McCarlie
+    // October 28, 2017
     $('#sendmessage').click(function () {
         // Call the Send method on the hub.
         chat.server.send($('#message').val());
@@ -85,25 +106,34 @@ $.connection.hub.start().done(function () {
     });
 
     // Calls the setname function when the user presses enter in the setname textbox
+    // Paul McCarlie
+    // November 9, 2017
     $('#displayname').keypress(function (e) {
         if (e.which == 13) {
             $('#setname').click();
         }
     });
 
-    //Sets/resets the users name when the user clicks setname
+    // Sets/resets the users name when the user clicks setname
+    // Andrew Busto
+    // November 7, 2017
     $('#setname').click(function () {
         // Call the Send method on the hub.
         chat.server.setName($('#displayname').val());
         // Clear text box and reset focus for next comment.
         $('#displayname').val('');
         $('#message').focus();
+        closeSide();
     });
 
+    // Adds a chat when the user clicks the button
+    // Connor Goudie/Chandu Dissanayake
+    // November 6, 2017
     $('#ButtonChatAdd').click(function () {
         chat.server.addChat($('#TextBoxChatAdd').val());
         $('#TextBoxChatAdd').val('');
         $('#message').focus();
+        $('.closebtn').click();
     });
 
     //Puts all the chats currently existing in the chat list
@@ -142,7 +172,9 @@ $.connection.hub.start().done(function () {
         ]
     };
 
-    //Searches the list of existing chatrooms using the string specified in the chat search box
+    // Searches the list of existing chatrooms using the string specified in the chat search box
+    // Paul McCarlie
+    // November 16, 2017
     $('#searchButton').click(function () {
         var fuse = new Fuse(chats, options); // "list" is the item array
 

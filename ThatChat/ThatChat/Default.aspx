@@ -1,35 +1,6 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ThatChat._Default" %>
+<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ThatChat._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <head>
-        <link rel="stylesheet" href="Content/accounts.css">
-        <link rel="stylesheet" href="Content/bootstrap.css">
-    </head>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-
-                     <input type="text" id="searchBox" /> 
-                        <input type="button" id="searchButton" value="Search Chat">
-
-                                <ul id="chatRooms" style="list-style:none;">
-                </ul>
-                <input type="text" id="TextBoxChatAdd" /> 
-                <button type="button" class="btn btn-default" id="ButtonChatAdd" value="add chat">
-                </button>
-            </div>
-
-            <div class="col-md-8">
-                <input type="text" id="displayname" />
-                <input type="button" id="setname" value="Set Name" />
-                <ul id="discussion" style="list-style:none;"></ul>
-                <input type="text" id="message" />
-                <input type="button" id="sendmessage" value="Send" />
-            </div>
-        </div>
-
-    </div>
     <!--Script references. -->
     <!--Reference the jQuery library. -->
     <script src="Scripts/jquery-1.10.2.min.js"></script>
@@ -40,5 +11,65 @@
     <!--Reference to script to update the page and send messages.-->
     <script src="Scripts/OurScripts/connect.js"></script>
     <script src="Scripts/fuse.js"></script>
+    <script src="content/client.js"></script>
+    <!-- End of script references -->
+
+    <!-- CSS references -->
+    <link rel="stylesheet" href="Content/accounts.css">
+    <link rel="stylesheet" href="Content/bootstrap.css">
+    <link rel="stylesheet" href="Content/site.css">
+    <!-- End of CSS references -->
+
+    <!-- Google Font references NOTE: how to use fonts in comment at head of Site.css-->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <!-- End of Google Font references -->
+
+    <div class="header">
+        <h1 class="title">ThatChat</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div id="mySideNav" class="sidenav grad">
+                    <a href="javascript:void(0)" id="closebtn" onclick="closeSide()">&times;</a>
+                    <div class="jumbotron" style="padding: 20px 20px 20px 20px">
+                    <h3>&nbsp;Conversations</h3>
+                        <div id="search">
+                            <input type="text" id="searchBox" class="form-control" />
+                            <input type="button" id="searchButton" class="form-control btn-info" value="Search Chat">
+                        </div>
+
+                        <ul id="chatRooms" style="list-style: none; padding: 0">
+                        </ul>
+                        <input type="text" id="TextBoxChatAdd" class="inline form-control" />
+                        <input type="button" class="form-control btn-success" id="ButtonChatAdd" value="+">
+                    </div>
+                </div>
+                <div id="header">
+                    <span id="burger" onclick="openSide()">&#9776;</span>
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+                <div class="jumbotron">
+                    <div id="userInfo">
+                        <input type="text" id="displayname" class="form-control" />
+                        <input type="button" id="setname" class="form-control btn-primary" value="Set Name" />
+                    </div>
+                    <hr />
+                    <div id="discussionScrollDiv" style="overflow-y: scroll; height: 400px;">
+                        <ul id="discussion" style="list-style: none;"></ul>
+                    </div>
+                    <hr />
+                    <div class="messageArea">
+                        <input type="text" id="message" class="form-control" />
+                        <input type="button" id="sendmessage" class="form-control btn-success" value="Send" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </asp:Content>
