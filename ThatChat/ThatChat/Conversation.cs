@@ -106,9 +106,11 @@ namespace ThatChat
         /// <param name="msg"></param>
         public void addMessage(Message msg)
         {
-            messageAccess.WaitOne();
-            messages.Add(msg);
-            messageAccess.ReleaseMutex();
+                messageAccess.WaitOne();
+                messages.Add(msg);
+                messageAccess.ReleaseMutex();
+         
+            
         }
 
         /// <summary>
@@ -118,13 +120,17 @@ namespace ThatChat
         /// <param name="hub"> The ChatHub with which the Message is sent. </param>
         public void broadcast(Message msg, ChatHub hub)
         {
-            addMessage(msg);
+            if (msg.Content.Length > 0 && msg.Content.Length<400)
+            {
+                addMessage(msg);
 
-            userAccess.WaitOne();
-            foreach (User user in users)
-                hub.sendTo(msg, user.Client);
+                userAccess.WaitOne();
+                foreach (User user in users)
+                    hub.sendTo(msg, user.Client);
 
-            userAccess.ReleaseMutex();
+                userAccess.ReleaseMutex();
+            }
+            
         }
     }
 }

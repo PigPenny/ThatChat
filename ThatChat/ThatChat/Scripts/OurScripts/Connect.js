@@ -30,6 +30,12 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     // Add the message to the page.
     $('#discussion').append(li);
 
+    //scroll to bottom of chat div
+    //var objDiv = document.getElementById("your_div");
+    // $('').scrollTop = $('discussionScrollDiv').scrollHeight;
+    $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
+    //$('#discussionScrollDiv').scrollTop(1000000);
+    //Add names for colouring later
     if (names[id] == null)
         names[id] = [];
     names[id][names[id].length] = nameDiv;
@@ -46,7 +52,7 @@ chat.client.addChat = function (name, id) {
     a.appendChild(linkText);
     a.title = name;
     a.href = "#";
-    a.className = "btn";
+    a.className = "form-control";
     document.body.appendChild(a);
 
     li.appendChild(a);
@@ -117,6 +123,7 @@ $.connection.hub.start().done(function () {
         // Clear text box and reset focus for next comment.
         $('#displayname').val('');
         $('#message').focus();
+        closeSide();
     });
 
     // Adds a chat when the user clicks the button
