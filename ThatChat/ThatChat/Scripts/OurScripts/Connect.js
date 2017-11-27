@@ -4,6 +4,8 @@ var chat = $.connection.chatHub;
 var names = [];
 // Array used to store list of chat room names
 var chats = [];
+// Stores the name currently being used
+var currentName;
 
 // Create a function that the hub can call to broadcast messages.
 // Chandu Dissanayake/Andrew Busto
@@ -21,11 +23,17 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     }
 
     nameDiv.innerText = name;
+
     contentDiv.innerText = message;
 
-    li.appendChild(nameDiv);
+    if (currentName != name) {
+        li.appendChild(nameDiv);
+    }
+
     li.appendChild(contentDiv);
     li.className = "remove";
+
+    currentName = nameDiv.innerText;
 
     // Add the message to the page.
     $('#discussion').append(li);
@@ -36,8 +44,8 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
     //$('#discussionScrollDiv').scrollTop(1000000);
     //Add names for colouring later
-    if (names[id] == null)
-        names[id] = [];
+    if (names[id] == null)
+        names[id] = [];
     names[id][names[id].length] = nameDiv;
 };
 
