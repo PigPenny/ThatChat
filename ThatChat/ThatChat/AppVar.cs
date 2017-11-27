@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 
 namespace ThatChat
@@ -13,24 +12,32 @@ namespace ThatChat
     {
         // The key used in the ApplicationState's indexer.
         private string key;
+
+        // All keys that have been used.
+        private static HashSet<String> keys = new HashSet<string>();
+
         // The ApplicationState associated with this application.
         private static HttpApplicationState context 
             = HttpContext.Current.Application;
 
         /// <summary>
         /// Purpose:  Instantiates an object of the AppVar class.
-        /// Author:   Andrew Busto
+        /// Author:   Paul McCarlie
         /// Date:     October 17, 2017
         /// </summary>
         /// <param name="key"> The key that will be used in Application's indexer. </param>
         public AppVar(string key)
         {
+            if (keys.Contains(key))
+                throw new ArgumentException("Key already in use.");
+
+            keys.Add(key);
             this.key = key;
         }
 
         /// <summary>
         /// Purpose:  Gets and sets the appropriate value in Application.
-        /// Author:   Andrew Busto
+        /// Author:   Paul McCarlie
         /// Date:     October 17, 2017
         /// </summary>
         public T Val

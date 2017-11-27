@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ThatChat
+﻿namespace ThatChat
 {
     /// <summary>
     /// Contains all information associated with a Message.
@@ -22,7 +17,7 @@ namespace ThatChat
 
         /// <summary>
         /// Purpose:  Instantiates an object of the Message class.
-        /// Author:   Andrew Busto
+        /// Author:   Paul McCarlie
         /// Date:     October 18, 2017
         /// </summary>
         /// <param name="acct">The Account of the user sending this message.</param>

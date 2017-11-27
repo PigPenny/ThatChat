@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Web;
+﻿using System.Threading;
 
 namespace ThatChat
 {
@@ -11,11 +7,11 @@ namespace ThatChat
     /// </summary>
     public class Account
     {
-        // A counter keeping track of the number of times an 
-        // Account has been instantiated with invalid inputs.
-        private static Int32 invalidCount = 0;
-
-        private static Int32 accntCount = 0;
+        // invalidCount - Keeps track of the number of invalid accounts
+        // accntCount   - Keeps track of the number of accounts
+        // Both of the above refer to all that have been created, not just those active.
+        private static int invalidCount = 0;
+        private static int accntCount = 0;
 
         /// <summary>
         /// The user's name.
@@ -25,16 +21,25 @@ namespace ThatChat
         /// <summary>
         /// True if this account is currently in use, false otherwise.
         /// </summary>
-        public bool Active { get; set; }
+        public bool Active { get; private set; }
 
-        public int Id { get; private set; }
+        /// <summary>
+        /// This Accounts unique identifier.
+        /// </summary>
+        public int Id {
+            get
+            {
+                return id;
+            }
+        }
+        private int id;
 
         /// <summary>
         /// Purpose:  Instantiates an object of the Account class.
         /// Author:   Andrew Busto
         /// Date:     October 17, 2017
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The username associated with this Account </param>
         public Account(string name)
         {
             Active = true;
@@ -46,12 +51,10 @@ namespace ThatChat
                 this.Name = name;
             }else
             {
-                Interlocked.Increment(ref invalidCount);
-                this.Name = generateName();
+                this.Name = generateName(Interlocked.Increment(ref invalidCount));
             }
 
-            Id = accntCount;
-            Interlocked.Increment(ref accntCount);
+            id = Interlocked.Increment(ref accntCount);
         }
 
         /// <summary>
@@ -61,9 +64,9 @@ namespace ThatChat
         /// Date:     October 31, 2017
         /// </summary>
         /// <returns> An auto generated name. </returns>
-        private string generateName()
+        private string generateName(int inv)
         {
-            return "Invalid name #" + invalidCount;
+            return "Invalid name #" + inv;
         }
 
         /// <summary>
@@ -76,6 +79,16 @@ namespace ThatChat
         private bool validName(string name)
         {
             return !name.Equals("");
+        }
+
+        /// <summary>
+        /// Purpose:  Deactivates an account.
+        /// Author:   Chandu Dissanayake
+        /// Date:     November 17, 2017
+        /// </summary>
+        public void deactivate()
+        {
+            Active = false;
         }
     }
 }
