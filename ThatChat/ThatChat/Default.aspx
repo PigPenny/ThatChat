@@ -11,7 +11,7 @@
     <!--Reference to script to update the page and send messages.-->
     <script src="Scripts/OurScripts/connect.js"></script>
     <script src="Scripts/fuse.js"></script>
-    <script src="content/client.js"></script>
+    <script src="Scripts/OurScripts/client.js"></script>
     <!-- End of script references -->
 
     <!-- CSS references -->
