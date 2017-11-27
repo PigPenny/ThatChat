@@ -27,14 +27,13 @@
     <div class="header">
         <h1 class="title">ThatChat</h1>
     </div>
-
     <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <div id="mySideNav" class="sidenav grad">
                     <a href="javascript:void(0)" id="closebtn" onclick="closeSide()">&times;</a>
                     <div class="jumbotron" style="padding: 20px 20px 20px 20px">
-                    <h3>&nbsp;Conversations</h3>
+                        <h3>&nbsp;Conversations</h3>
                         <div id="search">
                             <input type="text" id="searchBox" class="form-control" />
                             <input type="button" id="searchButton" class="form-control btn-info" value="Search Chat">
@@ -44,6 +43,9 @@
                         </ul>
                         <input type="text" id="TextBoxChatAdd" class="inline form-control" />
                         <input type="button" class="form-control btn-success" id="ButtonChatAdd" value="+">
+                        <div id="error" style="display : none;">
+                            Invalid chat room name
+                        </div>
                     </div>
                 </div>
                 <div id="header">

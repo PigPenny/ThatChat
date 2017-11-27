@@ -33,12 +33,17 @@ namespace ThatChat
         /// <param name="name"> The name of this Conversation. </param>
         public Conversation(string name)
         {
-            this.Name = name;
             users = new HashSet<User>();
             messages = new List<Message>();
 
             messageAccess = new Mutex();
             userAccess = new Mutex();
+            name = name.Trim(' ');
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("name canot be empty");
+            }
+            this.Name = name;
         }
 
         /// <summary>
@@ -110,8 +115,6 @@ namespace ThatChat
             messageAccess.WaitOne();
             messages.Add(msg);
             messageAccess.ReleaseMutex();
-
-
         }
 
         /// <summary>
@@ -131,7 +134,6 @@ namespace ThatChat
 
                 userAccess.ReleaseMutex();
             }
-
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace ThatChat
 {
@@ -39,7 +40,20 @@ namespace ThatChat
             AppVars.Conversations.Val.addConversation(new Conversation("convo2"));
             AppVars.Conversations.Val[2].addMessage(new Message(acct1, "hey gents"));
             AppVars.Conversations.Val[2].addMessage(new Message(acct2, "and ladies!"));
-  
+            try
+            {
+                AppVars.Conversations.Val.addConversation(new Conversation("  "));
+
+            }
+            catch { }
+
+            if (AppVars.Conversations.Val.Keys.Count == 3)
+            {
+                Debug.WriteLine("did it reddit");
+            }
+            //AppVars.Conversations.Val[3].addMessage(new Message(acct1, "hello"));
+            //AppVars.Conversations.Val[3].addMessage(new Message(acct2, "world"));
+
             // Initializes Admin.  IMPORTANT.
             AppVars.Admin.Val = new Account("GOD");
             // Initializes Users.  IMPORTANT.

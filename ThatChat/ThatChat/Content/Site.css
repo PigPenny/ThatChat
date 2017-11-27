@@ -19,7 +19,9 @@ body {
     margin: 5px 5px 5px 5px;
 }
 
-
+#error {
+    color: red;
+}
 .title {
     font-family: 'Pacifico', cursive;
     font-size:45px;
