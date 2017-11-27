@@ -83,7 +83,7 @@ namespace ThatChat
         /// <param name="name"> The name of the user. </param>
         public void addUser(string name)
         {
-            users[Context.ConnectionId] = new User(Clients.Caller, name);
+            users[Context.ConnectionId] = new User(Clients.Caller, name, Context.ConnectionId);
         }
 
         /// <summary>
@@ -154,6 +154,16 @@ namespace ThatChat
         {
             int id = catalogue.addConversation(new Conversation(name));
             Clients.All.addChat(catalogue[id].Name, id);
+        }
+
+        public void respond()
+        {
+            try
+            {
+                users[Context.ConnectionId].cancelDel();
+            }
+            catch (KeyNotFoundException)
+            { }
         }
     }
 }

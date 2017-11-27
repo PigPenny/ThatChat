@@ -44,8 +44,10 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
     //$('#discussionScrollDiv').scrollTop(1000000);
     //Add names for colouring later
-    if (names[id] == null)
-        names[id] = [];
+    if (names[id] == null)
+
+        names[id] = [];
+
     names[id][names[id].length] = nameDiv;
 };
 
@@ -86,6 +88,11 @@ chat.client.deactivateUser = function (id) {
         for (var nameDiv of names[id])
             nameDiv.className = "inactive accnt";
     }
+};
+
+chat.client.ping = function () {
+    chat.server.respond();
+    console.log("ping");
 };
 
 // Set initial focus to name input box
