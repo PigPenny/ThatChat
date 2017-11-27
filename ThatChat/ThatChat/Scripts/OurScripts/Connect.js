@@ -44,21 +44,24 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
     //$('#discussionScrollDiv').scrollTop(1000000);
     //Add names for colouring later
-    if (names[id] == null)
-        names[id] = [];
+    if (names[id] == null)
+
+        names[id] = [];
+
     names[id][names[id].length] = nameDiv;
 };
 
 // Create a function that the hub can call to add a chat room to the hub
 // Paul McCarlie
 // November 7, 2017
-chat.client.addChat = function (name, id) {
+chat.client.addChat = function (name, id, count) {
     var li = document.createElement("li");
 
     var a = document.createElement('a');
     var linkText = document.createTextNode(name);
     a.appendChild(linkText);
     a.title = name;
+    a.innerText = name + " " + count;
     a.href = "#";
     a.className = "form-control";
     document.body.appendChild(a);
@@ -77,6 +80,8 @@ chat.client.addChat = function (name, id) {
     var nameObject = { "name": name, "element": li };
     chats.push(nameObject);
 };
+
+
 
 // Create a function that the hub can call to deactivate a user no longer in use
 // Andrew Busto

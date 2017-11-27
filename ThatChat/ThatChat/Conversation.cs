@@ -133,5 +133,10 @@ namespace ThatChat
             }
 
         }
+
+        public int getNumberUsers()
+        {
+            return users.Count;
+        }
     }
 }

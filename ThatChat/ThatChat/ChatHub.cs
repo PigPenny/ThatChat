@@ -141,7 +141,9 @@ namespace ThatChat
         public void populateChats()
         {
             foreach (int key in catalogue.Keys)
-                Clients.Caller.addChat(catalogue[key].Name, key);
+            {
+                Clients.Caller.addChat(catalogue[key].Name, key, catalogue[key].getNumberUsers());
+            }
         }
 
         /// <summary>
@@ -153,7 +155,8 @@ namespace ThatChat
         public void addChat(string name)
         {
             int id = catalogue.addConversation(new Conversation(name));
-            Clients.All.addChat(catalogue[id].Name, id);
+            Clients.All.addChat(catalogue[id].Name, id, catalogue[id].getNumberUsers());
         }
+
     }
 }
