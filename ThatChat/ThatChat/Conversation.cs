@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace ThatChat
@@ -106,11 +107,11 @@ namespace ThatChat
         /// <param name="msg"></param>
         public void addMessage(Message msg)
         {
-                messageAccess.WaitOne();
-                messages.Add(msg);
-                messageAccess.ReleaseMutex();
-         
-            
+            messageAccess.WaitOne();
+            messages.Add(msg);
+            messageAccess.ReleaseMutex();
+
+
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace ThatChat
         /// <param name="hub"> The ChatHub with which the Message is sent. </param>
         public void broadcast(Message msg, ChatHub hub)
         {
-            if (msg.Content.Length > 0 && msg.Content.Length<400)
+            if (msg.Content.Length > 0 && msg.Content.Length < 400)
             {
                 addMessage(msg);
 
@@ -130,7 +131,7 @@ namespace ThatChat
 
                 userAccess.ReleaseMutex();
             }
-            
+
         }
     }
 }
