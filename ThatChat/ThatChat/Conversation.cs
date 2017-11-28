@@ -41,7 +41,6 @@ namespace ThatChat
         /// <param name="name"> The name of this Conversation. </param>
         public Conversation(string name)
         {
-            this.Name = name;
             users = new HashSet<User>();
             messages = new List<Message>();
 
@@ -54,6 +53,12 @@ namespace ThatChat
             delTrigger.AutoReset = false;
             delTrigger.Elapsed += delete;
             delTrigger.Start();
+            name = name.Trim(' ');
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("name canot be empty");
+            }
+            this.Name = name;
         }
 
         /// <summary>
