@@ -27,23 +27,24 @@
     <div class="header">
         <h1 class="title">ThatChat</h1>
     </div>
-
     <div class="container">
-        <div class="row">
+        <div class="row" style="height: 100%;">
             <div class="col-md-4">
                 <div id="mySideNav" class="sidenav grad">
                     <a href="javascript:void(0)" id="closebtn" onclick="closeSide()">&times;</a>
                     <div class="jumbotron" style="padding: 20px 20px 20px 20px">
-                    <h3>&nbsp;Conversations</h3>
+                        <h3>&nbsp;Conversations</h3>
                         <div id="search">
-                            <input type="text" id="searchBox" class="form-control" />
-                            <input type="button" id="searchButton" class="form-control btn-info" value="Search Chat">
+                            <input type="text" id="searchBox" class="form-control" placeholder="Search for a chat room" />
                         </div>
 
                         <ul id="chatRooms" style="list-style: none; padding: 0">
                         </ul>
-                        <input type="text" id="TextBoxChatAdd" class="inline form-control" />
+                        <input type="text" id="TextBoxChatAdd" class="inline form-control" placeholder="Add a new chat room" />
                         <input type="button" class="form-control btn-success" id="ButtonChatAdd" value="+">
+                        <div id="error" style="display: none;">
+                            Invalid chat room name
+                        </div>
                     </div>
                 </div>
                 <div id="header">
@@ -55,11 +56,14 @@
             <div class="col-md-8">
                 <div class="jumbotron">
                     <div id="userInfo">
+                        <asp:Label class="currentName" runat="server" ID="userID" Text="Username"></asp:Label>
+
                         <input type="text" id="displayname" class="form-control" />
                         <input type="button" id="setname" class="form-control btn-primary" value="Set Name" />
+
                     </div>
                     <hr />
-                    <div id="discussionScrollDiv" style="overflow-y: scroll; height: 400px;">
+                    <div id="discussionScrollDiv" style="overflow-y: scroll; height: 500px;">
                         <ul id="discussion" style="list-style: none;"></ul>
                     </div>
                     <hr />

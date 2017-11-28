@@ -51,12 +51,18 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     names[id][names[id].length] = nameDiv;
 };
 
+function valid(name) {
+    var regex = /^[\w\-\s]+$/;
+    return name.length != 0 && regex.exec(name) != null;
+}
 // Create a function that the hub can call to add a chat room to the hub
 // Paul McCarlie
 // November 7, 2017
 chat.client.addChat = function (name, id, count) {
     var a = document.createElement('a');
+    console.log(name);
     var linkText = document.createTextNode(name);
+    console.log(linkText);
     a.appendChild(linkText);
     a.title = name;
     a.innerText = name + " " + count;
@@ -76,6 +82,7 @@ chat.client.addChat = function (name, id, count) {
 
     var nameObject = {"id": id, "name": name, "element": a};
     chats.push(nameObject);
+
 };
 
 chat.client.updateChatUserCount = function (id, name, count) {
@@ -155,10 +162,15 @@ $.connection.hub.start().done(function () {
     // Connor Goudie/Chandu Dissanayake
     // November 6, 2017
     $('#ButtonChatAdd').click(function () {
-        chat.server.addChat($('#TextBoxChatAdd').val());
-        $('#TextBoxChatAdd').val('');
-        $('#message').focus();
-        $('.closebtn').click();
+        let name = $('#TextBoxChatAdd').val();
+        if (valid(name)) {
+            $('#TextBoxChatAdd').val('');
+            $('#message').focus();
+            chat.server.addChat(name);
+            $('#error').css("display", "none");
+        } else {
+            $('#error').css("display", "block");
+        }
     });
 
     //Puts all the chats currently existing in the chat list
@@ -200,18 +212,27 @@ $.connection.hub.start().done(function () {
     // Searches the list of existing chatrooms using the string specified in the chat search box
     // Paul McCarlie
     // November 16, 2017
-    $('#searchButton').click(function () {
+    $('#searchBox').keyup(function () {
         var fuse = new Fuse(chats, options); // "list" is the item array
 
         var chat = $('#searchBox').val();
-
-        var result = fuse.search(chat);
-
-        $('#chatRooms').empty();
-        for (var i = 0; i < result.length; i++) {
-            $('#chatRooms').append(result[i]["element"]);
+        if (chat != "") {
+            var result = fuse.search(chat);
+            $('#chatRooms').empty();
+            for (var i = 0; i < result.length; i++) {
+                $('#chatRooms').append(result[i]["element"]);
+            }
+            //chat.server.populateChats();
+        } else {
+            $('#chatRooms').empty();
+            for (var cr of chats) {
+                $('#chatRooms').append(cr.element);
+            }
         }
-
     });
 });
+
+function closeError() {
+    $('#error').css("display", "none");
+}
 

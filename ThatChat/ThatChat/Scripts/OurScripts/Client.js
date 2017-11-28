@@ -18,6 +18,7 @@ function closeSide() {
 
 $(window).resize(function () {
     console.log($(document).width());
+    console.log($(document).height());
     if (open) {
         if ($(document).width() > 992) {
             openSide();

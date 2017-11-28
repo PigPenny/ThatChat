@@ -157,8 +157,12 @@ namespace ThatChat
         /// <param name="name"></param>
         public void addChat(string name)
         {
-            int id = catalogue.addConversation(new Conversation(name));
-            Clients.All.addChat(catalogue[id].Name, id, catalogue[id].getNumberUsers());
+            try
+            {
+                int id = catalogue.addConversation(new Conversation(name));
+                Clients.All.addChat(catalogue[id].Name, id, catalogue[id].getNumberUsers());
+            }
+            catch { }
         }
         public void respond()
         {
