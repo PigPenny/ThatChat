@@ -12,7 +12,7 @@ namespace ThatChat
     /// </summary>
     public class User
     {
-        private double lifeTime = 100000;
+        private double lifeTime = 10000;
         private double responseTime = 10000;
         private System.Timers.Timer pingTrigger;
         private System.Timers.Timer delTrigger;
@@ -106,7 +106,7 @@ namespace ThatChat
 
             pingTrigger = new System.Timers.Timer(lifeTime);
             pingTrigger.Elapsed += pingClient;
-            pingTrigger.AutoReset = true;
+            pingTrigger.AutoReset = false;
 
             delTrigger = new System.Timers.Timer(responseTime);
             delTrigger.Elapsed += delUser;
@@ -130,6 +130,7 @@ namespace ThatChat
             foreach (KeyValuePair<string, User> user in AppVars.Users.Val)
                 user.Value.Client.deactivateUser(Id);
 
+            convo.removeUser(this);
             User usr;
             AppVars.Users.Val.TryRemove(connectString, out usr);
         }
@@ -137,6 +138,7 @@ namespace ThatChat
         public void cancelDel()
         {
             delTrigger.Stop();
+            pingTrigger.Start();
         }
     }
 }

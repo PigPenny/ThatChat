@@ -54,6 +54,7 @@ function valid(name) {
     var regex = /^[\w\-\s]+$/;
     return name.length != 0 && regex.exec(name) != null;
 }
+
 // Create a function that the hub can call to add a chat room to the hub
 // Paul McCarlie
 // November 7, 2017
@@ -67,6 +68,7 @@ chat.client.addChat = function (name, id, count) {
     a.innerText = name + " " + count;
     a.href = "#";
     a.className = "form-control";
+    a.id = id;
     document.body.appendChild(a);
     
     a.onclick = function () {
@@ -82,16 +84,20 @@ chat.client.addChat = function (name, id, count) {
 
     var nameObject = {"id": id, "name": name, "element": a};
     chats.push(nameObject);
-
 };
 
+chat.client.removeChat = function (id) {
+    for (var i = chats.length - 1; i >= 0; i--) {
+        if (chats[i].id === id) {
+            chats[i].element.remove();
+            chats.splice(i, 1);
+        }
+    }
+}
+
 chat.client.updateChatUserCount = function (id, name, count) {
-    console.log("works");
     chats.forEach(function (item) {
-        console.log(item.id);
-        console.log(id);
         if (item.id == id) {
-            console.log(item.element.innerText);
             item.element.innerText = name + " " + count;
         }
     });
@@ -235,4 +241,3 @@ $.connection.hub.start().done(function () {
 function closeError() {
     $('#error').css("display", "none");
 }
-
