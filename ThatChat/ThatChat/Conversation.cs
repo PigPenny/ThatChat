@@ -71,9 +71,16 @@ namespace ThatChat
         {
             userAccess.WaitOne();
             users.Add(user);
+            updateUserCount();
             userAccess.ReleaseMutex();
 
             delTrigger.Stop();
+        }
+
+        private void updateUserCount()
+        {
+            foreach (KeyValuePair<string, User> user2 in AppVars.Users.Val)
+                user2.Value.Client.updateChatUserCount(Id, Name, this.users.Count);
         }
 
         /// <summary>
@@ -86,6 +93,7 @@ namespace ThatChat
         {
             userAccess.WaitOne();
             users.Remove(user);
+            updateUserCount();
             userAccess.ReleaseMutex();
 
             if (users.Count == 0)
@@ -159,6 +167,11 @@ namespace ThatChat
         public void delete(Object source, ElapsedEventArgs e)
         {
             AppVars.Conversations.Val.deleteConversation(this.Id);
+        }
+
+        public int getNumberUsers()
+        {
+            return users.Count;
         }
     }
 }
