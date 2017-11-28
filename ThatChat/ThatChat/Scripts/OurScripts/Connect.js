@@ -14,8 +14,9 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     var li = document.createElement("li");
     var nameDiv = document.createElement("div");
     var contentDiv = document.createElement("div");
+    var imgRegex = /\.(jpeg|jpg|gif|png)$/;    
 
-    if (active == true) {
+    if (active) {
         nameDiv.className = "active accnt";
     }
     else {
@@ -25,6 +26,16 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     nameDiv.innerText = name;
 
     contentDiv.innerText = message;
+
+    if (imgRegex.exec(message) != null) 
+    {
+        var img = document.createElement("img");
+        console.log("img");
+        img.src = message;
+        img.style.maxWidth = '80%';
+        img.style.maxHeight = '80%';
+        contentDiv.appendChild(img);
+    }
 
     if (currentName != name) {
         li.appendChild(nameDiv);
@@ -39,10 +50,8 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     $('#discussion').append(li);
 
     //scroll to bottom of chat div
-    //var objDiv = document.getElementById("your_div");
-    // $('').scrollTop = $('discussionScrollDiv').scrollHeight;
     $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
-    //$('#discussionScrollDiv').scrollTop(1000000);
+    
     //Add names for colouring later
     if (names[id] == null)
         names[id] = [];

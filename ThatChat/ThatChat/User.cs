@@ -50,6 +50,7 @@ namespace ThatChat
             {
                 return convo;
             }
+
             set
             {
                 convoAccess.WaitOne();
