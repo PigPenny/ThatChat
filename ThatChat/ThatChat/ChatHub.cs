@@ -11,7 +11,7 @@ namespace ThatChat
     public class ChatHub : Hub
     {
         // The catalogue to access conversations from.
-        Catalogue catalogue = AppVars.Conversations.Val;
+        private Catalogue catalogue = AppVars.Conversations.Val;
 
         // All users that have ever connected.
         private ConcurrentDictionary<string, User> users = AppVars.Users.Val;

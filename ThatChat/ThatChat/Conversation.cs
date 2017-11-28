@@ -19,7 +19,7 @@ namespace ThatChat
         private Mutex messageAccess;
         private Mutex userAccess;
 
-        private double delTime = 100000;
+        private double delTime = 600000;
         private System.Timers.Timer delTrigger;
 
         // The messages sent over the course of this Conversation.
@@ -167,6 +167,8 @@ namespace ThatChat
         public void delete(Object source, ElapsedEventArgs e)
         {
             AppVars.Conversations.Val.deleteConversation(this.Id);
+            foreach (KeyValuePair<string, User> usr in AppVars.Users.Val)
+                usr.Value.Client.removeChat(Id);
         }
 
         public int getNumberUsers()
