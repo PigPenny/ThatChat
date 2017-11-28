@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Timers;
 
 namespace ThatChat
 {
@@ -10,9 +11,16 @@ namespace ThatChat
     /// </summary>
     public class Conversation
     {
+        // Keeps track of the number of conversations that exist.
+        private static int count = -1;
+        public int Id { get; private set; }
+
         // Manage access to messages and users respectively.
         private Mutex messageAccess;
         private Mutex userAccess;
+
+        private double delTime = 100000;
+        private System.Timers.Timer delTrigger;
 
         // The messages sent over the course of this Conversation.
         private List<Message> messages;
@@ -38,6 +46,13 @@ namespace ThatChat
 
             messageAccess = new Mutex();
             userAccess = new Mutex();
+
+            Id = Interlocked.Increment(ref count);
+
+            delTrigger = new System.Timers.Timer(delTime);
+            delTrigger.AutoReset = false;
+            delTrigger.Elapsed += delete;
+            delTrigger.Start();
             name = name.Trim(' ');
             if (name.Length == 0)
             {
@@ -57,6 +72,8 @@ namespace ThatChat
             userAccess.WaitOne();
             users.Add(user);
             userAccess.ReleaseMutex();
+
+            delTrigger.Stop();
         }
 
         /// <summary>
@@ -70,6 +87,9 @@ namespace ThatChat
             userAccess.WaitOne();
             users.Remove(user);
             userAccess.ReleaseMutex();
+
+            if (users.Count == 0)
+                delTrigger.Start();
         }
 
         /// <summary>
@@ -134,6 +154,11 @@ namespace ThatChat
 
                 userAccess.ReleaseMutex();
             }
+        }
+
+        public void delete(Object source, ElapsedEventArgs e)
+        {
+            AppVars.Conversations.Val.deleteConversation(this.Id);
         }
     }
 }
