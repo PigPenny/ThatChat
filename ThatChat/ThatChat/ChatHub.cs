@@ -83,7 +83,12 @@ namespace ThatChat
         /// <param name="name"> The name of the user. </param>
         public void addUser(string name)
         {
+<<<<<<< Updated upstream
             users[Context.ConnectionId] = new User(Clients.Caller, name, Context.ConnectionId);
+=======
+            users[Context.ConnectionId] = new User(Clients.Caller, name);
+            //updateChats();
+>>>>>>> Stashed changes
         }
 
         /// <summary>
@@ -157,6 +162,7 @@ namespace ThatChat
             int id = catalogue.addConversation(new Conversation(name));
             Clients.All.addChat(catalogue[id].Name, id, catalogue[id].getNumberUsers());
         }
+<<<<<<< Updated upstream
         public void respond()
         {
             try
@@ -166,6 +172,14 @@ namespace ThatChat
             catch (KeyNotFoundException)
             {
                 //TODO
+=======
+
+        public void updateChats()
+        {
+            foreach (int key in catalogue.Keys)
+            {
+                Clients.Caller.updateChat(catalogue[key].Name, key, catalogue[key].getNumberUsers());
+>>>>>>> Stashed changes
             }
         }
     }

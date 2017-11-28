@@ -77,11 +77,21 @@ chat.client.addChat = function (name, id, count) {
     // Add the message to the page.
     $('#chatRooms').append(li);
 
-    var nameObject = { "name": name, "element": li };
+    var nameObject = {"id": id, "name": name, "element": a};
     chats.push(nameObject);
 };
 
-
+chat.client.updateChatUserCount = function (id, name, count) {
+    console.log("works");
+    chats.forEach(function (item) {
+        console.log(item.id);
+        console.log(id);
+        if (item.id == id) {
+            console.log(item.element.innerText);
+            item.element.innerText = name + " " + count;
+        }
+    });
+}
 
 // Create a function that the hub can call to deactivate a user no longer in use
 // Andrew Busto
