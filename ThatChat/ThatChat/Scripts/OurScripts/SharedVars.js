@@ -5,4 +5,4 @@ var names = [];
 // Array used to store list of chat room names
 var chats = [];
 // Stores the name currently being used
-var currentName;
+var prevId;

@@ -35,12 +35,11 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     contentDiv.innerText = message;
     addMedia(contentDiv);
 
-    if (currentName != name) {
+    if (!(prevId == id && names[id][name[id].length-1].className != "inactive accnt"))
         li.appendChild(nameDiv);
-    }
 
     li.appendChild(contentDiv);
-    currentName = nameDiv.innerText;
+    prevId = id;
 
     // Add the message to the page.
     $('#discussion').append(li);
