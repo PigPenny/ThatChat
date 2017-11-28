@@ -55,8 +55,6 @@ chat.client.broadcastMessage = function (name, message, id, active) {
 // Paul McCarlie
 // November 7, 2017
 chat.client.addChat = function (name, id, count) {
-    var li = document.createElement("li");
-
     var a = document.createElement('a');
     var linkText = document.createTextNode(name);
     a.appendChild(linkText);
@@ -65,8 +63,7 @@ chat.client.addChat = function (name, id, count) {
     a.href = "#";
     a.className = "form-control";
     document.body.appendChild(a);
-
-    li.appendChild(a);
+    
     a.onclick = function () {
         $("#discussion").empty();
         chat.server.selectChatRoom(id);
@@ -75,7 +72,7 @@ chat.client.addChat = function (name, id, count) {
     };
 
     // Add the message to the page.
-    $('#chatRooms').append(li);
+    $('#chatRooms').append(a);
 
     var nameObject = {"id": id, "name": name, "element": a};
     chats.push(nameObject);

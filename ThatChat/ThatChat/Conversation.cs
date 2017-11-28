@@ -67,7 +67,7 @@ namespace ThatChat
             userAccess.WaitOne();
             users.Add(user);
             foreach (KeyValuePair<string, User> user2 in AppVars.Users.Val)
-                user2.Value.Client.updateChatUserCount(, Name, this.users.Count);
+                user2.Value.Client.updateChatUserCount(Id, Name, this.users.Count);
             userAccess.ReleaseMutex();
 
             delTrigger.Stop();

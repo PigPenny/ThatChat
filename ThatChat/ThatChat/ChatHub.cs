@@ -12,7 +12,7 @@ namespace ThatChat
     {
         // The catalogue to access conversations from.
         Catalogue catalogue = AppVars.Conversations.Val;
-        
+
         // All users that have ever connected.
         private ConcurrentDictionary<string, User> users = AppVars.Users.Val;
 
@@ -34,7 +34,8 @@ namespace ThatChat
                 Message msg = new Message(user.Accnt, content);
 
                 user.Convo.broadcast(msg, this);
-            } catch (KeyNotFoundException e)
+            }
+            catch (KeyNotFoundException e)
             {
                 Debug.Print(e.Message);
             }
@@ -83,12 +84,7 @@ namespace ThatChat
         /// <param name="name"> The name of the user. </param>
         public void addUser(string name)
         {
-<<<<<<< Updated upstream
             users[Context.ConnectionId] = new User(Clients.Caller, name, Context.ConnectionId);
-=======
-            users[Context.ConnectionId] = new User(Clients.Caller, name);
-            //updateChats();
->>>>>>> Stashed changes
         }
 
         /// <summary>
@@ -103,7 +99,8 @@ namespace ThatChat
             {
                 deactivate(users[Context.ConnectionId].Accnt);
                 users[Context.ConnectionId].Accnt = new Account(name);
-            } catch (KeyNotFoundException e)
+            }
+            catch (KeyNotFoundException e)
             {
                 Debug.Print(e.Message);
             }
@@ -132,7 +129,8 @@ namespace ThatChat
             try
             {
                 users[Context.ConnectionId].Convo = catalogue[chatID];
-            } catch (KeyNotFoundException e)
+            }
+            catch (KeyNotFoundException e)
             {
                 Debug.Print(e.Message);
             }
@@ -162,7 +160,6 @@ namespace ThatChat
             int id = catalogue.addConversation(new Conversation(name));
             Clients.All.addChat(catalogue[id].Name, id, catalogue[id].getNumberUsers());
         }
-<<<<<<< Updated upstream
         public void respond()
         {
             try
@@ -171,15 +168,7 @@ namespace ThatChat
             }
             catch (KeyNotFoundException)
             {
-                //TODO
-=======
-
-        public void updateChats()
-        {
-            foreach (int key in catalogue.Keys)
-            {
-                Clients.Caller.updateChat(catalogue[key].Name, key, catalogue[key].getNumberUsers());
->>>>>>> Stashed changes
+                //TO
             }
         }
     }
