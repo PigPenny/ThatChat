@@ -104,15 +104,17 @@ namespace ThatChat
             Accnt = new Account(name);
             convoAccess = new Mutex();
 
-            pingTrigger = new System.Timers.Timer(lifeTime);
-            pingTrigger.Elapsed += pingClient;
-            pingTrigger.AutoReset = false;
-
-            delTrigger = new System.Timers.Timer(responseTime);
-            delTrigger.Elapsed += delUser;
-            delTrigger.AutoReset = false;
+            prepTimer(out pingTrigger, lifeTime, pingClient);
+            prepTimer(out delTrigger, responseTime, delUser);
 
             pingTrigger.Start();
+        }
+
+        public void prepTimer(out System.Timers.Timer timer, double time, ElapsedEventHandler handler)
+        {
+            timer = new System.Timers.Timer(time);
+            timer.Elapsed += handler;
+            timer.AutoReset = false;
         }
 
         public void pingClient(Object source, ElapsedEventArgs e)

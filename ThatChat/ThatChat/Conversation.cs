@@ -53,6 +53,7 @@ namespace ThatChat
             delTrigger.AutoReset = false;
             delTrigger.Elapsed += delete;
             delTrigger.Start();
+
             name = name.Trim(' ');
             if (name.Length == 0)
             {
