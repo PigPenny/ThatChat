@@ -12,7 +12,7 @@ namespace ThatChat
     {
         // The catalogue to access conversations from.
         Catalogue catalogue = AppVars.Conversations.Val;
-        
+
         // All users that have ever connected.
         private ConcurrentDictionary<string, User> users = AppVars.Users.Val;
 
@@ -34,7 +34,8 @@ namespace ThatChat
                 Message msg = new Message(user.Accnt, content);
 
                 user.Convo.broadcast(msg, this);
-            } catch (KeyNotFoundException e)
+            }
+            catch (KeyNotFoundException e)
             {
                 Debug.Print(e.Message);
             }
@@ -83,7 +84,7 @@ namespace ThatChat
         /// <param name="name"> The name of the user. </param>
         public void addUser(string name)
         {
-            users[Context.ConnectionId] = new User(Clients.Caller, name);
+            users[Context.ConnectionId] = new User(Clients.Caller, name, Context.ConnectionId);
         }
 
         /// <summary>
@@ -98,7 +99,8 @@ namespace ThatChat
             {
                 deactivate(users[Context.ConnectionId].Accnt);
                 users[Context.ConnectionId].Accnt = new Account(name);
-            } catch (KeyNotFoundException e)
+            }
+            catch (KeyNotFoundException e)
             {
                 Debug.Print(e.Message);
             }
@@ -127,7 +129,8 @@ namespace ThatChat
             try
             {
                 users[Context.ConnectionId].Convo = catalogue[chatID];
-            } catch (KeyNotFoundException e)
+            }
+            catch (KeyNotFoundException e)
             {
                 Debug.Print(e.Message);
             }
@@ -141,7 +144,9 @@ namespace ThatChat
         public void populateChats()
         {
             foreach (int key in catalogue.Keys)
-                Clients.Caller.addChat(catalogue[key].Name, key);
+            {
+                Clients.Caller.addChat(catalogue[key].Name, key, catalogue[key].getNumberUsers());
+            }
         }
 
         /// <summary>
@@ -152,8 +157,23 @@ namespace ThatChat
         /// <param name="name"></param>
         public void addChat(string name)
         {
-            int id = catalogue.addConversation(new Conversation(name));
-            Clients.All.addChat(catalogue[id].Name, id);
+            try
+            {
+                int id = catalogue.addConversation(new Conversation(name));
+                Clients.All.addChat(catalogue[id].Name, id, catalogue[id].getNumberUsers());
+            }
+            catch { }
+        }
+        public void respond()
+        {
+            try
+            {
+                users[Context.ConnectionId].cancelDel();
+            }
+            catch (KeyNotFoundException)
+            {
+                //TO
+            }
         }
     }
 }

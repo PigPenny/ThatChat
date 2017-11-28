@@ -44,26 +44,32 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
     //$('#discussionScrollDiv').scrollTop(1000000);
     //Add names for colouring later
-    if (names[id] == null)
-        names[id] = [];
+    if (names[id] == null)
+
+        names[id] = [];
+
     names[id][names[id].length] = nameDiv;
 };
 
+function valid(name) {
+    var regex = /^[\w\-\s]+$/;
+    return name.length != 0 && regex.exec(name) != null;
+}
 // Create a function that the hub can call to add a chat room to the hub
 // Paul McCarlie
 // November 7, 2017
-chat.client.addChat = function (name, id) {
-    var li = document.createElement("li");
-
+chat.client.addChat = function (name, id, count) {
     var a = document.createElement('a');
+    console.log(name);
     var linkText = document.createTextNode(name);
+    console.log(linkText);
     a.appendChild(linkText);
     a.title = name;
+    a.innerText = name + " " + count;
     a.href = "#";
     a.className = "form-control";
     document.body.appendChild(a);
-
-    li.appendChild(a);
+    
     a.onclick = function () {
         $("#discussion").empty();
         chat.server.selectChatRoom(id);
@@ -72,11 +78,24 @@ chat.client.addChat = function (name, id) {
     };
 
     // Add the message to the page.
-    $('#chatRooms').append(li);
+    $('#chatRooms').append(a);
 
-    var nameObject = { "name": name, "element": li };
+    var nameObject = {"id": id, "name": name, "element": a};
     chats.push(nameObject);
+
 };
+
+chat.client.updateChatUserCount = function (id, name, count) {
+    console.log("works");
+    chats.forEach(function (item) {
+        console.log(item.id);
+        console.log(id);
+        if (item.id == id) {
+            console.log(item.element.innerText);
+            item.element.innerText = name + " " + count;
+        }
+    });
+}
 
 // Create a function that the hub can call to deactivate a user no longer in use
 // Andrew Busto
@@ -86,6 +105,11 @@ chat.client.deactivateUser = function (id) {
         for (var nameDiv of names[id])
             nameDiv.className = "inactive accnt";
     }
+};
+
+chat.client.ping = function () {
+    chat.server.respond();
+    console.log("ping");
 };
 
 // Set initial focus to name input box
@@ -138,10 +162,15 @@ $.connection.hub.start().done(function () {
     // Connor Goudie/Chandu Dissanayake
     // November 6, 2017
     $('#ButtonChatAdd').click(function () {
-        chat.server.addChat($('#TextBoxChatAdd').val());
-        $('#TextBoxChatAdd').val('');
-        $('#message').focus();
-        $('.closebtn').click();
+        let name = $('#TextBoxChatAdd').val();
+        if (valid(name)) {
+            $('#TextBoxChatAdd').val('');
+            $('#message').focus();
+            chat.server.addChat(name);
+            $('#error').css("display", "none");
+        } else {
+            $('#error').css("display", "block");
+        }
     });
 
     //Puts all the chats currently existing in the chat list
@@ -183,18 +212,27 @@ $.connection.hub.start().done(function () {
     // Searches the list of existing chatrooms using the string specified in the chat search box
     // Paul McCarlie
     // November 16, 2017
-    $('#searchButton').click(function () {
+    $('#searchBox').keyup(function () {
         var fuse = new Fuse(chats, options); // "list" is the item array
 
         var chat = $('#searchBox').val();
-
-        var result = fuse.search(chat);
-
-        $('#chatRooms').empty();
-        for (var i = 0; i < result.length; i++) {
-            $('#chatRooms').append(result[i]["element"]);
+        if (chat != "") {
+            var result = fuse.search(chat);
+            $('#chatRooms').empty();
+            for (var i = 0; i < result.length; i++) {
+                $('#chatRooms').append(result[i]["element"]);
+            }
+            //chat.server.populateChats();
+        } else {
+            $('#chatRooms').empty();
+            for (var cr of chats) {
+                $('#chatRooms').append(cr.element);
+            }
         }
-
     });
 });
+
+function closeError() {
+    $('#error').css("display", "none");
+}
 
