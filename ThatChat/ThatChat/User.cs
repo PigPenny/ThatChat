@@ -1,4 +1,8 @@
 ﻿using System.Threading;
+using System.Timers;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ThatChat
 {
@@ -8,6 +12,13 @@ namespace ThatChat
     /// </summary>
     public class User
     {
+        private double lifeTime = 100000;
+        private double responseTime = 10000;
+        private System.Timers.Timer pingTrigger;
+        private System.Timers.Timer delTrigger;
+
+        private string connectString;
+
         // Controls access to this user's conversation.
         private Mutex convoAccess;
 
@@ -61,9 +72,9 @@ namespace ThatChat
         /// Date:     October 17, 2017
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
-        public User(dynamic client)
+        public User(dynamic client, string connect)
         {
-            init(client, "");
+            init(client, "", connect);
         }
 
         /// <summary>
@@ -73,9 +84,9 @@ namespace ThatChat
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
         /// <param name="name">The name of this Client.</param>
-        public User(dynamic client, string name)
+        public User(dynamic client, string name, string connect)
         {
-            init(client, name);
+            init(client, name, connect);
         }
 
         /// <summary>
@@ -85,11 +96,47 @@ namespace ThatChat
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
         /// <param name="name">The name of this Client.</param>
-        private void init(dynamic client, string name)
+        private void init(dynamic client, string name, string connect)
         {
-            this.Client = client;
-            this.Accnt = new Account(name);
-            this.convoAccess = new Mutex();
+            connectString = connect;
+
+            Client = client;
+            Accnt = new Account(name);
+            convoAccess = new Mutex();
+
+            pingTrigger = new System.Timers.Timer(lifeTime);
+            pingTrigger.Elapsed += pingClient;
+            pingTrigger.AutoReset = true;
+
+            delTrigger = new System.Timers.Timer(responseTime);
+            delTrigger.Elapsed += delUser;
+            delTrigger.AutoReset = false;
+
+            pingTrigger.Start();
+        }
+
+        public void pingClient(Object source, ElapsedEventArgs e)
+        {
+            Client.ping();
+            delTrigger.Start();
+        }
+
+        public void delUser(Object source, ElapsedEventArgs e)
+        {
+            pingTrigger.Stop();
+
+            Accnt.deactivate();
+
+            foreach (KeyValuePair<string, User> user in AppVars.Users.Val)
+                user.Value.Client.deactivateUser(Id);
+
+            User usr;
+            AppVars.Users.Val.TryRemove(connectString, out usr);
+        }
+
+        public void cancelDel()
+        {
+            delTrigger.Stop();
         }
     }
 }

@@ -93,6 +93,11 @@ chat.client.deactivateUser = function (id) {
     }
 };
 
+chat.client.ping = function () {
+    chat.server.respond();
+    console.log("ping");
+};
+
 // Set initial focus to name input box
 $('#displayname').focus();
 
