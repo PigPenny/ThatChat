@@ -45,7 +45,6 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     //$('#discussionScrollDiv').scrollTop(1000000);
     //Add names for colouring later
     if (names[id] == null)
-
         names[id] = [];
 
     names[id][names[id].length] = nameDiv;
@@ -71,6 +70,7 @@ chat.client.addChat = function (name, id, count) {
     document.body.appendChild(a);
     
     a.onclick = function () {
+        currentName = "";
         $("#discussion").empty();
         chat.server.selectChatRoom(id);
         chat.server.init();
