@@ -9,9 +9,6 @@ namespace ThatChat
     /// </summary>
     public class Catalogue
     {
-        // Keeps track of the number of conversations that have been added.
-        private int count = -1;
-
         // Holds the conversations.
         private ConcurrentDictionary<int, Conversation> conversations;
 
@@ -34,9 +31,8 @@ namespace ThatChat
         /// <returns> The key corresponding to the conversation. </returns>
         public int addConversation(Conversation convo)
         {
-            conversations.TryAdd(Interlocked.Increment(ref count), convo);
-
-            return count;
+            conversations.TryAdd(convo.Id, convo);
+            return convo.Id;
         }
 
         /// <summary>
