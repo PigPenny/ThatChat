@@ -24,6 +24,10 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     var nameDiv     = document.createElement("div");
     var contentDiv  = document.createElement("div");
 
+    //Add names for colouring later
+    if (names[id] == null)
+        names[id] = [];
+
     if (active) {
         nameDiv.className = "active accnt";
     }
@@ -35,7 +39,7 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     contentDiv.innerText = message;
     addMedia(contentDiv);
 
-    if (!(prevId == id && names[id][name[id].length-1].className != "inactive accnt"))
+    if (!(prevId == id && names[id][names[id].length-1].className != "inactive accnt"))
         li.appendChild(nameDiv);
 
     li.appendChild(contentDiv);
@@ -46,10 +50,6 @@ chat.client.broadcastMessage = function (name, message, id, active) {
 
     //scroll to bottom of chat div
     $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
-
-    //Add names for colouring later
-    if (names[id] == null)
-        names[id] = [];
 
     names[id][names[id].length] = nameDiv;
 };
@@ -71,7 +71,7 @@ chat.client.addChat = function (name, id, count) {
     document.body.appendChild(a);
 
     a.onclick = function () {
-        currentName = "";
+        prevId = -1;
         $("#discussion").empty();
         chat.server.selectChatRoom(id);
         chat.server.init();

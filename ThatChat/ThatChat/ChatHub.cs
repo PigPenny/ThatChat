@@ -2,6 +2,7 @@
 using Microsoft.AspNet.SignalR;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System;
 
 namespace ThatChat
 {
@@ -39,6 +40,10 @@ namespace ThatChat
             {
                 Debug.Print(e.Message);
             }
+            catch (NullReferenceException e)
+            {
+                Debug.Print(e.Message);
+            }
         }
 
         /// <summary>
@@ -50,7 +55,15 @@ namespace ThatChat
         /// <param name="client"> The client to recieve the message. </param>
         public void sendTo(Message msg, dynamic client)
         {
-            client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id, msg.Acct.Active);
+            try
+            {
+                client.broadcastMessage(msg.Acct.Name, msg.Content, msg.Acct.Id, msg.Acct.Active);
+            }
+            catch (NullReferenceException e)
+            {
+                Debug.Print(e.Message);
+            }
+            
         }
 
         /// <summary>
@@ -61,8 +74,14 @@ namespace ThatChat
         /// <param name="name"> The name that the client has chosen. </param>
         public void init()
         {
-            // Sends the client all the messages that have been sent in their absense.
-            users[Context.ConnectionId].Convo.forAllMessages(updateCaller);
+            try
+            {
+                // Sends the client all the messages that have been sent in their absense.
+                users[Context.ConnectionId].Convo.forAllMessages(updateCaller);
+            } catch (NullReferenceException e)
+            {
+                Debug.Print(e.Message);
+            }
         }
 
         /// <summary>
@@ -71,7 +90,7 @@ namespace ThatChat
         /// Date:     November 18, 2017
         /// </summary>
         /// <param name="msg"></param>
-        public void updateCaller(Message msg)
+        protected void updateCaller(Message msg)
         {
             sendTo(msg, Clients.Caller);
         }
@@ -84,7 +103,16 @@ namespace ThatChat
         /// <param name="name"> The name of the user. </param>
         public void addUser(string name)
         {
-            users[Context.ConnectionId] = new User(Clients.Caller, name, Context.ConnectionId);
+            string connect = Context.ConnectionId;
+            if (!users.Keys.Contains(connect))
+            {
+                users[connect]
+                    = new User(Clients.Caller, name, connect);
+            }
+            else
+            {
+                users[connect].Accnt = new Account(name);
+            }
         }
 
         /// <summary>
@@ -162,17 +190,21 @@ namespace ThatChat
                 int id = catalogue.addConversation(new Conversation(name));
                 Clients.All.addChat(catalogue[id].Name, id, catalogue[id].getNumberUsers());
             }
-            catch { }
+            catch (NullReferenceException e)
+            {
+                Debug.Print(e.Message);
+            }
         }
+
         public void respond()
         {
             try
             {
                 users[Context.ConnectionId].cancelDel();
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException e)
             {
-                //TO
+                Debug.Print(e.Message);
             }
         }
     }
