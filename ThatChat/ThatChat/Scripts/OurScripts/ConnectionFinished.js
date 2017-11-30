@@ -59,8 +59,6 @@ $.connection.hub.start().done(function () {
     chat.server.populateChats();
     //Adds the new user specified in the displayname textbox
     chat.server.addUser($('#displayname').val());
-    //Puts the user in the first chat room on the list
-    chat.server.selectChatRoom(0);
     chat.server.init();
 
     //options for our fuzzy search, only threshold should need to be changed

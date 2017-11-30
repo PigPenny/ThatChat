@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace ThatChat
 {
@@ -12,11 +14,20 @@ namespace ThatChat
         // Both of the above refer to all that have been created, not just those active.
         private static int invalidCount = 0;
         private static int accntCount = 0;
+        private static HashSet<string> namesInUse;
 
         /// <summary>
         /// The user's name.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name {
+            get => name;
+            private set
+            {
+                name = value;
+                namesInUse.Add(name);
+            }
+        }
+        private string name;
 
         /// <summary>
         /// True if this account is currently in use, false otherwise.
@@ -34,6 +45,11 @@ namespace ThatChat
         }
         private int id;
 
+        static Account()
+        {
+            namesInUse = new HashSet<string>();
+        }
+
         /// <summary>
         /// Purpose:  Instantiates an object of the Account class.
         /// Author:   Andrew Busto
@@ -44,17 +60,29 @@ namespace ThatChat
         {
             Active = true;
 
+            if (((object)name) == null)
+                name = "";
+
+            name.Trim();
+            applyName(name);
+
+            id = Interlocked.Increment(ref accntCount);
+        }
+
+        private void applyName(string name)
+        {
             // Checks to make sure that the given name is valid.
             // If it isn't a different one will be assigned.
             if (validName(name))
             {
-                this.Name = name;
-            }else
-            {
-                this.Name = generateName(Interlocked.Increment(ref invalidCount));
+                Name = name;
             }
-
-            id = Interlocked.Increment(ref accntCount);
+            else
+            {
+                string hexAppend = 
+                    String.Format("{0:X}", Interlocked.Increment(ref invalidCount));
+                applyName(name + hexAppend);
+            }
         }
 
         /// <summary>
@@ -78,7 +106,7 @@ namespace ThatChat
         /// <returns> True if name is valid, false otherwise. </returns>
         private bool validName(string name)
         {
-            return !name.Equals("");
+            return !name.Equals("") && !namesInUse.Contains(name);
         }
 
         /// <summary>
@@ -88,6 +116,7 @@ namespace ThatChat
         /// </summary>
         public void deactivate()
         {
+            namesInUse.Remove(Name);
             Active = false;
         }
     }
