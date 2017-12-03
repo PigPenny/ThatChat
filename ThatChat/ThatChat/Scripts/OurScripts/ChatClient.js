@@ -2,6 +2,10 @@
 {
     if (regex.exec(content.innerText) != null) {
         var media = document.createElement(type);
+        media.onerror = function () {
+            this.remove();
+        };
+
         console.log(type);
         media.src = content.innerText;
         media.style.maxWidth = '80%';

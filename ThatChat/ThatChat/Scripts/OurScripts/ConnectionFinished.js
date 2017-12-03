@@ -1,4 +1,12 @@
-﻿// Start the connection.
+﻿// The message displayed to new users
+var startMessage = "Hello, welcome to ThatChat! " +
+    "You're not connected to any chats right now, " +
+    "you'll have to select one from the list to the " +
+    "left before you can start talking to anyone. " +
+    "You can customize your name with the box to the " +
+    "top of the page, and you can send messages with the box to the bottom!";
+
+// Start the connection.
 $.connection.hub.start().done(function () {
     // Calls the sendmessage function when the user presses enter in the message textbox 
     // Paul McCarlie
@@ -59,7 +67,7 @@ $.connection.hub.start().done(function () {
     chat.server.populateChats();
     //Adds the new user specified in the displayname textbox
     chat.server.addUser($('#displayname').val());
-    chat.server.init();
+    chat.client.broadcastMessage("God", startMessage, 0, true);
 
     //options for our fuzzy search, only threshold should need to be changed
     var options = {
