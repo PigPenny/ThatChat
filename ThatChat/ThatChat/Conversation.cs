@@ -15,6 +15,8 @@ namespace ThatChat
         private static int count = -1;
         public int Id { get; private set; }
 
+        private static HashSet<string> namesInUse = new HashSet<string>();
+
         // Manage access to messages and users respectively.
         private Mutex messageAccess;
         private Mutex userAccess;
@@ -54,12 +56,14 @@ namespace ThatChat
             delTrigger.Elapsed += delete;
             delTrigger.Start();
 
-            name = name.Trim(' ');
+            name = name.Trim();
             if (name.Length == 0)
-            {
-                throw new ArgumentException("name canot be empty");
-            }
-            this.Name = name;
+                throw new ArgumentException("Name canot be empty.");
+            if (namesInUse.Contains(name))
+                throw new ArgumentException("Name already in use.");
+
+            Name = name;
+            namesInUse.Add(name);
         }
 
         /// <summary>

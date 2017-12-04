@@ -194,6 +194,10 @@ namespace ThatChat
             {
                 Debug.Print(e.Message);
             }
+            catch (ArgumentException e)
+            {
+                Debug.Print(e.Message);
+            }
         }
 
         public void respond()
