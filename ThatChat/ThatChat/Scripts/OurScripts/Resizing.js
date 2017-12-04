@@ -19,20 +19,13 @@ function closeSide() {
 $(window).resize(function () {
     console.log($(document).width());
     console.log($(document).height());
-    if (open) {
-        if ($(document).width() > 992) {
-            openSide();
-        }
-        else {
-            closeSide();
-        }
-    } else {
-        if ($(document).width() > 992) {
-            openSide();
-        }
-        if (document.getElementById("mySideNav").style.width == "260px") {
-            closeSide();
-        }
 
+    if ($(document).width() > 992)
+    {
+        openSide();
+    }
+    else
+    {
+        closeSide();
     }
 });

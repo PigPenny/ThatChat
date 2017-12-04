@@ -7,7 +7,7 @@
 }
 
 .inactive {
-    color: ghostwhite;
+    color: orangered;
     text-decoration:line-through;
 }
 

@@ -15,11 +15,13 @@ namespace ThatChat
         private static int count = -1;
         public int Id { get; private set; }
 
+        private static HashSet<string> namesInUse = new HashSet<string>();
+
         // Manage access to messages and users respectively.
         private Mutex messageAccess;
         private Mutex userAccess;
 
-        private double delTime = 100000;
+        private double delTime = 600000;
         private System.Timers.Timer delTrigger;
 
         // The messages sent over the course of this Conversation.
@@ -53,12 +55,15 @@ namespace ThatChat
             delTrigger.AutoReset = false;
             delTrigger.Elapsed += delete;
             delTrigger.Start();
-            name = name.Trim(' ');
+
+            name = name.Trim();
             if (name.Length == 0)
-            {
-                throw new ArgumentException("name canot be empty");
-            }
-            this.Name = name;
+                throw new ArgumentException("Name canot be empty.");
+            if (namesInUse.Contains(name))
+                throw new ArgumentException("Name already in use.");
+
+            Name = name;
+            namesInUse.Add(name);
         }
 
         /// <summary>
@@ -167,6 +172,8 @@ namespace ThatChat
         public void delete(Object source, ElapsedEventArgs e)
         {
             AppVars.Conversations.Val.deleteConversation(this.Id);
+            foreach (KeyValuePair<string, User> usr in AppVars.Users.Val)
+                usr.Value.Client.removeChat(Id);
         }
 
         public int getNumberUsers()

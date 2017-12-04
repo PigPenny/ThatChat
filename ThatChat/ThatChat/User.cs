@@ -12,8 +12,8 @@ namespace ThatChat
     /// </summary>
     public class User
     {
-        private double lifeTime = 100000;
-        private double responseTime = 10000;
+        private double lifeTime = 5000;
+        private double responseTime = 5000;
         private System.Timers.Timer pingTrigger;
         private System.Timers.Timer delTrigger;
 
@@ -50,6 +50,7 @@ namespace ThatChat
             {
                 return convo;
             }
+
             set
             {
                 convoAccess.WaitOne();
@@ -104,15 +105,17 @@ namespace ThatChat
             Accnt = new Account(name);
             convoAccess = new Mutex();
 
-            pingTrigger = new System.Timers.Timer(lifeTime);
-            pingTrigger.Elapsed += pingClient;
-            pingTrigger.AutoReset = true;
-
-            delTrigger = new System.Timers.Timer(responseTime);
-            delTrigger.Elapsed += delUser;
-            delTrigger.AutoReset = false;
+            prepTimer(out pingTrigger, lifeTime, pingClient);
+            prepTimer(out delTrigger, responseTime, delUser);
 
             pingTrigger.Start();
+        }
+
+        public void prepTimer(out System.Timers.Timer timer, double time, ElapsedEventHandler handler)
+        {
+            timer = new System.Timers.Timer(time);
+            timer.Elapsed += handler;
+            timer.AutoReset = false;
         }
 
         public void pingClient(Object source, ElapsedEventArgs e)
@@ -124,11 +127,13 @@ namespace ThatChat
         public void delUser(Object source, ElapsedEventArgs e)
         {
             pingTrigger.Stop();
-
             Accnt.deactivate();
 
             foreach (KeyValuePair<string, User> user in AppVars.Users.Val)
                 user.Value.Client.deactivateUser(Id);
+
+            if (((object)convo) != null)
+                convo.removeUser(this);
 
             User usr;
             AppVars.Users.Val.TryRemove(connectString, out usr);
@@ -137,6 +142,7 @@ namespace ThatChat
         public void cancelDel()
         {
             delTrigger.Stop();
+            pingTrigger.Start();
         }
     }
 }
