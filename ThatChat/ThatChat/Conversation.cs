@@ -11,6 +11,8 @@ namespace ThatChat
     /// </summary>
     public class Conversation
     {
+        private const int MAX_NAME_LENGTH = 64;
+
         // Keeps track of the number of conversations that exist.
         private static int count = -1;
         public int Id { get; private set; }
@@ -57,8 +59,8 @@ namespace ThatChat
             delTrigger.Start();
 
             name = name.Trim();
-            if (name.Length == 0)
-                throw new ArgumentException("Name canot be empty.");
+            if (name.Length == 0 || name.Length > MAX_NAME_LENGTH)
+                throw new ArgumentException("Name invalid length.");
             if (namesInUse.Contains(name))
                 throw new ArgumentException("Name already in use.");
 

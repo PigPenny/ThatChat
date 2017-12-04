@@ -36,6 +36,12 @@ $.connection.hub.start().done(function () {
         }
     });
 
+    $('#TextBoxChatAdd').keypress(function (e) {
+        if (e.which == 13) {
+            $('#ButtonChatAdd').click();
+        }
+    });
+
     // Sets/resets the users name when the user clicks setname
     // Andrew Busto
     // November 7, 2017
@@ -122,7 +128,7 @@ $.connection.hub.start().done(function () {
 
 function valid(name) {
     var regex = /^[\w\-\s]+$/;
-    return name.length != 0 && regex.exec(name) != null;
+    return name.length > 0 && regex.exec(name) != null && name.length <= 64;
 }
 
 // Set initial focus to name input box
