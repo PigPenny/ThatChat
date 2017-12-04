@@ -1,7 +1,8 @@
-﻿using System;
+﻿using System.Threading;
+using System.Timers;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Diagnostics;
 
 namespace ThatChat
 {
@@ -11,6 +12,15 @@ namespace ThatChat
     /// </summary>
     public class User
     {
+        private double lifeTime = 5000;
+        private double responseTime = 5000;
+        private System.Timers.Timer pingTrigger;
+        private System.Timers.Timer delTrigger;
+
+        private string connectString;
+
+        // Controls access to this user's conversation.
+        private Mutex convoAccess;
 
         /// <summary>
         /// The account associated with this user.
@@ -27,58 +37,112 @@ namespace ThatChat
         /// </summary>
         public string Name { get => Accnt.Name; }
 
-        public int Id { get => Accnt.Id; }
+        /// <summary>
+        /// The unique identifier of this user's current account.
+        /// </summary>
+        public long Id { get => Accnt.Id; }
 
-        private Conversation convo;
+        /// <summary>
+        /// The conversation this user is currently involved in.
+        /// </summary>
         public Conversation Convo {
             get
             {
                 return convo;
             }
+
             set
             {
+                convoAccess.WaitOne();
+
+                // Ensures this user is only ever in one conversation.
                 if (((object) convo) != null)
-                    convo.Users.Remove(this);
+                    convo.removeUser(this);
 
                 convo = value;
-                convo.Users.Add(this);
+                convo.addUser(this);
+
+                convoAccess.ReleaseMutex();
             }
         }
+        private Conversation convo;
 
         /// <summary>
         /// Purpose:  Instantiates an object of the User class.
-        /// Author:   Andrew Busto
+        /// Author:   Connor Goudie/Chandu Dissanayake
         /// Date:     October 17, 2017
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
-        public User(dynamic client)
+        public User(dynamic client, string connect)
         {
-            init(client, "");
+            init(client, "", connect);
         }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the User class.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Paul McCarlie
         /// Date:     October 29, 2017
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
         /// <param name="name">The name of this Client.</param>
-        public User(dynamic client, string name)
+        public User(dynamic client, string name, string connect)
         {
-            init(client, name);
+            init(client, name, connect);
         }
 
         /// <summary>
         /// Purpose:  Initializes the values in this User to valid states.
-        /// Author:   Andrew Busto
+        /// Author:   Andrew Busto/Paul McCarlie
         /// Date:     October 30, 2017
         /// </summary>
         /// <param name="client">The client to connect to (eg. Client.Caller).</param>
         /// <param name="name">The name of this Client.</param>
-        private void init(dynamic client, string name)
+        private void init(dynamic client, string name, string connect)
         {
-            this.Client = client;
-            this.Accnt = new Account(name);
+            connectString = connect;
+
+            Client = client;
+            Accnt = new Account(name);
+            convoAccess = new Mutex();
+
+            prepTimer(out pingTrigger, lifeTime, pingClient);
+            prepTimer(out delTrigger, responseTime, delUser);
+
+            pingTrigger.Start();
+        }
+
+        public void prepTimer(out System.Timers.Timer timer, double time, ElapsedEventHandler handler)
+        {
+            timer = new System.Timers.Timer(time);
+            timer.Elapsed += handler;
+            timer.AutoReset = false;
+        }
+
+        public void pingClient(Object source, ElapsedEventArgs e)
+        {
+            Client.ping();
+            delTrigger.Start();
+        }
+
+        public void delUser(Object source, ElapsedEventArgs e)
+        {
+            pingTrigger.Stop();
+            Accnt.deactivate();
+
+            foreach (KeyValuePair<string, User> user in AppVars.Users.Val)
+                user.Value.Client.deactivateUser(Id);
+
+            if (((object)convo) != null)
+                convo.removeUser(this);
+
+            User usr;
+            AppVars.Users.Val.TryRemove(connectString, out usr);
+        }
+
+        public void cancelDel()
+        {
+            delTrigger.Stop();
+            pingTrigger.Start();
         }
     }
 }

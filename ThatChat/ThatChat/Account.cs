@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Web;
 
 namespace ThatChat
 {
@@ -11,47 +9,85 @@ namespace ThatChat
     /// </summary>
     public class Account
     {
-        // A counter keeping track of the number of times an 
-        // Account has been instantiated with invalid inputs.
-        private static Int32 invalidCount = 0;
+        // invalidCount - Keeps track of the number of invalid accounts
+        // accntCount   - Keeps track of the number of accounts
+        // Both of the above refer to all that have been created, not just those active.
+        private static int invalidCount = 0;
+        private static int accntCount = 0;
+        private static HashSet<string> namesInUse;
 
-        private static Int32 accntCount = 0;
+        private const int MAX_NAME_LENGTH = 64;
 
         /// <summary>
         /// The user's name.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name {
+            get => name;
+            private set
+            {
+                name = value;
+                namesInUse.Add(name);
+            }
+        }
+        private string name;
 
         /// <summary>
         /// True if this account is currently in use, false otherwise.
         /// </summary>
-        public bool Active { get; set; }
+        public bool Active { get; private set; }
 
-        public int Id { get; private set; }
+        /// <summary>
+        /// This Accounts unique identifier.
+        /// </summary>
+        public int Id {
+            get
+            {
+                return id;
+            }
+        }
+        private int id;
+
+        static Account()
+        {
+            namesInUse = new HashSet<string>();
+        }
 
         /// <summary>
         /// Purpose:  Instantiates an object of the Account class.
         /// Author:   Andrew Busto
         /// Date:     October 17, 2017
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The username associated with this Account </param>
         public Account(string name)
         {
             Active = true;
 
+            if (((object)name) == null)
+                name = "";
+
+            name.Trim();
+            applyName(name);
+
+            id = Interlocked.Increment(ref accntCount);
+        }
+
+        private void applyName(string name)
+        {
+            if (name.Length > MAX_NAME_LENGTH)
+                name = "";
+                
             // Checks to make sure that the given name is valid.
             // If it isn't a different one will be assigned.
             if (validName(name))
             {
-                this.Name = name;
-            }else
-            {
-                Interlocked.Increment(ref invalidCount);
-                this.Name = generateName();
+                Name = name;
             }
-
-            Id = accntCount;
-            Interlocked.Increment(ref accntCount);
+            else
+            {
+                string hexAppend = 
+                    String.Format("{0:X}", Interlocked.Increment(ref invalidCount));
+                applyName(name + hexAppend);
+            }
         }
 
         /// <summary>
@@ -61,9 +97,9 @@ namespace ThatChat
         /// Date:     October 31, 2017
         /// </summary>
         /// <returns> An auto generated name. </returns>
-        private string generateName()
+        private string generateName(int inv)
         {
-            return "Invalid name #" + invalidCount;
+            return "Invalid name #" + inv;
         }
 
         /// <summary>
@@ -75,7 +111,18 @@ namespace ThatChat
         /// <returns> True if name is valid, false otherwise. </returns>
         private bool validName(string name)
         {
-            return !name.Equals("");
+            return !name.Equals("") && !namesInUse.Contains(name);
+        }
+
+        /// <summary>
+        /// Purpose:  Deactivates an account.
+        /// Author:   Chandu Dissanayake
+        /// Date:     November 17, 2017
+        /// </summary>
+        public void deactivate()
+        {
+            namesInUse.Remove(Name);
+            Active = false;
         }
     }
 }
