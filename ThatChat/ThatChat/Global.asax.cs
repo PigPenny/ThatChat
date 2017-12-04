@@ -37,6 +37,10 @@ namespace ThatChat
             AppVars.Conversations.Val[2].addMessage(new Message(acct1, "hey gents"));
             AppVars.Conversations.Val[2].addMessage(new Message(acct2, "and ladies!"));
 
+            acct1.deactivate();
+            acct2.deactivate();
+            acct3.deactivate();
+
             // Initializes Admin.  IMPORTANT.
             AppVars.Admin.Val = new Account("GOD");
 
