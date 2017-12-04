@@ -16,6 +16,8 @@ namespace ThatChat
         private static int accntCount = 0;
         private static HashSet<string> namesInUse;
 
+        private const int MAX_NAME_LENGTH = 64;
+
         /// <summary>
         /// The user's name.
         /// </summary>
@@ -71,6 +73,9 @@ namespace ThatChat
 
         private void applyName(string name)
         {
+            if (name.Length > MAX_NAME_LENGTH)
+                applyName("");
+
             // Checks to make sure that the given name is valid.
             // If it isn't a different one will be assigned.
             if (validName(name))

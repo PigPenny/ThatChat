@@ -35,8 +35,8 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     if (active) {
         Math.seedrandom(id);
         var r = 255;
-        var g = Math.floor(Math.random() * 250);
-        var b = Math.floor(Math.random() * 250)
+        var g = Math.floor(Math.random() * 234) + 16;
+        var b = Math.floor(Math.random() * 140) + 16
         nameDiv.style.color = "#" + r.toString(16) + g.toString(16) + b.toString(16);
         nameDiv.className = "active accnt";
     }

@@ -3,11 +3,10 @@
 }
 
 .active {
-    color: darkorange;
+    text-decoration: underline;
 }
 
 .inactive {
-    color: orangered;
     text-decoration:line-through;
 }
 
