@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 
 namespace ThatChat
 {
@@ -23,7 +18,8 @@ namespace ThatChat
             Account acct1 = new Account("face");
             Account acct2 = new Account("facade");
             Account acct3 = new Account("arcade");
-            // Initializes the Conversation.  IMPORTANT.
+
+            // Initializes the Conversations.  IMPORTANT.
             AppVars.Conversations.Val = new Catalogue();
 
             AppVars.Conversations.Val.addConversation(new Conversation("convo0"));
@@ -40,22 +36,10 @@ namespace ThatChat
             AppVars.Conversations.Val.addConversation(new Conversation("convo2"));
             AppVars.Conversations.Val[2].addMessage(new Message(acct1, "hey gents"));
             AppVars.Conversations.Val[2].addMessage(new Message(acct2, "and ladies!"));
-            try
-            {
-                AppVars.Conversations.Val.addConversation(new Conversation("  "));
-
-            }
-            catch { }
-
-            if (AppVars.Conversations.Val.Keys.Count == 3)
-            {
-                Debug.WriteLine("did it reddit");
-            }
-            //AppVars.Conversations.Val[3].addMessage(new Message(acct1, "hello"));
-            //AppVars.Conversations.Val[3].addMessage(new Message(acct2, "world"));
 
             // Initializes Admin.  IMPORTANT.
             AppVars.Admin.Val = new Account("GOD");
+
             // Initializes Users.  IMPORTANT.
             AppVars.Users.Val = new ConcurrentDictionary<string, User>();
         }

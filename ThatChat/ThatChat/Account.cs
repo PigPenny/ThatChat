@@ -74,8 +74,8 @@ namespace ThatChat
         private void applyName(string name)
         {
             if (name.Length > MAX_NAME_LENGTH)
-                applyName("");
-
+                name = "";
+                
             // Checks to make sure that the given name is valid.
             // If it isn't a different one will be assigned.
             if (validName(name))
