@@ -12,6 +12,7 @@
     <script src="Scripts/fuse.js"></script>
     
     <!--Our Scripts.-->
+    <script src="Scripts/seedrandom-released/seedrandom.min.js"></script>
     <script src="Scripts/OurScripts/SharedVars.js"></script>
     <script src="Scripts/OurScripts/ChatClient.js"></script>
     <script src="Scripts/OurScripts/ConnectionFinished.js"></script>
@@ -68,7 +69,7 @@
 
                     </div>
                     <hr />
-                    <div id="discussionScrollDiv" style="overflow-y: scroll; height: 500px;">
+                    <div id="discussionScrollDiv" style="overflow-y: scroll; overflow-wrap: break-word; height: 500px;">
                         <ul id="discussion" style="list-style: none;"></ul>
                     </div>
                     <hr />
