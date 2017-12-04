@@ -36,7 +36,7 @@
     <div class="container">
         <div class="row" style="height: 100%;">
             <div class="col-md-4">
-                <div id="mySideNav" class="sidenav grad">
+                <div id="mySideNav" class="sidenav">
                     <a href="javascript:void(0)" id="closebtn" onclick="closeSide()">&times;</a>
                     <div class="jumbotron" style="padding: 20px 20px 20px 20px">
                         <h3>&nbsp;Conversations</h3>
@@ -79,6 +79,7 @@
                     </div>
                 </div>
             </div>
+        <input type="button" value="Background: Dynamic" class="btn-primary" id="OnOff" />
         </div>
     </div>
 

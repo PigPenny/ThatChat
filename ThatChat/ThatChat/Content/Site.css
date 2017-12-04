@@ -72,18 +72,22 @@ textarea {
     margin: 5px;
 }
 
+#OnOff{
+    float: right;
+}
+
 .chatbox {
     background-color: #7A7979;
     padding: 15px;
 }
 
-
+.stat {
+    background: #4b79cf;
+    background-size: 600% 600%;
+    padding: 0;
+}
 .grad {
-    /*background: #3C7293; /* For browsers that do not support gradients */
-    /*background: -webkit-linear-gradient(left top, #2DAF93, #3C7293); 
-    background: -o-linear-gradient(bottom right, #2DAF93, #3C7293); 
-    background: -moz-linear-gradient(bottom right, #2DAF93, #3C7293); 
-    background: linear-gradient(to bottom right, #2DAF93, #3C7293);*/
+    /*background: linear-gradient(230deg, #ff0000, #ff8800, #ffff00, #88ff00, #00ff00, #00ff88, #00ffff, #0088ff, #0000ff, #8800ff);*/
     background: linear-gradient(230deg, #a24bcf, #4b79cf, #4bc5cf);
     background-size: 600% 600%;
     -webkit-animation: AnimationName 30s ease infinite;
