@@ -6,6 +6,8 @@ var startMessage = "Hello, welcome to ThatChat! " +
     "You can customize your name with the box to the " +
     "top of the page, and you can send messages with the box to the bottom!";
 
+var background = true;
+
 // Start the connection.
 $.connection.hub.start().done(function () {
     // Calls the sendmessage function when the user presses enter in the message textbox 
@@ -118,6 +120,20 @@ $.connection.hub.start().done(function () {
             }
         }
     });
+
+    $('#OnOff').click(function () {
+        background = !background;
+        console.log(background);
+        if (!background) {
+            $('#OnOff').attr('value', "Background: Static");
+            $('body').removeClass("grad");
+            $('body').addClass("stat");
+        } else if (background) {
+            $('#OnOff').attr('value', "Background: Dynamic");
+            $('body').removeClass("stat");
+            $('body').addClass("grad");
+        }
+    })
 });
 
 function valid(name) {
