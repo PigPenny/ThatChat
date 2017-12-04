@@ -149,15 +149,13 @@ textarea {
     }
 }
 
-
-
-
 @media screen and (max-width: 370px) {
     .title {
         font-size: 22px;
         top: 5px;
     }
 }
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
@@ -212,20 +210,21 @@ textarea {
     justify-content: space-between;
 }
 
-    #userInfo #displayname {
-        flex: 2 0 0;
-    }
+#userInfo #displayname {
+    flex: 2 0 0;
+}
 
-    #userInfo #setname {
-        flex: 1 0 0;
-    }
+#userInfo #setname {
+    flex: 1 0 0;
+}
 
-    #userInfo .currentName {
-        padding-top: 10px;
-        color: white;
-        font-size: larger;
-        flex: 1 0 0;
-    }
+#userInfo .currentName {
+    padding-top: 10px;
+    color: white;
+    font-size: larger;
+    flex: 1 0 0;
+}
+
 #mySideNav .jumbotron {
     background-size: 1000%;
     padding: 0;
