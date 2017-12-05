@@ -10,6 +10,8 @@ var background = true;
 
 // Start the connection.
 $.connection.hub.start().done(function () {
+    $('#counter').text(0);
+
     // Calls the sendmessage function when the user presses enter in the message textbox 
     // Paul McCarlie
     // November 9, 2017
@@ -119,6 +121,12 @@ $.connection.hub.start().done(function () {
                 $('#chatRooms').append(cr.element);
             }
         }
+    });
+
+    $('#message').keyup(function () {
+        var length = $('#message').val().length;
+        console.log(length);
+        $('#counter').text(length);
     });
 
     $('#OnOff').click(function () {
