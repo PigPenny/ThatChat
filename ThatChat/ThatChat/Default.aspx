@@ -10,7 +10,7 @@
     <script src="signalr/hubs"></script>
     <!--Reference to script to update the page and send messages.-->
     <script src="Scripts/fuse.js"></script>
-    
+
     <!--Our Scripts.-->
     <script src="Scripts/seedrandom-released/seedrandom.min.js"></script>
     <script src="Scripts/OurScripts/SharedVars.js"></script>
@@ -38,7 +38,7 @@
             <div class="col-md-4">
                 <div id="mySideNav" class="sidenav">
                     <a href="javascript:void(0)" id="closebtn" onclick="closeSide()">&times;</a>
-                    <div class="jumbotron" style="padding: 20px 20px 20px 20px">
+                    <div id="sidecontent" class="jumbotron" style="padding: 20px 20px 20px 20px">
                         <h3>&nbsp;Conversations</h3>
                         <div id="search">
                             <input type="text" id="searchBox" class="form-control" placeholder="Search for a chat room" />
@@ -46,8 +46,10 @@
 
                         <ul id="chatRooms" style="list-style: none; padding: 0">
                         </ul>
-                        <input type="text" id="TextBoxChatAdd" class="inline form-control" placeholder="Add a new chat room" />
-                        <input type="button" class="form-control btn-success" id="ButtonChatAdd" value="+">
+                        <div id="addchat">
+                            <input type="text" id="TextBoxChatAdd" class="inline form-control" placeholder="Add a new chat room" />
+                            <input type="button" class="form-control btn-success" id="ButtonChatAdd" value="+">
+                        </div>
                         <div id="error" style="display: none;">
                             Invalid chat room name
                         </div>
@@ -60,16 +62,14 @@
             </div>
 
             <div class="col-md-8">
-                <div class="jumbotron">
+                <div class="jumbotron" id="maincontent">
                     <div id="userInfo">
-                        <asp:Label class="currentName" runat="server" ID="userID" Text="Username"></asp:Label>
-
+                        <%--<div id="userID" style="color:white;">awgawgwae</div>--%>
                         <input type="text" id="displayname" class="form-control" />
-                        <input type="button" id="setname" class="form-control btn-primary" value="Set Name" />
-
+                        <input type="button" id="setname" class="form-control btn-primary" value="Set Name"/>
                     </div>
                     <hr />
-                    <div id="discussionScrollDiv" style="overflow-y: scroll; overflow-wrap: break-word; height: 500px;">
+                    <div id="discussionScrollDiv" style="overflow-y: scroll; overflow-wrap: break-word;">
                         <ul id="discussion" style="list-style: none;"></ul>
                     </div>
                     <hr />
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        <input type="button" value="Background: Dynamic" class="btn-primary" id="OnOff" />
+            <input type="button" value="Background: Dynamic" class="btn-primary" id="OnOff" />
         </div>
     </div>
 

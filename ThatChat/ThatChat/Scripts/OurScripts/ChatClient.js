@@ -1,4 +1,5 @@
-﻿function embedFile(regex, content, type)
+﻿var username = "";
+function embedFile(regex, content, type)
 {
     if (regex.exec(content.innerText) != null) {
         var media = document.createElement(type);
@@ -61,7 +62,6 @@ chat.client.broadcastMessage = function (name, message, id, active) {
 
     //scroll to bottom of chat div
     $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
-
     names[id][names[id].length] = nameDiv;
 };
 
@@ -125,5 +125,9 @@ chat.client.deactivateUser = function (id) {
 
 chat.client.ping = function () {
     chat.server.respond();
-    console.log("ping");
+    //console.log("ping");
 };
+
+//function setName() {
+//    var name = document.getElementById("displayname").val;
+//}
