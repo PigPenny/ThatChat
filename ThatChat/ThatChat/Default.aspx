@@ -65,7 +65,7 @@
                 <div class="jumbotron" id="maincontent">
                     <div id="userInfo">
                         <%--<div id="userID" style="color:white;">awgawgwae</div>--%>
-                        <input type="text" id="displayname" class="form-control" />
+                        <input type="text" id="displayname" class="form-control" placeholder="Enter name here."/>
                         <input type="button" id="setname" class="form-control btn-primary" value="Set Name"/>
                     </div>
                     <hr />

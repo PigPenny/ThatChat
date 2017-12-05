@@ -41,6 +41,11 @@ ul {
     height: 100%;
 }
 
+.counter {
+    width: 5%;
+    color: white;
+}
+
 #discussionScrollDiv {
     color: white;
     overflow-y: scroll;

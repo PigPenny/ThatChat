@@ -21,6 +21,10 @@ function addMedia(content) {
     embedFile(/\.(jpeg|jpg|gif|png)$/, content, 'img');
     embedFile(/\.(mp4|webm)$/, content, 'video');
 }
+$(this).attr("placeholder", "Type your answer here");
+chat.client.displayName = function (name) {
+    $('#displayname').attr("placeholder", name);
+};
 
 // Create a function that the hub can call to broadcast messages.
 // Chandu Dissanayake/Andrew Busto
@@ -51,7 +55,7 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     contentDiv.innerText = message;
     addMedia(contentDiv);
 
-    if (!(prevId == id && names[id][names[id].length-1].className != "inactive accnt"))
+    if (prevId != id)
         li.appendChild(nameDiv);
 
     li.appendChild(contentDiv);
