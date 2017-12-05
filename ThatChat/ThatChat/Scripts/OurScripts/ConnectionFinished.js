@@ -77,7 +77,7 @@ $.connection.hub.start().done(function () {
     chat.server.populateChats();
     //Adds the new user specified in the displayname textbox
     chat.server.addUser($('#displayname').val());
-    chat.client.broadcastMessage("God", startMessage, 0, true);
+    chat.client.broadcastMessage("GOD", startMessage, 0, true);
 
     //options for our fuzzy search, only threshold should need to be changed
     var options = {
