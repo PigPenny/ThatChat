@@ -127,6 +127,7 @@ namespace ThatChat
             {
                 deactivate(users[Context.ConnectionId].Accnt);
                 users[Context.ConnectionId].Accnt = new Account(name);
+                Clients.Caller.displayName(name);
             }
             catch (KeyNotFoundException e)
             {

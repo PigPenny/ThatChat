@@ -21,6 +21,10 @@ function addMedia(content) {
     embedFile(/\.(jpeg|jpg|gif|png)$/, content, 'img');
     embedFile(/\.(mp4|webm)$/, content, 'video');
 }
+$(this).attr("placeholder", "Type your answer here");
+chat.client.displayName = function (name) {
+    $('#displayname').attr("placeholder", name);
+};
 
 // Create a function that the hub can call to broadcast messages.
 // Chandu Dissanayake/Andrew Busto
