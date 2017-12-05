@@ -237,6 +237,7 @@ textarea {
     margin-top: 0px;
     overflow-y: scroll;
 }
+
 @media screen and (max-width: 992px) {
     #body-content {
         margin: 0;
@@ -273,25 +274,21 @@ textarea {
         transition: 0.5s;
     }
 
-        #mySideNav .jumbotron {
-            background-size: 1000%;
-            padding: 0;
-            left: 0;
-            margin-bottom: 0px;
-            margin-top: 0px;
-        }
+    #mySideNav .jumbotron {
+        background-size: 1000%;
+        padding: 0;
+        left: 0;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
 
-        #mySideNav #closebtn {
-            position: absolute;
-            display: block;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-    ul {
-        z-index: 0;
+    #mySideNav #closebtn {
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
     }
 }
 

@@ -10,6 +10,7 @@
         media.src = content.innerText;
         media.style.maxWidth = '80%';
         media.style.maxHeight = '80%';
+        content.appendChild(document.createElement('br'));
         content.appendChild(media);
         media.controls = true;
     }
@@ -28,7 +29,7 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     var nameDiv     = document.createElement("div");
     var contentDiv  = document.createElement("div");
 
-    //Add names for colouring later
+    //Add names for changing the css class later
     if (names[id] == null)
         names[id] = [];
 
