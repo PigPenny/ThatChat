@@ -74,7 +74,7 @@
                     </div>
                     <hr />
                     <div class="messageArea">
-                        <div id ="counter"></div>
+                        <div id ="counter" class="counter"></div>
                         <input type="text" id="message" class="form-control" />
                         <input type="button" id="sendmessage" class="form-control btn-success" value="Send" />
                     </div>

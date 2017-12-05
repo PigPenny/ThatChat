@@ -20,6 +20,10 @@ html body {
     height: 100%;
 }
 
+.counter {
+    width: 5%;
+}
+
 #discussionScrollDiv {
     color: white;
     overflow-y: scroll;
