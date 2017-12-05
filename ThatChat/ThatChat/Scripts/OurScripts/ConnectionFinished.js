@@ -125,7 +125,11 @@ $.connection.hub.start().done(function () {
 
     $('#message').keyup(function () {
         var length = $('#message').val().length;
-        console.log(length);
+        if (length < 120) {
+            $('#counter').css("color", "white");
+        } else {
+            $('#counter').css("color", "red");
+        }
         $('#counter').text(length);
     });
 
