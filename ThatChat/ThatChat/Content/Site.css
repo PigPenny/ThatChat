@@ -39,6 +39,8 @@ ul {
     margin-top: 0px;
     margin-bottom: 0px;
     height: 100%;
+    font-size: medium;
+    line-height: 1.5;
 }
 
 .counter {
