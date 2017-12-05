@@ -55,7 +55,7 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     contentDiv.innerText = message;
     addMedia(contentDiv);
 
-    if (!(prevId == id && names[id][names[id].length-1].className != "inactive accnt"))
+    if (prevId != id)
         li.appendChild(nameDiv);
 
     li.appendChild(contentDiv);
