@@ -201,6 +201,11 @@ namespace ThatChat
             }
         }
 
+        /// <summary>
+        /// Purpose:  Called by a client when they are pinged.
+        /// Author:   Andrew Busto
+        /// Date:     November 30, 2017
+        /// </summary>
         public void respond()
         {
             try

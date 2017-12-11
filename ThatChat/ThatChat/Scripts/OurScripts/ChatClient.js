@@ -1,4 +1,14 @@
-﻿var username = "";
+﻿/*
+  This file contains all the functions associated with
+  a "client." (as seen by SignalR)
+*/
+
+// Starting username.
+var username = "";
+
+// Attempts to load a file from a string.
+// Andrew Busto
+// November 27
 function embedFile(regex, content, type)
 {
     if (regex.exec(content.innerText) != null) {
@@ -17,11 +27,17 @@ function embedFile(regex, content, type)
     }
 }
 
+// Adds some media to a message.
+// Andrew Busto
+// November 27
 function addMedia(content) {
     embedFile(/\.(jpeg|jpg|gif|png)$/, content, 'img');
     embedFile(/\.(mp4|webm)$/, content, 'video');
 }
-$(this).attr("placeholder", "Type your answer here");
+
+// Displays a name as a placeholder.
+// Andrew Busto
+// October 1
 chat.client.displayName = function (name) {
     $('#displayname').attr("placeholder", name);
 };
@@ -100,6 +116,9 @@ chat.client.addChat = function (name, id, count) {
     chats.push(nameObject);
 };
 
+// Removes a conversation from the list.
+// Andrew Busto & Paul McCarlie
+// November 27
 chat.client.removeChat = function (id) {
     for (var i = chats.length - 1; i >= 0; i--) {
         if (chats[i].id === id) {
@@ -109,6 +128,9 @@ chat.client.removeChat = function (id) {
     }
 }
 
+// Updates the user count of a Conversation in the list.
+// Paul McCarlie
+// November 28
 chat.client.updateChatUserCount = function (id, name, count) {
     chats.forEach(function (item) {
         if (item.id == id) {
@@ -117,7 +139,8 @@ chat.client.updateChatUserCount = function (id, name, count) {
     });
 }
 
-// Create a function that the hub can call to deactivate a user no longer in use
+// Create a function that the hub can call to 
+// deactivate a user no longer in use.
 // Andrew Busto
 // October 31, 2017
 chat.client.deactivateUser = function (id) {
@@ -127,11 +150,9 @@ chat.client.deactivateUser = function (id) {
     }
 };
 
+// Asks a client for a response to make sure they're still here.
+// Andrew Busto
+// November 28
 chat.client.ping = function () {
     chat.server.respond();
-    //console.log("ping");
 };
-
-//function setName() {
-//    var name = document.getElementById("displayname").val;
-//}
