@@ -1,4 +1,9 @@
-﻿// The message displayed to new users
+﻿/*
+  This page contains the code to be executed when the connection
+  to our chathub is completed.
+*/
+
+// The message displayed to new users
 var startMessage = "Hello, welcome to ThatChat! " +
     "You're not connected to any chats right now, " +
     "you'll have to select one from the list to the " +
@@ -40,6 +45,9 @@ $.connection.hub.start().done(function () {
         }
     });
 
+    // Calls ButtonChatAdd's click function when enter is pressed.
+    // Andrew Busto
+    // October 1
     $('#TextBoxChatAdd').keypress(function (e) {
         if (e.which == 13) {
             $('#ButtonChatAdd').click();
@@ -129,6 +137,9 @@ $.connection.hub.start().done(function () {
         }
     });
 
+    // Updates the letter count next to a message.
+    // Paul McCarlie
+    // October 1
     $('#message').keyup(function () {
         var length = $('#message').val().length;
         if (length < 120) {
@@ -139,6 +150,9 @@ $.connection.hub.start().done(function () {
         $('#counter').text(length);
     });
 
+    // Turns the dynamic background on and off.
+    // Paul McCarlie
+    // November 30
     $('#OnOff').click(function () {
         background = !background;
         console.log(background);
@@ -154,6 +168,9 @@ $.connection.hub.start().done(function () {
     })
 });
 
+// Checks if a name is valid.
+// Connor Goudie
+// November 28 
 function valid(name) {
     var regex = /^[\w\-\s]+$/;
     return name.length > 0 && regex.exec(name) != null && name.length <= 64;
