@@ -127,6 +127,7 @@ namespace ThatChat
             {
                 deactivate(users[Context.ConnectionId].Accnt);
                 users[Context.ConnectionId].Accnt = new Account(name);
+                Clients.Caller.displayName(users[Context.ConnectionId].Accnt.Name);
             }
             catch (KeyNotFoundException e)
             {
@@ -200,6 +201,11 @@ namespace ThatChat
             }
         }
 
+        /// <summary>
+        /// Purpose:  Called by a client when they are pinged.
+        /// Author:   Andrew Busto
+        /// Date:     November 30, 2017
+        /// </summary>
         public void respond()
         {
             try

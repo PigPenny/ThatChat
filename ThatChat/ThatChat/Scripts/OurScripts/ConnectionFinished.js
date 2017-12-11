@@ -1,4 +1,9 @@
-﻿// The message displayed to new users
+﻿/*
+  This page contains the code to be executed when the connection
+  to our chathub is completed.
+*/
+
+// The message displayed to new users
 var startMessage = "Hello, welcome to ThatChat! " +
     "You're not connected to any chats right now, " +
     "you'll have to select one from the list to the " +
@@ -10,6 +15,8 @@ var background = true;
 
 // Start the connection.
 $.connection.hub.start().done(function () {
+    $('#counter').text(0);
+
     // Calls the sendmessage function when the user presses enter in the message textbox 
     // Paul McCarlie
     // November 9, 2017
@@ -38,6 +45,9 @@ $.connection.hub.start().done(function () {
         }
     });
 
+    // Calls ButtonChatAdd's click function when enter is pressed.
+    // Andrew Busto
+    // October 1
     $('#TextBoxChatAdd').keypress(function (e) {
         if (e.which == 13) {
             $('#ButtonChatAdd').click();
@@ -75,7 +85,7 @@ $.connection.hub.start().done(function () {
     chat.server.populateChats();
     //Adds the new user specified in the displayname textbox
     chat.server.addUser($('#displayname').val());
-    chat.client.broadcastMessage("God", startMessage, 0, true);
+    chat.client.broadcastMessage("GOD", startMessage, 0, true);
 
     //options for our fuzzy search, only threshold should need to be changed
     var options = {
@@ -127,6 +137,22 @@ $.connection.hub.start().done(function () {
         }
     });
 
+    // Updates the letter count next to a message.
+    // Paul McCarlie
+    // October 1
+    $('#message').keyup(function () {
+        var length = $('#message').val().length;
+        if (length < 120) {
+            $('#counter').css("color", "white");
+        } else {
+            $('#counter').css("color", "red");
+        }
+        $('#counter').text(length);
+    });
+
+    // Turns the dynamic background on and off.
+    // Paul McCarlie
+    // November 30
     $('#OnOff').click(function () {
         background = !background;
         console.log(background);
@@ -142,6 +168,9 @@ $.connection.hub.start().done(function () {
     })
 });
 
+// Checks if a name is valid.
+// Connor Goudie
+// November 28 
 function valid(name) {
     var regex = /^[\w\-\s]+$/;
     return name.length > 0 && regex.exec(name) != null && name.length <= 64;

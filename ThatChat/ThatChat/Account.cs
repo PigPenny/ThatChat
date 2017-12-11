@@ -65,8 +65,7 @@ namespace ThatChat
             if (((object)name) == null)
                 name = "";
 
-            name.Trim();
-            applyName(name);
+            applyName(name.Trim());
 
             id = Interlocked.Increment(ref accntCount);
         }

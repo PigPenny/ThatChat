@@ -1,4 +1,8 @@
-﻿// Declare a proxy to reference the hub.
+﻿/*
+  These are variables that may have uses between javascript files.
+*/
+
+// Declare a proxy to reference the hub.
 var chat = $.connection.chatHub;
 // Arrray used to store list of user names
 var names = [];

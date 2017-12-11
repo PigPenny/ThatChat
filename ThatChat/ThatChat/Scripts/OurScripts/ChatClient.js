@@ -1,4 +1,15 @@
-﻿function embedFile(regex, content, type)
+﻿/*
+  This file contains all the functions associated with
+  a "client." (as seen by SignalR)
+*/
+
+// Starting username.
+var username = "";
+
+// Attempts to load a file from a string.
+// Andrew Busto
+// November 27
+function embedFile(regex, content, type)
 {
     if (regex.exec(content.innerText) != null) {
         var media = document.createElement(type);
@@ -10,15 +21,26 @@
         media.src = content.innerText;
         media.style.maxWidth = '80%';
         media.style.maxHeight = '80%';
+        content.appendChild(document.createElement('br'));
         content.appendChild(media);
         media.controls = true;
     }
 }
 
+// Adds some media to a message.
+// Andrew Busto
+// November 27
 function addMedia(content) {
     embedFile(/\.(jpeg|jpg|gif|png)$/, content, 'img');
     embedFile(/\.(mp4|webm)$/, content, 'video');
 }
+
+// Displays a name as a placeholder.
+// Andrew Busto
+// October 1
+chat.client.displayName = function (name) {
+    $('#displayname').attr("placeholder", name);
+};
 
 // Create a function that the hub can call to broadcast messages.
 // Chandu Dissanayake/Andrew Busto
@@ -28,7 +50,7 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     var nameDiv     = document.createElement("div");
     var contentDiv  = document.createElement("div");
 
-    //Add names for colouring later
+    //Add names for changing the css class later
     if (names[id] == null)
         names[id] = [];
 
@@ -49,7 +71,7 @@ chat.client.broadcastMessage = function (name, message, id, active) {
     contentDiv.innerText = message;
     addMedia(contentDiv);
 
-    if (!(prevId == id && names[id][names[id].length-1].className != "inactive accnt"))
+    if (prevId != id)
         li.appendChild(nameDiv);
 
     li.appendChild(contentDiv);
@@ -60,7 +82,6 @@ chat.client.broadcastMessage = function (name, message, id, active) {
 
     //scroll to bottom of chat div
     $("#discussionScrollDiv").scrollTop($("#discussionScrollDiv")[0].scrollHeight);
-
     names[id][names[id].length] = nameDiv;
 };
 
@@ -95,6 +116,9 @@ chat.client.addChat = function (name, id, count) {
     chats.push(nameObject);
 };
 
+// Removes a conversation from the list.
+// Andrew Busto & Paul McCarlie
+// November 27
 chat.client.removeChat = function (id) {
     for (var i = chats.length - 1; i >= 0; i--) {
         if (chats[i].id === id) {
@@ -104,6 +128,9 @@ chat.client.removeChat = function (id) {
     }
 }
 
+// Updates the user count of a Conversation in the list.
+// Paul McCarlie
+// November 28
 chat.client.updateChatUserCount = function (id, name, count) {
     chats.forEach(function (item) {
         if (item.id == id) {
@@ -112,7 +139,8 @@ chat.client.updateChatUserCount = function (id, name, count) {
     });
 }
 
-// Create a function that the hub can call to deactivate a user no longer in use
+// Create a function that the hub can call to 
+// deactivate a user no longer in use.
 // Andrew Busto
 // October 31, 2017
 chat.client.deactivateUser = function (id) {
@@ -122,7 +150,9 @@ chat.client.deactivateUser = function (id) {
     }
 };
 
+// Asks a client for a response to make sure they're still here.
+// Andrew Busto
+// November 28
 chat.client.ping = function () {
     chat.server.respond();
-    console.log("ping");
 };

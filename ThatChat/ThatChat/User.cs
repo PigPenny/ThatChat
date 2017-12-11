@@ -2,7 +2,6 @@
 using System.Timers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ThatChat
 {
@@ -12,11 +11,18 @@ namespace ThatChat
     /// </summary>
     public class User
     {
+        // lifeTime     - The amount of time before a client will be pinged.
+        // responseTime - The amount of time after a ping before a 
+        //                user will be removed.
         private double lifeTime = 5000;
         private double responseTime = 5000;
+
+        // pingTrigger  - The timer that pings the client.
+        // delTrigger   - The timer that deletes the client.
         private System.Timers.Timer pingTrigger;
         private System.Timers.Timer delTrigger;
 
+        // The connection string to the client.
         private string connectString;
 
         // Controls access to this user's conversation.
@@ -111,27 +117,53 @@ namespace ThatChat
             pingTrigger.Start();
         }
 
-        public void prepTimer(out System.Timers.Timer timer, double time, ElapsedEventHandler handler)
+        /// <summary>
+        /// Purpose:  Initializes a timer.
+        /// Author:   Andrew Busto
+        /// Date:     November 28, 2017
+        /// </summary>
+        /// <param name="timer"> The timer to be initialized. </param>
+        /// <param name="time"> The amount of time before the elapsed event. </param>
+        /// <param name="handler"> the handler for the elapsed event. </param>
+        public void prepTimer(out System.Timers.Timer timer, 
+            double time, ElapsedEventHandler handler)
         {
             timer = new System.Timers.Timer(time);
             timer.Elapsed += handler;
             timer.AutoReset = false;
         }
 
+        /// <summary>
+        /// Purpose:  Requests a response from this user's client.
+        /// Author:   Andrew Busto
+        /// Date:     November 28, 2017
+        /// </summary>
+        /// <param name="source"> Unused. </param>
+        /// <param name="e"> Unused. </param>
         public void pingClient(Object source, ElapsedEventArgs e)
         {
             Client.ping();
             delTrigger.Start();
         }
 
+        /// <summary>
+        /// Purpose:  Deletes this user.
+        /// Author:   Andrew Busto
+        /// Date:     November 28, 2017
+        /// </summary>
+        /// <param name="source"> Unused. </param>
+        /// <param name="e"> Unused. </param>
         public void delUser(Object source, ElapsedEventArgs e)
         {
             pingTrigger.Stop();
             Accnt.deactivate();
 
+            // Informs all clients that this user's 
+            // account has been deactivated.
             foreach (KeyValuePair<string, User> user in AppVars.Users.Val)
                 user.Value.Client.deactivateUser(Id);
 
+            // Removes this user from their current convo.
             if (((object)convo) != null)
                 convo.removeUser(this);
 
@@ -139,6 +171,11 @@ namespace ThatChat
             AppVars.Users.Val.TryRemove(connectString, out usr);
         }
 
+        /// <summary>
+        /// Purpose:  Called in response to a ping, prevents deletion.
+        /// Author:   Andrew Busto
+        /// Date:     November 28, 2017
+        /// </summary>
         public void cancelDel()
         {
             delTrigger.Stop();
